@@ -1,353 +1,325 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
   <title>Pressure Valve Services – Martin DC Water Utility Consultants</title>
+  <meta name="description" content="Expert pressure valve inspection, maintenance, repair and replacement for rural Texas water systems. Martin DC Water Utility Consultants.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="https://waterutilityconsultant.com/wp-content/uploads/2025/01/Picture33-150x150.png" sizes="32x32">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Manrope', sans-serif; color: #000; background: #fff; line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
-    img { max-width: 100%; display: block; }
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    .container { max-width: 1290px; margin: 0 auto; padding: 0 40px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Manrope',sans-serif;font-size:16px;color:#3A4F66;background:#FAFBFC;line-height:1.65;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    ul{list-style:none}
+    :root{--blue:#0080FF;--blue-light:#E0F6FE;--navy:#192a3d;--navy-mid:#3A4F66;--color-6:#f2f5f7;--max-w:1290px;--nav-pill-bg:rgba(220,235,248,0.85);--nav-pill-border:rgba(180,219,252,0.90)}
+    .container{max-width:var(--max-w);margin:0 auto;padding:0 90px}
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 40px;
-      background: transparent;
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-    nav.scrolled { background: rgba(255,255,255,0.97); box-shadow: 0 2px 16px rgba(0,0,0,0.09); }
-    .nav-logo img { height: 72px; width: auto; }
-    .nav-pill {
-      display: flex; align-items: center;
-      background: rgba(180,219,252,0.20);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(180,219,252,0.6);
-      border-radius: 50px; padding: 8px 32px;
-      box-shadow: none; flex: 1; max-width: 600px;
-    }
-    .nav-pill > a, .nav-drop > a {
-      font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 13px;
-      color: #192a3d; padding: 10px 28px; border-radius: 50px; font-size: 15px;
-      transition: color 0.2s; white-space: nowrap;
-      display: flex; align-items: center; gap: 3px;
-    }
-    .nav-pill > a:hover, .nav-drop > a:hover { color: #0080FF; }
-    .nav-pill > a.active, .nav-drop > a.active { color: #192a3d; }
-    .nav-cta:hover { background: rgba(210,232,248,0.65) !important; }
-    .nav-cta {
-      display: inline-flex; align-items: center;
-      background: rgba(180,219,252,0.20); color: #192a3d !important;
-      font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 12px;
-      padding: 10px 20px; border-radius: 50px;
-      border: 1px solid rgba(180,219,252,0.6);
-      transition: background 0.2s; backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .nav-cta:hover { background: #0062cc; }
-    .nav-drop { position: relative; }
-    .nav-drop:hover .drop { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
-    .drop {
-      position: absolute; top: calc(100% + 8px); left: 50%;
-      transform: translateX(-50%) translateY(10px);
-      background: #fff; border-radius: 12px; padding: 8px 0;
-      min-width: 220px; box-shadow: 0 8px 32px rgba(0,0,0,0.13);
-      opacity: 0; pointer-events: none; transition: all 0.2s;
-    }
-    .drop a { display: block; padding: 10px 20px; font-size: 13px !important; font-weight: 500 !important; color: #3A4F66 !important; }
-    .drop a:hover { color: #0080FF !important; background: #f5f8ff; }
-    .drop a.cur { color: #0080FF !important; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: background 0.3s; }
-    nav.scrolled .hamburger span { background: #192a3d; }
-    .mob-menu { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 2000; flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
-    .mob-menu.open { display: flex; }
-    .mob-menu a { font-size: 20px; font-weight: 700; color: #192a3d; }
-    .mob-close { position: absolute; top: 24px; right: 28px; font-size: 28px; cursor: pointer; background: none; border: none; color: #192a3d; }
+    /* ── NAV ── */
+    #main-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 40px;transition:background .3s,box-shadow .3s}
+    #main-nav.scrolled{background:rgba(255,255,255,0.97);box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+    .nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .nav-logo img{height:60px;width:auto}
+    .nav-pill{display:flex;align-items:center;gap:4px;background:var(--nav-pill-bg);border:1px solid var(--nav-pill-border);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:50px;padding:6px 10px}
+    .nav-pill a{font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;color:var(--navy);padding:8px 16px;border-radius:50px;transition:background .2s;white-space:nowrap}
+    .nav-pill a:hover{background:rgba(180,219,252,0.30)}
+    .nav-pill a.current{color:var(--blue)}
+    .nav-dropdown{position:relative;padding-bottom:8px}
+    .nav-dropdown>a{display:flex;align-items:center;gap:4px}
+    .nav-dropdown>a::after{content:'';border:4px solid transparent;border-top-color:var(--navy);margin-top:2px}
+    .dropdown-menu{display:block;visibility:hidden;opacity:0;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.97);border:1px solid #e1e8ed;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.12);padding:8px 0;min-width:220px;z-index:100;transition:opacity 0.2s ease,visibility 0.2s ease}
+    .nav-dropdown:hover .dropdown-menu{visibility:visible;opacity:1}
+    .dropdown-menu a{display:block;padding:10px 20px;font-size:13px;font-weight:600;color:var(--navy);transition:background .15s}
+    .dropdown-menu a:hover{background:var(--blue-light);color:var(--blue)}
+    .dropdown-menu a.current{color:var(--blue)}
+    .nav-contact{font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;color:var(--navy);background:var(--nav-pill-bg);border:1px solid var(--nav-pill-border);backdrop-filter:blur(8px);border-radius:50px;padding:8px 18px;transition:background .2s,color .2s;white-space:nowrap}
+    .nav-contact:hover{background:rgba(0,128,255,0.15);color:var(--blue)}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+    .nav-hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:.3s}
+    #main-nav.scrolled .nav-hamburger span{background:var(--navy)}
+    .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,0.98);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{font-family:'Manrope',sans-serif;font-size:20px;font-weight:700;color:var(--navy)}
+    .mobile-menu a:hover{color:var(--blue)}
+    .mobile-menu-close{position:absolute;top:20px;right:24px;font-size:28px;cursor:pointer;color:var(--navy);background:none;border:none}
+    .mobile-sub{display:flex;flex-direction:column;align-items:center;gap:12px}
+    .mobile-sub a{font-size:15px !important;color:var(--navy-mid) !important}
 
-    /* HERO */
-    .hero {
-      position: relative; width: 100%; min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      padding-top: 80px; overflow: hidden;
-    }
-    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-    .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.20); z-index: 1; }
-    .hero h1 {
-      position: relative; z-index: 2;
-      font-family: 'Exo', sans-serif; font-weight: 700;
-      font-size: 60px; color: #fff; text-align: center;
-      text-shadow: 15px 12px 39px #000;
-    }
+    /* ── HERO ── */
+    .page-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 40%;z-index:0}
+    .page-hero-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.20);z-index:1}
+    .page-hero-inner{position:relative;z-index:2;text-align:center}
+    .page-hero-title{font-family:'Exo',sans-serif;font-size:60px;font-weight:700;color:#fff;text-transform:capitalize;letter-spacing:-.5px}
 
-    /* INTRO: image left, text right — padding-top 80px */
-    .intro { padding: 80px 0 40px; background: #FAFBFC; }
-    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-    .intro-grid img { width: 100%; border-radius: 12px; }
-    .intro-text h2 { font-family: 'Exo', sans-serif; font-size: 42px; font-weight: 700; color: #192a3d; margin-bottom: 16px; }
-    .intro-text p { font-family: 'Manrope', sans-serif; font-size: 16px; font-weight: 400; color: #000; line-height: 1.75; }
-    .intro-text strong { font-weight: 700; }
+    /* ── INTRO SPLIT ── */
+    .svc-intro{padding:80px 0 72px;background:#fff}
+    .svc-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .svc-intro-img{border-radius:16px;overflow:hidden}
+    .svc-intro-img img{width:100%;height:380px;object-fit:cover}
+    .section-label{display:inline-flex;align-items:center;gap:10px;color:var(--blue);font-family:'Exo',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;margin-bottom:16px;letter-spacing:.08em}
+    .section-label::before{content:'';width:28px;height:2px;background:var(--blue);flex-shrink:0}
+    .svc-intro-text h2{font-family:'Exo',sans-serif;font-size:clamp(26px,3vw,38px);font-weight:600;color:var(--navy);line-height:1.2;margin-bottom:20px}
+    .svc-intro-text p{font-family:'Manrope',sans-serif;font-size:16px;font-weight:500;color:var(--navy-mid);line-height:1.75;margin-bottom:16px}
 
-    /* BAND: blue bg, two cards with light-blue fill */
-    .band { background: #0080FF; padding: 80px 0; }
-    .band-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .band-card {
-      background: #EBF3FC;
-      border-radius: 12px;
-      padding: 50px;
-      display: flex; flex-direction: column; justify-content: center;
+    /* ── BENEFITS + PROCESS CARDS ── */
+    .svc-cards{padding:0 0 80px;background:#fff}
+    .svc-cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .svc-info-card{background:var(--blue-light);border-radius:16px;padding:36px}
+    .svc-info-card h3{font-family:'Exo',sans-serif;font-size:22px;font-weight:600;color:var(--navy);margin-bottom:20px}
+    .svc-info-card p{font-family:'Manrope',sans-serif;font-size:15px;font-weight:500;color:var(--navy-mid);line-height:1.75}
+    .svc-info-card ul{display:flex;flex-direction:column;gap:12px}
+    .svc-info-card ul li{display:flex;align-items:flex-start;gap:10px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:500;color:var(--navy-mid)}
+    .svc-info-card ul li i{color:var(--blue);font-size:10px;margin-top:5px;flex-shrink:0}
+
+    /* ── CASE STUDY ── */
+    .case-study{padding:80px 0;background:#fff}
+    .case-studies-title{font-family:'Exo',sans-serif;font-size:51px;font-weight:700;color:var(--navy);text-align:center;margin-bottom:16px}
+    .case-study-subtitle{font-family:'Exo',sans-serif;font-size:32px;font-weight:700;color:var(--navy);text-align:center;margin-bottom:48px}
+    .case-study-card{background:#EBF3FC;border-radius:12px;padding:25px;display:flex;flex-direction:column;gap:24px}
+    .case-study-image{width:100%;height:350px;object-fit:cover;object-position:center center;border-radius:12px}
+    .case-study-section h3{font-family:'Exo',sans-serif;font-size:32px;font-weight:700;color:var(--navy);margin-bottom:12px;line-height:1.3}
+    .case-study-section p{font-family:'Manrope',sans-serif;font-size:16px;font-weight:400;color:#000;line-height:1.65}
+
+    /* ── BOTTOM CTA ── */
+    .svc-cta{position:relative;min-height:50vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .svc-cta-bg{position:absolute;inset:0;background-image:url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/steel-pipelines-cables-plant-scaled.jpg');background-size:cover;background-position:center;z-index:0}
+    .svc-cta-overlay{position:absolute;inset:0;background:rgba(0,128,255,0.18);z-index:1}
+    .svc-cta-content{position:relative;z-index:2;text-align:center;padding:0 24px}
+    .svc-cta-content h2{font-family:'Exo',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:#fff;margin-bottom:32px;text-transform:capitalize}
+    .btn-primary{display:inline-flex;align-items:center;justify-content:center;font-family:'Manrope',sans-serif;font-size:14px;font-weight:800;text-transform:capitalize;color:#fff;background:var(--blue);border:1px solid var(--blue);border-radius:37px;padding:19px 25px;transition:background .25s,color .25s;cursor:pointer}
+    .btn-primary:hover{background:#fff;color:var(--blue)}
+    .btn-white{display:inline-flex;align-items:center;justify-content:center;font-family:'Manrope',sans-serif;font-size:14px;font-weight:800;text-transform:capitalize;color:var(--blue);background:#fff;border:1px solid #fff;border-radius:37px;padding:19px 25px;transition:background .25s,color .25s;cursor:pointer}
+    .btn-white:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+    /* ── FOOTER ── */
+    footer{background:var(--color-6);background-image:url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/Footer.png');background-size:cover;background-position:center;padding:60px 0 30px}
+    .footer-top{display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:10px;border-bottom:2px solid rgba(0,0,0,0.11);flex-wrap:wrap;gap:20px}
+    .footer-logo img{height:60px;width:auto}
+    .footer-social{display:flex;gap:5px}
+    .footer-social a{width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:#000;font-size:16px;transition:background .2s,color .2s}
+    .footer-social a:hover{background:var(--blue);color:#fff}
+    .footer-cols{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;padding:40px 0;border-bottom:2px solid rgba(0,0,0,0.11)}
+    .footer-col h2{font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px}
+    .footer-contact-item{font-family:'Manrope',sans-serif;font-size:18px;font-weight:400;color:#000;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    a.footer-contact-item:hover{color:var(--blue)}
+    .footer-contact-item svg{flex-shrink:0}
+    .footer-links{display:flex;flex-direction:column;gap:10px}
+    .footer-links a{font-family:'Manrope',sans-serif;font-size:16px;font-weight:500;color:#000;text-transform:capitalize;transition:color .2s}
+    .footer-links a:hover{color:var(--blue)}
+    .footer-portal-desc{font-family:'Manrope',sans-serif;font-size:16px;font-weight:500;color:#000;line-height:1.65;margin-bottom:20px}
+    .footer-bottom{padding-top:24px;text-align:center}
+    .footer-bottom p{font-family:'Manrope',sans-serif;font-size:16px;font-weight:500;color:#000}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px){
+      .container{padding:0 40px}
+      .svc-intro-grid{grid-template-columns:1fr;gap:36px}
+      .svc-intro-img img{height:280px}
+      .svc-cards-grid{grid-template-columns:1fr}
+      .footer-cols{grid-template-columns:1fr 1fr;gap:30px}
     }
-    .band-card h3 { font-family: 'Exo', sans-serif; font-size: 42px; font-weight: 700; color: #192a3d; margin-bottom: 16px; }
-    .band-card p { font-family: 'Manrope', sans-serif; font-size: 16px; color: #000; line-height: 1.75; }
-    .band-card ul { display: flex; flex-direction: column; gap: 7px; }
-    .band-card ul li { font-family: 'Manrope', sans-serif; font-size: 16px; color: #000; display: flex; align-items: center; gap: 6px; }
-    .band-card ul li::before { content: "•"; font-size: 6px; color: #000; flex-shrink: 0; }
-
-    /* CASE STUDIES: white bg, padding 80px */
-    .cases { padding: 80px 0; background: #f2f5f7; }
-    .cases-head { text-align: center; margin-bottom: 16px; }
-    .cases-head h2 { font-family: 'Exo', sans-serif; font-size: 51px; font-weight: 700; color: #192a3d; margin-bottom: 8px; }
-    .cases-head p { font-family: 'Exo', sans-serif; font-size: 32px; font-weight: 700; color: #192a3d; }
-    .cases-img { margin: 24px 0; border-radius: 12px; overflow: hidden; }
-    .cases-img img { width: 100%; height: 350px; object-fit: cover; border-radius: 12px; }
-    .cases-body-wrap { background: #EBF3FC; border-radius: 12px; padding: 25px; margin-top: 0; }
-    .cases-body { display: flex; flex-direction: column; gap: 24px; }
-    .cases-body h3 { font-family: 'Exo', sans-serif; font-size: 32px; font-weight: 700; color: #192a3d; margin-bottom: 8px; }
-    .cases-body p { font-family: 'Manrope', sans-serif; font-size: 16px; color: #000; line-height: 1.75; }
-
-    /* CTA: steel pipes bg image, 60vh min */
-    .cta {
-      position: relative; min-height: 60vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background-image: url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/steel-pipelines-cables-plant-scaled.jpg');
-      background-position: center; background-size: cover;
-      text-align: center; padding: 60px 40px;
-    }
-    .cta::before { content: ''; position: absolute; inset: 0; background: rgba(0,128,255,0.18); }
-    .cta h2 { position: relative; z-index: 1; font-family: 'Exo', sans-serif; font-size: 48px; font-weight: 700; color: #fff; margin-bottom: 28px; text-align: center; }
-    .cta a {
-      position: relative; z-index: 1;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: #0080FF; color: #fff;
-      font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 14px;
-      text-transform: capitalize;
-      padding: 19px 25px; border-radius: 37px;
-      border: 1px solid #0080FF;
-      transition: all 0.2s;
-    }
-    .cta a:hover { background: #fff; color: #0080FF; }
-
-    /* FOOTER */
-    footer { background: #EBF3FC; padding: 52px 0 24px; }
-    .foot-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.07); margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
-    .foot-logo img { height: 52px; }
-    .foot-social { display: flex; gap: 10px; }
-    .foot-social a { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #192a3d; background: #fff; transition: all 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-    .foot-social a:hover { background: #0080FF; color: #fff; border-color: #0080FF; }
-    .foot-grid { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 40px; margin-bottom: 36px; }
-    .foot-col h4 { font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700; color: #192a3d; margin-bottom: 16px; }
-    .foot-col ul li { margin-bottom: 9px; }
-    .foot-col ul li a { font-size: 13px; color: #3A4F66; transition: color 0.2s; }
-    .foot-col ul li a:hover { color: #0080FF; }
-    .foot-contact li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #3A4F66; margin-bottom: 11px; line-height: 1.5; }
-    .foot-contact li i { color: #0080FF; margin-top: 2px; flex-shrink: 0; }
-    .foot-portal p { font-size: 13px; color: #3A4F66; line-height: 1.65; margin-bottom: 16px; }
-    .btn-blue { display: inline-flex; background: #0080FF; color: #fff; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 12px; padding: 11px 20px; border-radius: 50px; transition: background 0.2s; }
-    .btn-blue:hover { background: #0062cc; }
-    .foot-bottom { border-top: 1px solid rgba(0,0,0,0.07); padding-top: 16px; text-align: center; }
-    .foot-bottom p { font-size: 12px; color: #3A4F66; }
-
-    @media (max-width: 1024px) {
-      .intro-grid { grid-template-columns: 1fr; }
-      .band-grid { grid-template-columns: 1fr; }
-      .foot-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
-    }
-    @media (max-width: 767px) {
-      .hero { min-height: 53vh; }
-      .hero h1 { font-size: 45px; }
-      .band-card h3, .intro-text h2 { font-size: 25px; }
-      .cases-head h2 { font-size: 35px; }
-      .cases-head p { font-size: 25px; }
-      .cases-body h3 { font-size: 25px; }
-      .cta h2 { font-size: 35px; }
-      nav { padding: 14px 20px; }
-      .nav-pill, .nav-cta { display: none; }
-      .hamburger { display: flex; }
-      .foot-grid { grid-template-columns: 1fr; }
-      .band-card { padding: 40px; }
+    @media(max-width:767px){
+      .container{padding:0 20px}
+      #main-nav{padding:14px 20px}
+      .nav-pill{display:none}
+      .nav-contact{display:none}
+      .nav-hamburger{display:flex}
+      .page-hero-title{font-size:40px}
+      .svc-intro-img img{height:220px}
+      .svc-cta{padding:80px 0}
+      .footer-cols{grid-template-columns:1fr;gap:28px}
     }
   </style>
 </head>
 <body>
 
-<nav id="mainNav">
-  <a href="index.html" class="nav-logo">
-    <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC">
-  </a>
-  <div class="nav-pill">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <div class="nav-drop">
-      <a href="services.html" class="active">Services ▾</a>
-      <div class="drop">
-        <a href="altitude-valve-services.html">Altitude Valve Services</a>
-        <a href="pressure-valve-services.html" class="cur">Pressure Valve Services</a>
-        <a href="booster-pump-maintenance.html">Booster Pump Maintenance</a>
-        <a href="licensed-operator-support.html">Licensed Operator Support</a>
-        <a href="emergency-solutions.html">Emergency Solutions</a>
-        <a href="well-maintenance.html">Well Maintenance</a>
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC Water Utility Consultants">
+    </a>
+    <div class="nav-pill">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <div class="nav-dropdown">
+        <a href="services.html" class="current">Services</a>
+        <div class="dropdown-menu">
+          <a href="altitude-valve-services.html">Altitude Valve Services</a>
+          <a href="pressure-valve-services.html" class="current">Pressure Valve Services</a>
+          <a href="booster-pump-maintenance.html">Booster Pump Maintenance</a>
+          <a href="licensed-operator-support.html">Licensed Operator Support</a>
+          <a href="emergency-solutions.html">Emergency Solutions</a>
+          <a href="well-maintenance.html">Well Maintenance</a>
+        </div>
       </div>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
     </div>
-    <a href="projects.html">Projects</a>
-    <a href="blog.html">Blog</a>
+    <a href="contact.html" class="nav-contact">Contact Us</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <a href="contact.html" class="nav-cta">Contact Us</a>
-  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
 
-<div class="mob-menu" id="mobMenu">
-  <button class="mob-close" id="mobClose">✕</button>
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">&#10005;</button>
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
-  <a href="services.html">Services</a>
+  <div class="mobile-sub">
+    <a href="services.html">Services</a>
+    <a href="altitude-valve-services.html">Altitude Valve Services</a>
+    <a href="pressure-valve-services.html">Pressure Valve Services</a>
+    <a href="booster-pump-maintenance.html">Booster Pump Maintenance</a>
+    <a href="licensed-operator-support.html">Licensed Operator Support</a>
+    <a href="emergency-solutions.html">Emergency Solutions</a>
+    <a href="well-maintenance.html">Well Maintenance</a>
+  </div>
   <a href="projects.html">Projects</a>
   <a href="blog.html">Blog</a>
   <a href="contact.html">Contact Us</a>
 </div>
 
-<section class="hero">
-  <video autoplay muted playsinline loop src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/prv-page-header-video.mp4"></video>
-  <div class="hero-overlay"></div>
-  <h1>Pressure Valve Services</h1>
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/istock-water-treatment-plant-150res-scaled.jpg')"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-inner">
+    <h1 class="page-hero-title">Pressure Valve Services</h1>
+  </div>
 </section>
 
-<section class="intro">
+<!-- INTRO -->
+<section class="svc-intro">
   <div class="container">
-    <div class="intro-grid">
-      <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/PRV-thumbnail.png" alt="Pressure reducing valve">
-      <div class="intro-text">
+    <div class="svc-intro-grid">
+      <div class="svc-intro-img">
+        <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/PRV-thumbnail.png" alt="Pressure valve services" loading="eager">
+      </div>
+      <div class="svc-intro-text">
+        <div class="section-label">Our Expertise</div>
         <h2>Pressure Valve Services</h2>
-        <p><strong>Pressure Valve Services</strong> are essential to ensure the safe and efficient operation of your water systems. We specialize in the inspection, maintenance, repair, and replacement of pressure valves to prevent leaks, maintain system pressure, and enhance performance. Our expert team ensures compliance with safety standards while minimizing downtime. Rely on us for dependable and cost-effective solutions tailored to your pressure valve needs.</p>
+        <p>Pressure Valve Services are essential to ensure the safe and efficient operation of your water systems. We specialize in the inspection, maintenance, repair, and replacement of pressure valves to prevent leaks, maintain system pressure, and enhance performance.</p>
+        <p>Our expert team ensures compliance with safety standards while minimizing downtime. Rely on us for dependable and cost-effective solutions tailored to your pressure valve needs.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="band">
+<!-- BENEFITS + PROCESS -->
+<section class="svc-cards">
   <div class="container">
-    <div class="band-grid">
-      <div class="band-card">
+    <div class="svc-cards-grid">
+      <div class="svc-info-card">
         <h3>Key Benefits</h3>
         <ul>
-          <li>Extended System Lifespan.</li>
-          <li>Reduced Downtime And Costs.</li>
-          <li>Reliable Water Level Or Pressure Control.</li>
+          <li><i class="fas fa-circle"></i>Extended system lifespan.</li>
+          <li><i class="fas fa-circle"></i>Reduced downtime and costs.</li>
+          <li><i class="fas fa-circle"></i>Reliable water level or pressure control.</li>
         </ul>
       </div>
-      <div class="band-card">
-        <h3>Process</h3>
-        <p>We inspect components such as diaphragms, seals, pilot controls, and control tubing, ensuring optimal functionality.</p>
+      <div class="svc-info-card">
+        <h3>Our Process</h3>
+        <p>We inspect components such as diaphragms, seals, pilot controls, and control tubing, ensuring optimal functionality and long-term reliability for your water pressure system.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cases">
+<!-- CASE STUDY -->
+<section class="case-study">
   <div class="container">
-    <div class="cases-head">
-      <h2>Case Studies</h2>
-      <p>Pressure Reducing Valve (PRV) Maintenance Preventing System Overpressure</p>
-    </div>
-    <div class="cases-img">
-      <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/maxresdefault-1.jpg" alt="PRV maintenance">
-    </div>
-    <div class="cases-body-wrap">
-    <div class="cases-body">
-      <div>
+    <h2 class="case-studies-title">Case Studies</h2>
+    <p class="case-study-subtitle">Pressure Reducing Valve (PRV) Maintenance Preventing System Overpressure</p>
+    <div class="case-study-card">
+      <img class="case-study-image" src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/maxresdefault-1.jpg" alt="Pressure valve maintenance case study" loading="lazy">
+      <div class="case-study-section">
         <h3>Background:</h3>
         <p>A rural water utility in Texas, serving a community of 300 residents, began experiencing complaints of irregular water pressure, ranging from weak flow to excessively high pressure. The issue was traced to the main Pressure Reducing Valve (PRV), a critical component that regulates downstream pressure to ensure consistent water delivery.</p>
       </div>
-      <div>
+      <div class="case-study-section">
         <h3>Challenge:</h3>
         <p>The PRV had not been inspected or serviced in over five years. Internal components, including the diaphragm and pilot control, had become worn and clogged with debris. This caused the valve to intermittently fail, resulting in pressure spikes that risked damaging downstream infrastructure, including residential plumbing and appliances.</p>
       </div>
-      <div>
+      <div class="case-study-section">
         <h3>Solution:</h3>
         <p>Martin DC was called to assess and address the issue. The team conducted a full teardown of the PRV, revealing significant wear on the diaphragm, seals, and pilot orifices. These components were replaced, the valve was cleaned, and adjustments were made to recalibrate the pressure settings. Additionally, the team provided training to the utility's staff on regular PRV maintenance best practices.</p>
       </div>
-      <div>
+      <div class="case-study-section">
         <h3>Outcome:</h3>
         <p>The maintenance restored the PRV to full functionality, stabilizing water pressure throughout the system and eliminating customer complaints. The proactive repair prevented potential pipe bursts and costly emergency repairs, saving the utility thousands of dollars in damages. The community now enjoys consistent, safe water pressure, and the utility has implemented a maintenance schedule to ensure long-term reliability of the PRV.</p>
       </div>
-      <div>
+      <div class="case-study-section">
         <h3>Conclusion:</h3>
         <p>This case highlights the critical role of PRVs in maintaining safe and efficient water systems. Regular maintenance and timely repairs of PRVs not only improve performance but also protect infrastructure and reduce long-term costs for rural water utilities.</p>
       </div>
     </div>
-    </div>
   </div>
 </section>
 
-<section class="cta">
-  <h2>Request a Service Quote</h2>
-  <a href="contact.html">Contact Us Today</a>
+<!-- BOTTOM CTA -->
+<section class="svc-cta">
+  <div class="svc-cta-bg"></div>
+  <div class="svc-cta-overlay"></div>
+  <div class="svc-cta-content">
+    <h2>Request a Service Quote</h2>
+    <a href="contact.html" class="btn-white">Contact Us Today</a>
+  </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="container">
-    <div class="foot-top">
-      <div class="foot-logo"><img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC"></div>
-      <div class="foot-social">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-x-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+    <div class="footer-top">
+      <div class="footer-logo"><a href="index.html"><img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC Water Utility Consultants"></a></div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
       </div>
     </div>
-    <div class="foot-grid">
-      <div class="foot-col">
-        <h4>Contact Us</h4>
-        <ul class="foot-contact">
-          <li><i class="fas fa-phone"></i><a href="tel:3252661407">325-266-1407</a></li>
-          <li><i class="fas fa-envelope"></i><a href="mailto:office@waterutilityconsultant.com">office@waterutilityconsultant.com</a></li>
-          <li><i class="fas fa-location-dot"></i><span>1775 CR 356 Doole, TX 76836</span></li>
-        </ul>
+    <div class="footer-cols">
+      <div></div>
+      <div class="footer-col">
+        <h2>Contact Us</h2>
+        <a class="footer-contact-item" href="tel:325-266-1407"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M27.4062 12.7812C27.75 12.875 28 13.1562 28 13.5C28 21.5312 21.5 28 13.5 28C13.125 28 12.8438 27.7812 12.75 27.4375L12 24.1875C11.9375 23.8438 12.0938 23.4688 12.4375 23.3125L15.9375 21.8125C16.25 21.6875 16.5938 21.7812 16.8125 22.0312L18.375 23.9375C20.8125 22.7812 22.7812 20.7812 23.9062 18.4062L22 16.8438C21.75 16.625 21.6562 16.2812 21.7812 15.9688L23.2812 12.4688C23.4375 12.125 23.8125 11.9375 24.1562 12.0312L27.4062 12.7812Z" fill="#0080FF"/></svg>325-266-1407</a>
+        <a class="footer-contact-item" href="mailto:office@waterutilityconsultant.com"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M27.6875 17.9688C27.8125 17.875 28 17.9688 28 18.125V24.5C28 25.3438 27.3125 26 26.5 26H13.5C12.6562 26 12 25.3438 12 24.5V18.125C12 17.9688 12.1562 17.875 12.2812 17.9688C13 18.5312 13.9062 19.2188 17.0938 21.5312C17.75 22 18.875 23.0312 20 23.0312C21.0938 23.0312 22.25 22 22.875 21.5312C26.0625 19.2188 26.9688 18.5312 27.6875 17.9688ZM20 22C19.25 22.0312 18.2188 21.0938 17.6875 20.7188C13.5312 17.7188 13.2188 17.4375 12.2812 16.6875C12.0938 16.5625 12 16.3438 12 16.0938V15.5C12 14.6875 12.6562 14 13.5 14H26.5C27.3125 14 28 14.6875 28 15.5V16.0938C28 16.3438 27.875 16.5625 27.6875 16.6875C26.75 17.4375 26.4375 17.7188 22.2812 20.7188C21.75 21.0938 20.7188 22.0312 20 22Z" fill="#0080FF"/></svg>office@waterutilityconsultant.com</a>
+        <span class="footer-contact-item"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M26.875 12.125C27.4062 11.8125 28.0938 12.25 27.9688 12.875L25.7188 26.375C25.6562 26.875 25.125 27.1562 24.6875 26.9688L20.8125 25.3125L18.8125 27.75C18.375 28.2812 17.5 28 17.5 27.25V24.7188L25 15.5625C25.1562 15.375 24.9062 15.1562 24.75 15.3125L15.7812 23.2188L12.4375 21.8125C11.875 21.5938 11.8125 20.7812 12.375 20.4688L26.875 12.125Z" fill="#0080FF"/></svg>1775 CR 356 Doole, TX 76836</span>
       </div>
-      <div class="foot-col">
-        <h4>Useful Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="services.html">Our Service</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
+      <div class="footer-col">
+        <h2>Useful Links</h2>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About Us</a>
+          <a href="services.html">Our Service</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
       </div>
-      <div class="foot-col foot-portal">
-        <h4>Access Your System</h4>
-        <p>Log in to your personalized dashboard for real-time updates, service requests, and system performance insights.</p>
-        <a href="portal.html" class="btn-blue">Schedule Your Free Consultation Today</a>
+      <div class="footer-col">
+        <h2>Access Your System</h2>
+        <p class="footer-portal-desc">Log in to your personalized dashboard for real-time updates, service requests, and system performance insights.</p>
+        <a href="contact.html" class="btn-primary">Schedule Your Free Consultation Today</a>
       </div>
     </div>
-    <div class="foot-bottom"><p>All Rights Reserved</p></div>
+    <div class="footer-bottom"><p>All Rights Reserved</p></div>
   </div>
 </footer>
 
 <script>
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); });
-  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('mobMenu').classList.add('open'); });
-  document.getElementById('mobClose').addEventListener('click', () => { document.getElementById('mobMenu').classList.remove('open'); });
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('open'));
+  document.getElementById('mobile-close').addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('open'));
 </script>
 </body>
 </html>
