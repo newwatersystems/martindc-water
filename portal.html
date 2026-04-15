@@ -126,8 +126,8 @@
     .file-upload-wrap i{font-size:28px;color:var(--blue);margin-bottom:8px;display:block}
     .file-upload-wrap p{font-size:13px;color:var(--navy-mid)}
     .file-upload-wrap span{font-size:12px;color:#aab0bc}
-    #fileInput{display:none}
-    #fileName{font-size:13px;color:var(--blue);margin-top:8px;font-weight:600}
+    #fileInput,#meFileInput{display:none}
+    #fileName,#meFileName{font-size:13px;color:var(--blue);margin-top:8px;font-weight:600}
 
     /* ── STATUS MESSAGES ── */
     .status-msg{padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-top:16px;display:none}
@@ -179,8 +179,26 @@
     .coming-soon p{font-size:14px;color:var(--navy-mid);line-height:1.65}
     .coming-soon .badge{background:var(--blue);color:#fff;margin-bottom:16px}
 
+    /* ── MY WORK ORDERS SPLIT SCREEN ── */
+    .wo-layout{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+    .wo-list{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .wo-list-item{padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .18s;display:flex;flex-direction:column;gap:6px;border-left:3px solid transparent}
+    .wo-list-item:last-child{border-bottom:none}
+    .wo-list-item:hover{background:var(--blue-light)}
+    .wo-list-item.selected{background:var(--blue-light);border-left-color:var(--blue)}
+    .wo-list-item-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .wo-list-service{font-size:13px;font-weight:700;color:var(--navy);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .wo-list-date{font-size:11px;color:var(--navy-mid);white-space:nowrap}
+    .wo-list-address{font-size:12px;color:var(--navy-mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .wo-detail{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;min-height:300px}
+    .wo-detail-row{display:flex;gap:12px;margin-bottom:14px;font-size:14px;align-items:flex-start}
+    .wo-detail-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy-mid);min-width:150px;padding-top:2px;flex-shrink:0}
+    .wo-detail-value{color:var(--navy);font-weight:600;line-height:1.5;flex:1}
+    .wo-detail-section{border-top:1px solid var(--border);margin-top:20px;padding-top:20px}
+
     /* ── RESPONSIVE ── */
-    @media(max-width:900px){.sidebar{width:200px}.form-grid{grid-template-columns:1fr}}
+    @media(max-width:1100px){.wo-layout{grid-template-columns:280px 1fr}}
+    @media(max-width:900px){.sidebar{width:200px}.form-grid{grid-template-columns:1fr}.wo-layout{grid-template-columns:1fr}.wo-detail{display:none}.wo-detail.visible{display:block}}
     @media(max-width:680px){.sidebar{display:none}.portal-main{padding:20px}.login-card{padding:32px 24px}.portal-nav{padding:0 16px}#portalUserEmail{display:none}}
   </style>
 </head>
@@ -206,8 +224,7 @@
     <div class="form-panel active" id="loginPanel">
       <div class="form-msg" id="loginMsg"></div>
 
-      <!-- Google Button -->
-      <button class="btn-google" onclick="doGoogleLogin()" id="googleBtn">
+      <button class="btn-google" onclick="doGoogleLogin()">
         <svg width="18" height="18" viewBox="0 0 48 48" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
         Sign in with Google
       </button>
@@ -346,7 +363,7 @@
         <p style="font-size:12px;color:var(--navy-mid);margin-top:12px;"><i class="fas fa-circle" style="color:var(--blue);font-size:8px;margin-right:6px;"></i>Blue dots indicate scheduled work orders</p>
       </div>
 
-      <!-- ═══ WORK ORDER ═══ -->
+      <!-- ═══ SUBMIT WORK ORDER ═══ -->
       <div class="portal-page" id="page-workorder">
         <h2 class="page-title">Submit Work Order Request</h2>
         <div class="card">
@@ -401,8 +418,6 @@
               <label>Project Scope of Work *</label>
               <textarea id="wofScope" placeholder="Describe the issue or work needed in as much detail as possible..."></textarea>
             </div>
-
-            <!-- File Upload -->
             <div class="field-group full">
               <label>Attach Images (optional)</label>
               <div class="file-upload-wrap" onclick="document.getElementById('fileInput').click()">
@@ -421,6 +436,22 @@
             </button>
           </div>
           <div class="status-msg" id="wofMsg"></div>
+        </div>
+      </div>
+
+      <!-- ═══ MY WORK ORDERS ═══ -->
+      <div class="portal-page" id="page-myworkorders">
+        <h2 class="page-title">My Work Orders</h2>
+        <div class="wo-layout">
+          <div class="wo-list" id="woList">
+            <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div>
+          </div>
+          <div class="wo-detail" id="woDetail">
+            <div class="empty-state" style="padding:48px 24px">
+              <i class="fas fa-clipboard-list" style="font-size:36px;color:#c0c8d0;display:block;margin-bottom:12px;"></i>
+              <p>Select a work order to view details</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -451,8 +482,6 @@
               <label>Address or GPS Coordinates *</label>
               <input type="text" id="meAddress" placeholder="Street address or GPS coordinates">
             </div>
-
-            <!-- File upload -->
             <div class="field-group full">
               <label>Attach Images (optional)</label>
               <div class="file-upload-wrap" onclick="document.getElementById('meFileInput').click()">
@@ -465,7 +494,6 @@
             </div>
           </div>
 
-          <!-- Repair layer section -->
           <p style="font-size:13px;font-weight:700;color:var(--navy);margin:24px 0 16px;padding-top:24px;border-top:1px solid var(--border);">Repair Layer Details <span style="font-weight:400;color:var(--navy-mid);">(fill in only if applicable)</span></p>
           <div class="form-grid">
             <div class="field-group">
@@ -510,7 +538,7 @@
             </div>
             <div class="field-group full">
               <label>Distance from Road Center to Middle of Line</label>
-              <input type="text" id="meRoadDistance" placeholder='e.g. 8\' from centerline'>
+              <input type="text" id="meRoadDistance" placeholder="e.g. 8' from centerline">
             </div>
           </div>
 
@@ -528,7 +556,7 @@
         <h2 class="page-title">Map View</h2>
         <div class="coming-soon">
           <div class="coming-soon-icon"><i class="fas fa-map"></i></div>
-          <div class="badge">Coming Soon</div>
+          <div class="badge" style="background:var(--blue);color:#fff;margin-bottom:16px;">Coming Soon</div>
           <h3>Your System Map</h3>
           <p>View your water infrastructure map including valve locations, service lines, pressure zones, and tank placements. This feature is in development.</p>
         </div>
@@ -542,22 +570,6 @@
         </div>
       </div>
 
-      <!-- ═══ MY WORK ORDERS ═══ -->
-      <div class="portal-page" id="page-myworkorders">
-        <h2 class="page-title">My Work Orders</h2>
-        <div class="wo-layout">
-          <div class="wo-list" id="woList">
-            <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div>
-          </div>
-          <div class="wo-detail" id="woDetail">
-            <div class="empty-state" style="padding:48px 24px">
-              <i class="fas fa-clipboard-list" style="font-size:36px;color:#c0c8d0;display:block;margin-bottom:12px;"></i>
-              <p>Select an open work order to view details</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
       <!-- ═══ QUOTES ═══ -->
       <div class="portal-page" id="page-quotes">
         <h2 class="page-title">Quotes</h2>
@@ -580,9 +592,10 @@
   const { createClient } = supabase;
   const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  let currentUser = null;
+  let currentUser  = null;
   let selectedFile = null;
   let selectedMeFile = null;
+  let woData = [];
 
   // ── AUTH STATE ────────────────────────────────────────────────────────────
   sb.auth.onAuthStateChange((event, session) => {
@@ -603,12 +616,10 @@
     document.getElementById('portalUserEmail').textContent = email;
     document.getElementById('userInitial').textContent = email.charAt(0).toUpperCase();
 
-    // Set today's date on forms
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('wofDate').value = today;
-    document.getElementById('meDate').value = today;
+    document.getElementById('meDate').value  = today;
 
-    // Pull customer name from customers table
     try {
       const res = await fetch(
         `${SUPABASE_URL}/rest/v1/customers?email=eq.${encodeURIComponent(email)}&select=first_name,last_name,status`,
@@ -619,8 +630,7 @@
         const c = rows[0];
         const fullName = `${c.first_name} ${c.last_name}`.trim();
         document.getElementById('wofName').value = fullName;
-        document.getElementById('meName').value = fullName;
-        // Upgrade lead → client on portal login
+        document.getElementById('meName').value  = fullName;
         if (c.status === 'lead') {
           await fetch(`${SUPABASE_URL}/rest/v1/customers?email=eq.${encodeURIComponent(email)}`, {
             method: 'PATCH',
@@ -631,7 +641,7 @@
       } else {
         const meta = user.user_metadata?.full_name || '';
         document.getElementById('wofName').value = meta;
-        document.getElementById('meName').value = meta;
+        document.getElementById('meName').value  = meta;
       }
     } catch(e) {}
 
@@ -639,7 +649,7 @@
   }
 
   function showLogin() {
-    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('loginScreen').style.display  = 'flex';
     document.getElementById('portalScreen').style.display = 'none';
   }
 
@@ -690,7 +700,6 @@
       return;
     }
 
-    // Upsert into customers table
     const parts = name.split(' ');
     await fetch(`${SUPABASE_URL}/rest/v1/customers`, {
       method: 'POST',
@@ -714,7 +723,7 @@
     else { showMsg(msg, 'Password reset email sent! Check your inbox.', 'success'); }
   }
 
-  // ── WORK ORDER ────────────────────────────────────────────────────────────
+  // ── WORK ORDER SUBMIT ─────────────────────────────────────────────────────
   function handleFileSelect(input) {
     selectedFile = input.files[0];
     document.getElementById('fileName').textContent = selectedFile ? `✓ ${selectedFile.name}` : '';
@@ -738,47 +747,41 @@
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
     let attachmentUrl = null;
-
-    // Upload file if selected
     if (selectedFile) {
       const filePath = `${currentUser.id}/${Date.now()}-${selectedFile.name}`;
       const { data, error: upErr } = await sb.storage
         .from('work-order-attachments')
         .upload(filePath, selectedFile, { cacheControl: '3600', upsert: false });
-      if (!upErr && data) {
-        attachmentUrl = data.path;
-      }
+      if (!upErr && data) attachmentUrl = data.path;
     }
 
     const { error } = await sb.from('work_orders').insert({
-      user_id:        currentUser.id,
-      email:          currentUser.email,
+      user_id:         currentUser.id,
+      email:           currentUser.email,
       name,
       service,
-      poc_name:       poc,
-      poc_phone:      pocPh,
-      quote_needed:   document.getElementById('wofQuote').value,
+      poc_name:        poc,
+      poc_phone:       pocPh,
+      quote_needed:    document.getElementById('wofQuote').value,
       address,
-      preferred_date: document.getElementById('wofPreferred').value || null,
+      preferred_date:  document.getElementById('wofPreferred').value || null,
       scope,
       attachment_path: attachmentUrl,
-      submitted_at:   new Date().toISOString()
+      submitted_at:    new Date().toISOString()
     });
 
     if (error) {
       showStatusMsg(msg, 'Submission failed. Please try again.', 'error');
     } else {
-      showStatusMsg(msg, '✓ Work order submitted! We\'ll follow up within 1 business day.', 'success');
-      // Notify office (fire and forget)
+      showStatusMsg(msg, "✓ Work order submitted! We'll follow up within 1 business day.", 'success');
       fetch(`${SUPABASE_URL}/functions/v1/notify-office`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${SUPABASE_ANON}` },
         body: JSON.stringify({ type: 'work_order', name, service, address, email: currentUser.email })
       }).catch(()=>{});
-      // Clear form
       ['wofPOCName','wofPOCPhone','wofAddress','wofScope','wofPreferred'].forEach(id => document.getElementById(id).value = '');
       document.getElementById('wofService').value = '';
-      document.getElementById('wofQuote').value = '';
+      document.getElementById('wofQuote').value   = '';
       document.getElementById('fileName').textContent = '';
       selectedFile = null;
       document.getElementById('fileInput').value = '';
@@ -787,6 +790,135 @@
 
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Work Order';
+  }
+
+  // ── MY WORK ORDERS ────────────────────────────────────────────────────────
+  const STATUS_ORDER = { pending: 0, scheduled: 1, completed: 2 };
+
+  async function loadMyWorkOrders() {
+    const listEl   = document.getElementById('woList');
+    const detailEl = document.getElementById('woDetail');
+    listEl.innerHTML   = `<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div>`;
+    detailEl.innerHTML = `<div class="empty-state" style="padding:48px 24px"><i class="fas fa-clipboard-list" style="font-size:36px;color:#c0c8d0;display:block;margin-bottom:12px;"></i><p>Select a work order to view details</p></div>`;
+
+    try {
+      const { data, error } = await sb.from('work_orders')
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .order('submitted_at', { ascending: false });
+
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        listEl.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i><p>No work orders found.</p></div>`;
+        return;
+      }
+
+      // Sort: open statuses first (pending → scheduled → completed), then newest first
+      const sorted = [...data].sort((a, b) => {
+        const sa = STATUS_ORDER[a.status] ?? 0;
+        const sb2 = STATUS_ORDER[b.status] ?? 0;
+        if (sa !== sb2) return sa - sb2;
+        return new Date(b.submitted_at) - new Date(a.submitted_at);
+      });
+
+      woData = sorted;
+
+      listEl.innerHTML = sorted.map((wo, i) => `
+        <div class="wo-list-item" id="wo-item-${i}" onclick="selectWorkOrder(${i})">
+          <div class="wo-list-item-top">
+            <span class="wo-list-service">${wo.service || 'Service Request'}</span>
+            <span class="badge badge-${wo.status || 'pending'}">${wo.status || 'pending'}</span>
+          </div>
+          <div class="wo-list-address">${wo.address || '—'}</div>
+          <div class="wo-list-date">${
+            wo.preferred_date
+              ? 'Preferred: ' + new Date(wo.preferred_date + 'T12:00:00').toLocaleDateString()
+              : wo.submitted_at
+                ? 'Submitted: ' + new Date(wo.submitted_at).toLocaleDateString()
+                : '—'
+          }</div>
+        </div>`).join('');
+
+      // Auto-select first item
+      if (sorted.length > 0) selectWorkOrder(0);
+
+    } catch(e) {
+      listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not load work orders. Please try again.</p></div>`;
+    }
+  }
+
+  function selectWorkOrder(index) {
+    document.querySelectorAll('.wo-list-item').forEach(el => el.classList.remove('selected'));
+    const row = document.getElementById('wo-item-' + index);
+    if (row) row.classList.add('selected');
+
+    const wo     = woData[index];
+    const detail = document.getElementById('woDetail');
+    detail.classList.add('visible');
+
+    const fmt = v => v || '<span style="color:#aab0bc;">—</span>';
+    const fmtDate = v => {
+      if (!v) return null;
+      return new Date(v.length === 10 ? v + 'T12:00:00' : v).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    };
+
+    detail.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+        <h3 style="font-family:'Exo',sans-serif;font-size:20px;font-weight:700;color:var(--navy);">${wo.service || 'Work Order'}</h3>
+        <span class="badge badge-${wo.status || 'pending'}" style="font-size:12px;padding:5px 14px;">${wo.status || 'pending'}</span>
+      </div>
+
+      <div class="wo-detail-row">
+        <span class="wo-detail-label">Address</span>
+        <span class="wo-detail-value">${fmt(wo.address)}</span>
+      </div>
+      <div class="wo-detail-row">
+        <span class="wo-detail-label">Preferred Date</span>
+        <span class="wo-detail-value">${fmt(fmtDate(wo.preferred_date))}</span>
+      </div>
+      <div class="wo-detail-row">
+        <span class="wo-detail-label">Date Submitted</span>
+        <span class="wo-detail-value">${fmt(fmtDate(wo.submitted_at))}</span>
+      </div>
+      <div class="wo-detail-row">
+        <span class="wo-detail-label">Quote Required</span>
+        <span class="wo-detail-value">${fmt(wo.quote_needed)}</span>
+      </div>
+
+      <div class="wo-detail-section">
+        <div class="wo-detail-row">
+          <span class="wo-detail-label">Point of Contact</span>
+          <span class="wo-detail-value">${fmt(wo.poc_name)}</span>
+        </div>
+        <div class="wo-detail-row">
+          <span class="wo-detail-label">POC Phone</span>
+          <span class="wo-detail-value">${fmt(wo.poc_phone)}</span>
+        </div>
+      </div>
+
+      <div class="wo-detail-section">
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy-mid);margin-bottom:10px;">Scope of Work</div>
+        <div style="font-size:14px;color:var(--navy);line-height:1.75;background:var(--light);border-radius:8px;padding:14px 16px;">${fmt(wo.scope)}</div>
+      </div>
+
+      ${wo.attachment_path ? `
+      <div class="wo-detail-section">
+        <div class="wo-detail-row">
+          <span class="wo-detail-label">Attachment</span>
+          <span class="wo-detail-value">
+            <a href="#" style="color:var(--blue);font-weight:700;" onclick="viewAttachment('${wo.attachment_path}');return false;">
+              <i class="fas fa-paperclip" style="margin-right:4px;"></i>View Attachment
+            </a>
+          </span>
+        </div>
+      </div>` : ''}
+    `;
+  }
+
+  async function viewAttachment(path) {
+    const { data } = await sb.storage.from('work-order-attachments').createSignedUrl(path, 60);
+    if (data?.signedUrl) window.open(data.signedUrl, '_blank');
   }
 
   // ── MAP EDIT ──────────────────────────────────────────────────────────────
@@ -813,32 +945,34 @@
     }
 
     const { error } = await sb.from('map_edit_requests').insert({
-      user_id:           currentUser.id,
-      email:             currentUser.email,
-      name:              document.getElementById('meName').value.trim(),
-      layer_name:        layer,
-      edit_explanation:  document.getElementById('meExplanation').value.trim(),
-      address_or_gps:    address,
-      line_size:         document.getElementById('meLineSize').value.trim() || null,
-      line_depth:        document.getElementById('meLineDepth').value.trim() || null,
-      line_material:     document.getElementById('meLineMaterial').value.trim() || null,
-      repair_method:     document.getElementById('meRepairMethod').value.trim() || null,
-      valve_size:        document.getElementById('meValveSize').value.trim() || null,
-      valve_type:        document.getElementById('meValveType').value.trim() || null,
-      line_pressure:     document.getElementById('meLinePressure').value.trim() || null,
-      inlet_pressure:    document.getElementById('meInletPressure').value.trim() || null,
-      outlet_pressure:   document.getElementById('meOutletPressure').value.trim() || null,
-      item_manufacturer: document.getElementById('meManufacturer').value.trim() || null,
-      distance_from_road:document.getElementById('meRoadDistance').value.trim() || null,
-      attachment_path:   attachmentUrl,
-      submitted_at:      new Date().toISOString()
+      user_id:            currentUser.id,
+      email:              currentUser.email,
+      name:               document.getElementById('meName').value.trim(),
+      layer_name:         layer,
+      edit_explanation:   document.getElementById('meExplanation').value.trim(),
+      address_or_gps:     address,
+      line_size:          document.getElementById('meLineSize').value.trim()      || null,
+      line_depth:         document.getElementById('meLineDepth').value.trim()     || null,
+      line_material:      document.getElementById('meLineMaterial').value.trim()  || null,
+      repair_method:      document.getElementById('meRepairMethod').value.trim()  || null,
+      valve_size:         document.getElementById('meValveSize').value.trim()     || null,
+      valve_type:         document.getElementById('meValveType').value.trim()     || null,
+      line_pressure:      document.getElementById('meLinePressure').value.trim()  || null,
+      inlet_pressure:     document.getElementById('meInletPressure').value.trim() || null,
+      outlet_pressure:    document.getElementById('meOutletPressure').value.trim()|| null,
+      item_manufacturer:  document.getElementById('meManufacturer').value.trim()  || null,
+      distance_from_road: document.getElementById('meRoadDistance').value.trim()  || null,
+      attachment_path:    attachmentUrl,
+      submitted_at:       new Date().toISOString()
     });
 
     if (error) {
       showStatusMsg(msg, 'Submission failed. Please try again.', 'error');
     } else {
       showStatusMsg(msg, '✓ Map edit request submitted successfully!', 'success');
-      ['meLayerName','meExplanation','meAddress','meLineSize','meLineDepth','meLineMaterial','meRepairMethod','meValveSize','meValveType','meLinePressure','meInletPressure','meOutletPressure','meManufacturer','meRoadDistance'].forEach(id => document.getElementById(id).value = '');
+      ['meLayerName','meExplanation','meAddress','meLineSize','meLineDepth','meLineMaterial',
+       'meRepairMethod','meValveSize','meValveType','meLinePressure','meInletPressure',
+       'meOutletPressure','meManufacturer','meRoadDistance'].forEach(id => document.getElementById(id).value = '');
       document.getElementById('meFileName').textContent = '';
       selectedMeFile = null;
       document.getElementById('meFileInput').value = '';
@@ -878,7 +1012,9 @@
                 <td>${inv.service_date ? new Date(inv.service_date).toLocaleDateString() : '—'}</td>
                 <td>${inv.amount ? '$' + Number(inv.amount).toFixed(2) : '—'}</td>
                 <td><span class="badge badge-${inv.status}">${inv.status}</span></td>
-                <td>${inv.invoice_url ? `<a href="${inv.invoice_url}" target="_blank" class="btn btn-ghost btn-sm"><i class="fas fa-download"></i> View</a>` : '<span style="color:#aab0bc;font-size:12px;">Not uploaded yet</span>'}</td>
+                <td>${inv.invoice_url
+                  ? `<a href="${inv.invoice_url}" target="_blank" class="btn btn-ghost btn-sm"><i class="fas fa-download"></i> View</a>`
+                  : '<span style="color:#aab0bc;font-size:12px;">Not uploaded yet</span>'}</td>
               </tr>`).join('')}
             </tbody>
           </table>
@@ -932,7 +1068,8 @@
   const now = new Date();
   let currentMonth = now.getMonth();
   let currentYear  = now.getFullYear();
-  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const MONTHS = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
 
   function changeMonth(dir) {
     currentMonth += dir;
@@ -946,7 +1083,6 @@
     const body = document.getElementById('calBody');
     body.innerHTML = '';
 
-    // Fetch work orders for this month
     const startDate = `${year}-${String(month+1).padStart(2,'0')}-01`;
     const endDate   = `${year}-${String(month+1).padStart(2,'0')}-${new Date(year, month+1, 0).getDate()}`;
     let events = {};
@@ -981,7 +1117,7 @@
     }
 
     for (let d = 1; d <= daysIn; d++) {
-      const cell = document.createElement('div');
+      const cell    = document.createElement('div');
       const isToday = (d === todayD && month === todayM && year === todayY);
       cell.className = 'cal-day' + (isToday ? ' today' : '');
       let html = `<div class="day-num">${d}</div>`;
@@ -998,13 +1134,13 @@
   // ── UI HELPERS ────────────────────────────────────────────────────────────
   function showMsg(el, text, type) {
     el.textContent = text;
-    el.className = 'form-msg ' + type;
+    el.className   = 'form-msg ' + type;
     setTimeout(() => { el.style.display = 'none'; el.className = 'form-msg'; }, 8000);
   }
 
   function showStatusMsg(el, text, type) {
     el.textContent = text;
-    el.className = 'status-msg ' + type;
+    el.className   = 'status-msg ' + type;
     setTimeout(() => { el.style.display = 'none'; el.className = 'status-msg'; }, 8000);
   }
 
@@ -1020,10 +1156,10 @@
     document.getElementById('page-' + pageId).classList.add('active');
     document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
     if (el) el.classList.add('active');
-    // Load data when tabs are opened
-    if (pageId === 'invoices') loadInvoices();
-    if (pageId === 'quotes') loadQuotes();
-    if (pageId === 'calendar') buildCalendar(currentYear, currentMonth);
+    if (pageId === 'invoices')     loadInvoices();
+    if (pageId === 'quotes')       loadQuotes();
+    if (pageId === 'calendar')     buildCalendar(currentYear, currentMonth);
+    if (pageId === 'myworkorders') loadMyWorkOrders();
   }
 </script>
 </body>
