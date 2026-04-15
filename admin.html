@@ -515,9 +515,7 @@ const pillClass=s=>{const m={'received':'pill-received','acknowledged':'pill-ack
 const accentClass=s=>{const m={'received':'accent-blue','acknowledged':'accent-amber','staged':'accent-amber','in-field':'accent-green','in_field':'accent-green','complete':'accent-gray','closed':'accent-gray'};return m[(s||'').toLowerCase()]||'accent-blue';};
 
 async function loadAll(){
-  const {data:{session}}=await sb.auth.getSession();
-  const token=session?.access_token||SUPABASE_ANON;
-  const h={apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`};
+  const h={apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`};
   const [woR,meR,invR,qR,custR]=await Promise.all([
     fetch(`${SUPABASE_URL}/rest/v1/work_orders?order=submitted_at.desc&select=*`,{headers:h}),
     fetch(`${SUPABASE_URL}/rest/v1/map_edit_requests?order=submitted_at.desc&select=*`,{headers:h}),
@@ -535,21 +533,19 @@ async function loadAll(){
 }
 
 async function nextDocNumber(docType,prefix){
-  const {data:{session}}=await sb.auth.getSession();
-  const token=session?.access_token||SUPABASE_ANON;
   const year=new Date().getFullYear();
   const res=await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_doc_sequence`,{
     method:'POST',
-    headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+    headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json'},
     body:JSON.stringify({doc_type_param:docType})
   });
   if(res.ok){const num=await res.json();return `${prefix}-${year}-${String(num).padStart(4,'0')}`;}
-  const getRes=await fetch(`${SUPABASE_URL}/rest/v1/doc_sequences?doc_type=eq.${docType}&select=last_num`,{headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`}});
+  const getRes=await fetch(`${SUPABASE_URL}/rest/v1/doc_sequences?doc_type=eq.${docType}&select=last_num`,{headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`}});
   const rows=await getRes.json();
   const next=(rows?.[0]?.last_num||99)+1;
   await fetch(`${SUPABASE_URL}/rest/v1/doc_sequences?doc_type=eq.${docType}`,{
     method:'PATCH',
-    headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},
+    headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=minimal'},
     body:JSON.stringify({last_num:next})
   });
   return `${prefix}-${year}-${String(next).padStart(4,'0')}`;
@@ -1033,8 +1029,7 @@ async function submitQuote(woId,qNum,dateStr){
   btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Issuing quote...';
   let pdfPath=null;
   if(pdfFile){const filePath=`quotes/${Date.now()}-${pdfFile.name}`;const {data,error:upErr}=await sb.storage.from('work-order-attachments').upload(filePath,pdfFile,{cacheControl:'3600',upsert:false});if(!upErr&&data) pdfPath=data.path;}
-  const {data:{session}}=await sb.auth.getSession(); const token=session?.access_token||SUPABASE_ANON;
-  const res=await fetch(`${SUPABASE_URL}/rest/v1/quotes`,{method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({quote_number:qNum,work_order_id:woId||null,customer_name:customerName,email,service,amount,status:'pending',notes,quote_url:url||null,quote_pdf_path:pdfPath||null,expires_at:expires||null,submitted_at:dateStr,created_at:new Date().toISOString()})});
+  const res=await fetch(`${SUPABASE_URL}/rest/v1/quotes`,{method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({quote_number:qNum,work_order_id:woId||null,customer_name:customerName,email,service,amount,status:'pending',notes,quote_url:url||null,quote_pdf_path:pdfPath||null,expires_at:expires||null,submitted_at:dateStr,created_at:new Date().toISOString()})});
   if(res.ok){const newQ=await res.json();allQuotes.unshift(Array.isArray(newQ)?newQ[0]:newQ);msg.textContent=`✓ Quote ${qNum} issued. Customer can view it in their portal.`;msg.className='detail-msg success';renderQuotes();renderDashboard();btn.innerHTML='<i class="fas fa-check"></i> Quote Issued';}
   else{const err=await res.json();msg.textContent='Failed: '+(err.message||'Unknown error');msg.className='detail-msg error';btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Issue Quote to Customer';}
 }
@@ -1054,8 +1049,7 @@ async function submitStandaloneQuote(qNum,dateStr){
   btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Issuing quote...';
   let pdfPath=null;
   if(pdfFile){const filePath=`quotes/${Date.now()}-${pdfFile.name}`;const {data,error:upErr}=await sb.storage.from('work-order-attachments').upload(filePath,pdfFile,{cacheControl:'3600',upsert:false});if(!upErr&&data) pdfPath=data.path;}
-  const {data:{session}}=await sb.auth.getSession(); const token=session?.access_token||SUPABASE_ANON;
-  const res=await fetch(`${SUPABASE_URL}/rest/v1/quotes`,{method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({quote_number:qNum,work_order_id:null,customer_name:customerName,email,service,amount,status:'pending',notes,quote_url:url||null,quote_pdf_path:pdfPath||null,expires_at:expires||null,submitted_at:dateStr,created_at:new Date().toISOString()})});
+  const res=await fetch(`${SUPABASE_URL}/rest/v1/quotes`,{method:'POST',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({quote_number:qNum,work_order_id:null,customer_name:customerName,email,service,amount,status:'pending',notes,quote_url:url||null,quote_pdf_path:pdfPath||null,expires_at:expires||null,submitted_at:dateStr,created_at:new Date().toISOString()})});
   if(res.ok){const newQ=await res.json();allQuotes.unshift(Array.isArray(newQ)?newQ[0]:newQ);msg.textContent=`✓ Quote ${qNum} issued. Customer can view it in their portal.`;msg.className='detail-msg success';renderQuotes();renderDashboard();btn.innerHTML='<i class="fas fa-check"></i> Quote Issued';}
   else{const err=await res.json();msg.textContent='Failed: '+(err.message||'Unknown error');msg.className='detail-msg error';btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Issue Quote to Customer';}
 }
@@ -1092,8 +1086,7 @@ function openQuoteDetail(id){
 }
 
 async function updateQuoteStatus(id,status){
-  const {data:{session}}=await sb.auth.getSession(); const token=session?.access_token||SUPABASE_ANON;
-  await fetch(`${SUPABASE_URL}/rest/v1/quotes?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status})});
+  await fetch(`${SUPABASE_URL}/rest/v1/quotes?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status})});
   const q=allQuotes.find(x=>String(x.id)===String(id)); if(q) q.status=status;
   renderQuotes(); renderDashboard();
 }
@@ -1103,22 +1096,19 @@ async function viewQuotePDF(path){const {data}=await sb.storage.from('work-order
 function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.getElementById('detailPanel').classList.remove('open');}
 
 async function updateWOStatus(id,status){
-  const {data:{session}}=await sb.auth.getSession(); const token=session?.access_token||SUPABASE_ANON;
-  await fetch(`${SUPABASE_URL}/rest/v1/work_orders?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status,updated_at:new Date().toISOString()})});
+  await fetch(`${SUPABASE_URL}/rest/v1/work_orders?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status,updated_at:new Date().toISOString()})});
   const wo=allWorkOrders.find(w=>String(w.id)===String(id)); if(wo) wo.status=status;
   renderDashboard(); renderPipeline(pipelineFilter);
 }
 
 async function saveAssignedTo(id,name){
-  const {data:{session}}=await sb.auth.getSession(); const token=session?.access_token||SUPABASE_ANON;
-  await fetch(`${SUPABASE_URL}/rest/v1/work_orders?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({assigned_to:name||null,updated_at:new Date().toISOString()})});
+  await fetch(`${SUPABASE_URL}/rest/v1/work_orders?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({assigned_to:name||null,updated_at:new Date().toISOString()})});
   const wo=allWorkOrders.find(w=>String(w.id)===String(id)); if(wo) wo.assigned_to=name;
   renderPipeline(pipelineFilter);
 }
 
 async function updateInfraStatus(id,status){
-  const {data:{session}}=await sb.auth.getSession(); const token=session?.access_token||SUPABASE_ANON;
-  await fetch(`${SUPABASE_URL}/rest/v1/map_edit_requests?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status,updated_at:new Date().toISOString()})});
+  await fetch(`${SUPABASE_URL}/rest/v1/map_edit_requests?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status,updated_at:new Date().toISOString()})});
   const m=allMapEdits.find(x=>String(x.id)===String(id)); if(m) m.status=status;
   renderDashboard(); renderInfra();
 }
@@ -1127,8 +1117,7 @@ async function saveFieldNote(id){
   const note=document.getElementById('detail-note').value;
   const btn=document.getElementById('note-save-btn'); const msg=document.getElementById('note-msg');
   btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving...';
-  const {data:{session}}=await sb.auth.getSession(); const token=session?.access_token||SUPABASE_ANON;
-  const res=await fetch(`${SUPABASE_URL}/rest/v1/work_orders?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({operator_notes:note,updated_at:new Date().toISOString()})});
+  const res=await fetch(`${SUPABASE_URL}/rest/v1/work_orders?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({operator_notes:note,updated_at:new Date().toISOString()})});
   if(res.ok){msg.textContent='Field log saved.';msg.className='detail-msg success';const wo=allWorkOrders.find(w=>String(w.id)===String(id));if(wo)wo.operator_notes=note;}
   else{msg.textContent='Save failed.';msg.className='detail-msg error';}
   btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> Save log entry';
@@ -1139,8 +1128,7 @@ async function saveInfraNote(id){
   const note=document.getElementById('detail-note').value;
   const btn=document.getElementById('note-save-btn'); const msg=document.getElementById('note-msg');
   btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving...';
-  const {data:{session}}=await sb.auth.getSession(); const token=session?.access_token||SUPABASE_ANON;
-  const res=await fetch(`${SUPABASE_URL}/rest/v1/map_edit_requests?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({operator_notes:note,updated_at:new Date().toISOString()})});
+  const res=await fetch(`${SUPABASE_URL}/rest/v1/map_edit_requests?id=eq.${id}`,{method:'PATCH',headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${SUPABASE_ANON}`,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({operator_notes:note,updated_at:new Date().toISOString()})});
   if(res.ok){msg.textContent='Field log saved.';msg.className='detail-msg success';const m=allMapEdits.find(x=>String(x.id)===String(id));if(m)m.operator_notes=note;}
   else{msg.textContent='Save failed.';msg.className='detail-msg error';}
   btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> Save log entry';
