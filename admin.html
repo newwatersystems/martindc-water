@@ -217,6 +217,7 @@
 
     /* ── ACCOUNT HUD ── */
     @keyframes acscan{0%{top:-60px}100%{top:100%}}
+    @keyframes ticker{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
     .ac-hb{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 12px;border:1px solid rgba(93,202,165,.14);background:rgba(3,12,22,.8);position:relative;min-width:55px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);cursor:pointer}
     .ac-hb.ac-hb-al{border-color:rgba(226,75,74,.3)}.ac-hb.ac-hb-wn{border-color:rgba(239,159,39,.25)}
     .ac-hb-sn{position:absolute;top:-1px;right:3px;font-size:6px;color:rgba(93,202,165,.28);font-family:'Share Tech Mono',monospace}
@@ -420,12 +421,12 @@
           </div>
           <div style="padding:8px 14px;border-right:1px solid rgba(93,202,165,.1);display:flex;flex-direction:column;justify-content:center">
             <div style="font-size:10px;color:rgba(93,202,165,.35);letter-spacing:.12em;margin-bottom:5px">LICENSED JURISDICTIONS</div>
-            <div style="display:flex;gap:4px">
-              <div style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700">TX</div>
-              <div style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700">NM</div>
-              <div style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700">OK</div>
-              <div style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700">KS</div>
-              <div style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700">AR</div>
+            <div style="display:flex;gap:4px" id="ac-state-filters">
+              <div onclick="acToggleState('TX',this)" style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700;cursor:pointer;transition:all .15s">TX</div>
+              <div onclick="acToggleState('NM',this)" style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700;cursor:pointer;transition:all .15s">NM</div>
+              <div onclick="acToggleState('OK',this)" style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700;cursor:pointer;transition:all .15s">OK</div>
+              <div onclick="acToggleState('KS',this)" style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700;cursor:pointer;transition:all .15s">KS</div>
+              <div onclick="acToggleState('AR',this)" style="font-size:11px;padding:4px 10px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);font-weight:700;cursor:pointer;transition:all .15s">AR</div>
             </div>
           </div>
           <div style="margin-left:auto;padding:8px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end">
@@ -434,7 +435,7 @@
           </div>
         </div>
         <!-- BODY -->
-        <div style="position:relative;z-index:5;display:grid;grid-template-columns:1fr 220px;flex:1;overflow:hidden">
+        <div style="position:relative;z-index:5;display:grid;grid-template-columns:1fr 260px;flex:1;overflow:hidden">
           <div style="display:flex;flex-direction:column;border-right:1px solid rgba(93,202,165,.1);overflow:hidden">
             <!-- CONTROLS -->
             <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid rgba(93,202,165,.07);background:rgba(0,5,10,.6);flex-shrink:0;flex-wrap:wrap">
@@ -450,24 +451,26 @@
             </div>
             <!-- ACCOUNT GRID -->
             <div id="ac-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:12px 16px;overflow-y:auto;flex:1"></div>
-            <!-- COMMS FEED -->
-            <div style="background:rgba(0,4,9,.92);border-top:1px solid rgba(93,202,165,.09);flex-shrink:0">
-              <div style="padding:5px 14px;border-bottom:1px solid rgba(93,202,165,.07);display:flex;align-items:center;gap:7px">
-                <div style="width:4px;height:4px;border-radius:50%;background:#5DCAA5;animation:hpulse 1s ease-in-out infinite"></div>
-                <div style="font-size:11px;color:rgba(93,202,165,.5);letter-spacing:.1em">LIVE COMMS — ACTIVITY LOG // SLA MONITOR</div>
+            <!-- TICKER -->
+            <div style="background:rgba(0,4,9,.95);border-top:1px solid rgba(93,202,165,.12);flex-shrink:0;display:flex;align-items:center;overflow:hidden;height:36px">
+              <div style="flex-shrink:0;padding:0 14px;border-right:1px solid rgba(93,202,165,.15);display:flex;align-items:center;gap:6px;height:100%">
+                <div style="width:5px;height:5px;border-radius:50%;background:#5DCAA5;animation:hpulse 1s ease-in-out infinite"></div>
+                <div style="font-size:10px;color:rgba(93,202,165,.6);letter-spacing:.12em;white-space:nowrap">LIVE COMMS</div>
               </div>
-              <div id="ac-comms" style="display:flex;gap:10px;padding:8px 16px;overflow-x:auto;min-height:64px"></div>
+              <div style="flex:1;overflow:hidden;position:relative;height:100%">
+                <div id="ac-ticker" style="display:flex;align-items:center;height:100%;position:absolute;white-space:nowrap;animation:ticker 40s linear infinite"></div>
+              </div>
             </div>
           </div>
           <!-- SIDEBAR -->
           <div style="display:flex;flex-direction:column;background:rgba(0,3,8,.92);overflow-y:auto">
             <div style="padding:10px 12px;border-bottom:1px solid rgba(93,202,165,.07)">
-              <div style="font-size:10px;color:rgba(93,202,165,.35);letter-spacing:.14em;margin-bottom:10px">PIPELINE PRESSURE — DAYS DUE</div>
+              <div style="font-size:12px;color:rgba(93,202,165,.5);letter-spacing:.12em;margin-bottom:14px;font-weight:700">PIPELINE PRESSURE</div>
               <div id="ac-gauges"></div>
             </div>
             <div style="padding:10px 12px;border-bottom:1px solid rgba(93,202,165,.07)">
-              <div style="font-size:10px;color:rgba(93,202,165,.35);letter-spacing:.14em;margin-bottom:8px">OPERATOR CREDENTIALS</div>
-              <div style="font-size:12px;color:rgba(93,202,165,.55);line-height:2;letter-spacing:.03em">
+              <div style="font-size:12px;color:rgba(93,202,165,.5);letter-spacing:.12em;margin-bottom:12px;font-weight:700">OPERATOR CREDENTIALS</div>
+              <div style="font-size:13px;color:rgba(93,202,165,.7);line-height:2.2;letter-spacing:.03em">
                 <div>LIC // TX · NM · OK · KS · AR</div>
                 <div style="color:rgba(93,202,165,.28);margin-top:2px">MULTI-STATE WO LIC // ACTIVE</div>
                 <div style="color:rgba(93,202,165,.28)">US EOD NAVY VETERAN</div>
@@ -475,18 +478,18 @@
               </div>
             </div>
             <div style="padding:10px 12px;flex:1">
-              <div style="font-size:10px;color:rgba(93,202,165,.35);letter-spacing:.14em;margin-bottom:10px">MISSION CLOCK</div>
+              <div style="font-size:12px;color:rgba(93,202,165,.5);letter-spacing:.12em;margin-bottom:14px;font-weight:700">MISSION CLOCK</div>
               <div style="text-align:center;padding:8px 0">
-                <div id="ac-mission" style="font-family:'Exo',sans-serif;font-size:32px;font-weight:800;color:#5DCAA5;letter-spacing:.08em;line-height:1">00:00</div>
-                <div style="font-size:10px;color:rgba(93,202,165,.35);letter-spacing:.12em;margin-top:5px">SESSION ACTIVE</div>
+                <div id="ac-mission" style="font-family:'Exo',sans-serif;font-size:42px;font-weight:800;color:#5DCAA5;letter-spacing:.08em;line-height:1">00:00</div>
+                <div style="font-size:12px;color:rgba(93,202,165,.45);letter-spacing:.1em;margin-top:8px">SESSION ACTIVE</div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:10px">
                   <div style="border:1px solid rgba(93,202,165,.09);padding:5px 3px;text-align:center">
-                    <div id="ac-swo" style="font-family:'Exo',sans-serif;font-size:22px;font-weight:800;color:#EF9F27;line-height:1">0</div>
-                    <div style="font-size:10px;color:rgba(93,202,165,.35);letter-spacing:.07em;margin-top:4px">OPEN WO</div>
+                    <div id="ac-swo" style="font-family:'Exo',sans-serif;font-size:30px;font-weight:800;color:#EF9F27;line-height:1">0</div>
+                    <div style="font-size:12px;color:rgba(93,202,165,.45);letter-spacing:.06em;margin-top:6px">OPEN WO</div>
                   </div>
                   <div style="border:1px solid rgba(93,202,165,.09);padding:5px 3px;text-align:center">
-                    <div id="ac-sod" style="font-family:'Exo',sans-serif;font-size:22px;font-weight:800;color:#E24B4A;line-height:1">0</div>
-                    <div style="font-size:10px;color:rgba(93,202,165,.35);letter-spacing:.07em;margin-top:4px">OVERDUE</div>
+                    <div id="ac-sod" style="font-family:'Exo',sans-serif;font-size:30px;font-weight:800;color:#E24B4A;line-height:1">0</div>
+                    <div style="font-size:12px;color:rgba(93,202,165,.45);letter-spacing:.06em;margin-top:6px">OVERDUE</div>
                   </div>
                 </div>
               </div>
@@ -900,7 +903,7 @@ function renderCustomers(){
 }
 
 /* ── ACCOUNT HUD STATE ── */
-let acFilter='all', acAlpha='', acSessionStart=Date.now(), acClockInt=null;
+let acFilter='all', acAlpha='', acSessionStart=Date.now(), acClockInt=null, acActiveStates=new Set();
 
 function acCls(a){return a.overdueInv>0?'cr':a.openWOs>0?'wn':'cl';}
 function acBdg(a){if(a.overdueInv>0)return{c:'bdg-cr',t:'CRITICAL'};if(a.openWOs>0)return{c:'bdg-wn',t:'ACTIVE'};return{c:'bdg-cl',t:'CLEAR'};}
@@ -1013,20 +1016,25 @@ function renderAccounts(){
     }
   }
 
-  /* Build comms feed */
-  const cEl=document.getElementById('ac-comms');
-  if(cEl&&!cEl.children.length){
-    [{type:'rd',time:'15:44',msg:'OVERDUE INV — MASON COUNTY WCID // $1,425.00',clr:'#E24B4A',bdr:'#E24B4A'},
-     {type:'am',time:'15:31',msg:'WO AGING 8HRS — BRADY IRRIGATION // PRV SVC',clr:'#EF9F27',bdr:'#EF9F27'},
-     {type:'bl',time:'15:12',msg:'NEW REQUEST — MANAGER NWS // ALTITUDE VALVE',clr:'#85B7EB',bdr:'#0080FF'},
-     {type:'am',time:'14:55',msg:'QUOTE PENDING 3 DAYS — DEBRA TEST // BOOSTER PUMP',clr:'#EF9F27',bdr:'#EF9F27'},
-     {type:'gr',time:'14:22',msg:'COMPLETE — RANDY SAMPLE // LIC OP SUPPORT',clr:'#5DCAA5',bdr:'#5DCAA5'},
-     {type:'gr',time:'12:30',msg:'INVOICE PAID — RANDY SAMPLE // $875.00',clr:'#5DCAA5',bdr:'#5DCAA5'},
-    ].forEach(c=>{
-      const div=document.createElement('div');
-      div.style.cssText=`display:flex;flex-direction:column;flex-shrink:0;border-left:2px solid ${c.bdr};padding:2px 7px;min-width:150px`;
-      div.innerHTML=`<div style="font-size:10px;color:rgba(93,202,165,.4);letter-spacing:.06em;margin-bottom:3px;font-family:Share Tech Mono,monospace">${c.time}</div><div style="font-size:12px;color:${c.clr};letter-spacing:.03em;font-family:Share Tech Mono,monospace">${c.msg}</div>`;
-      cEl.appendChild(div);
+  /* Build ticker */
+  const tickerEl=document.getElementById('ac-ticker');
+  if(tickerEl&&!tickerEl.children.length){
+    const items=[
+      {msg:'OVERDUE INV — MASON COUNTY WCID // $1,425.00',clr:'#E24B4A',time:'15:44'},
+      {msg:'WO AGING 8HRS — BRADY IRRIGATION // PRV SVC',clr:'#EF9F27',time:'15:31'},
+      {msg:'NEW REQUEST — MANAGER NWS // ALTITUDE VALVE',clr:'#85B7EB',time:'15:12'},
+      {msg:'QUOTE PENDING 3 DAYS — DEBRA TEST // BOOSTER PUMP',clr:'#EF9F27',time:'14:55'},
+      {msg:'COMPLETE — RANDY SAMPLE // LIC OP SUPPORT',clr:'#5DCAA5',time:'14:22'},
+      {msg:'INVOICE PAID — RANDY SAMPLE // $875.00',clr:'#5DCAA5',time:'12:30'},
+      {msg:'INFRA UPDATE PENDING — DEBRA TEST // DISTRIBUTION LINES',clr:'#EF9F27',time:'11:18'},
+      {msg:'NEW LEAD RECEIVED — LLANO CITY WATER',clr:'#85B7EB',time:'10:04'},
+    ];
+    /* Duplicate for seamless loop */
+    [...items,...items].forEach(item=>{
+      const span=document.createElement('span');
+      span.style.cssText=`font-family:Share Tech Mono,monospace;font-size:11px;color:${item.clr};padding:0 32px;white-space:nowrap;letter-spacing:.05em`;
+      span.innerHTML=`<span style="color:rgba(93,202,165,.35);margin-right:10px">${item.time}</span>${item.msg}`;
+      tickerEl.appendChild(span);
     });
   }
 
@@ -1039,7 +1047,8 @@ function acRender(acData){
   const filtered=acData.filter(a=>{
     const mf=acFilter==='all'||a.status===acFilter;
     const ma=!acAlpha||a.name.toUpperCase().startsWith(acAlpha);
-    return mf&&ma;
+    const ms=acActiveStates.size===0||acActiveStates.has(a.state||'TX');
+    return mf&&ma&&ms;
   });
   const grid=document.getElementById('ac-grid');
   if(!grid)return;
@@ -1059,6 +1068,30 @@ function acSetFilter(f,btn){
   btn.style.background=f==='critical'?'rgba(226,75,74,.1)':f==='active'?'rgba(239,159,39,.08)':'rgba(93,202,165,.14)';
   btn.style.borderColor=f==='critical'?'#E24B4A':f==='active'?'#EF9F27':'#5DCAA5';
   btn.style.color=f==='critical'?'#E24B4A':f==='active'?'#EF9F27':'#5DCAA5';
+  const clients=allCustomers.filter(c=>c.status==='client');
+  const acData=clients.map(c=>{
+    const email=c.email||'';const name=[c.first_name,c.last_name].filter(Boolean).join(' ')||email;
+    const wos=allWorkOrders.filter(w=>w.email===email);
+    const openWos=wos.filter(w=>!['complete','closed'].includes((w.status||'').toLowerCase()));
+    const overdueInv=allInvoices.filter(i=>i.email===email&&(i.status||'').toLowerCase()==='overdue');
+    const st=overdueInv.length>0?'critical':openWos.length>0?'active':'clear';
+    return {name,email,openWOs:openWos.length,totalJobs:wos.length,overdueInv:overdueInv.length,status:st,state:'TX'};
+  });
+  acRender(acData);
+}
+
+function acToggleState(state, el){
+  if(acActiveStates.has(state)){
+    acActiveStates.delete(state);
+    el.style.background='transparent';
+    el.style.borderColor='rgba(93,202,165,.3)';
+    el.style.color='#5DCAA5';
+  } else {
+    acActiveStates.add(state);
+    el.style.background='rgba(93,202,165,.25)';
+    el.style.borderColor='#5DCAA5';
+    el.style.color='#fff';
+  }
   const clients=allCustomers.filter(c=>c.status==='client');
   const acData=clients.map(c=>{
     const email=c.email||'';const name=[c.first_name,c.last_name].filter(Boolean).join(' ')||email;
