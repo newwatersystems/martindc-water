@@ -214,6 +214,17 @@
     .form-input::placeholder,.form-textarea::placeholder{color:var(--text-muted)}
     .form-select option{background:#1a2e42}
     .form-textarea{resize:vertical;min-height:70px;line-height:1.6}
+
+    /* ── ACCOUNT HUD ── */
+    @keyframes acscan{0%{top:-60px}100%{top:100%}}
+    .ac-hb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 8px;border:1px solid rgba(93,202,165,.14);background:rgba(3,12,22,.8);position:relative;min-width:55px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);cursor:pointer}
+    .ac-hb.ac-hb-al{border-color:rgba(226,75,74,.3)}.ac-hb.ac-hb-wn{border-color:rgba(239,159,39,.25)}
+    .ac-hb-sn{position:absolute;top:-1px;right:3px;font-size:6px;color:rgba(93,202,165,.28);font-family:'Share Tech Mono',monospace}
+    .ac-hb-ic{font-size:12px;line-height:1}
+    .ac-hb-n{font-family:'Exo',sans-serif;font-size:14px;font-weight:800;line-height:1;color:#5DCAA5}
+    .ac-hb-n.ac-hb-n-al{color:#E24B4A;text-shadow:0 0 5px rgba(226,75,74,.4)}.ac-hb-n.ac-hb-n-wn{color:#EF9F27}
+    .ac-hb-l{font-size:6px;color:rgba(93,202,165,.32);letter-spacing:.09em;white-space:nowrap;font-family:'Share Tech Mono',monospace}
+    #page-accounts.active{display:flex !important}
     @media(max-width:1100px){.dash-3col{grid-template-columns:1fr 1fr !important}}
     @media(max-width:768px){.ops-sidebar{display:none}.sitrep-bar{grid-template-columns:1fr 1fr}.detail-panel{width:100%}.dash-3col{grid-template-columns:1fr !important}}
   </style>
@@ -386,9 +397,114 @@
     </div>
 
     <!-- ACCOUNT DOSSIERS -->
-    <div class="ops-page" id="page-accounts">
-      <div class="page-header"><h1 class="page-title">Account Dossiers</h1></div>
-      <div class="account-grid" id="accounts-grid"><div class="empty-ops"><div class="ops-spinner"></div></div></div>
+    <div class="ops-page" id="page-accounts" style="padding:0;height:calc(100vh - var(--nav-h));overflow:hidden;display:none;flex-direction:column">
+      <div id="accounts-hud" style="height:100%;display:flex;flex-direction:column;background:#03080f;font-family:'Share Tech Mono',monospace;color:#5DCAA5;position:relative;overflow:hidden">
+        <div id="ac-scanline" style="position:absolute;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(93,202,165,.03),transparent);animation:acscan 6s linear infinite;pointer-events:none;z-index:10"></div>
+        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(93,202,165,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(93,202,165,.025) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.65) 100%);pointer-events:none;z-index:1"></div>
+        <!-- HUD TOP -->
+        <div style="position:relative;z-index:5;display:flex;align-items:stretch;border-bottom:1px solid rgba(93,202,165,.15);background:rgba(0,5,10,.9);flex-shrink:0">
+          <div style="padding:8px 16px;border-right:1px solid rgba(93,202,165,.12);display:flex;align-items:center;gap:12px">
+            <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" style="height:36px;width:auto;filter:brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(110deg);opacity:.9" alt="Martin Direct Consulting">
+            <div>
+              <div style="font-family:'Exo',sans-serif;font-size:12px;font-weight:900;color:#5DCAA5;letter-spacing:.12em;white-space:nowrap">MARTIN DIRECT CONSULTING</div>
+              <div style="font-size:7px;color:rgba(93,202,165,.4);letter-spacing:.16em;margin-top:2px;white-space:nowrap"><span id="ac-sdot" style="display:inline-block;width:5px;height:5px;border-radius:50%;background:#5DCAA5;margin-right:4px;animation:hpulse 2s ease-in-out infinite;vertical-align:middle"></span>SCADA OPS CENTER // ALL SYSTEMS NOMINAL</div>
+            </div>
+          </div>
+          <div style="padding:8px 14px;border-right:1px solid rgba(93,202,165,.1);display:flex;flex-direction:column;justify-content:center">
+            <div style="font-size:7px;color:rgba(93,202,165,.35);letter-spacing:.16em;margin-bottom:2px">OPERATOR IN COMMAND</div>
+            <div style="font-family:'Exo',sans-serif;font-size:11px;font-weight:800;color:#e8edf2;letter-spacing:.08em">MARTIN, CHRISTOPHER W.</div>
+            <div style="font-size:7px;color:rgba(93,202,165,.5);letter-spacing:.05em;margin-top:1px">MULTI-STATE LIC. OPERATOR // EOD NAVY VETERAN</div>
+          </div>
+          <div style="padding:8px 14px;border-right:1px solid rgba(93,202,165,.1);display:flex;flex-direction:column;justify-content:center">
+            <div style="font-size:7px;color:rgba(93,202,165,.35);letter-spacing:.16em;margin-bottom:4px">LICENSED JURISDICTIONS</div>
+            <div style="display:flex;gap:4px">
+              <div style="font-size:7px;padding:2px 6px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%)">TX</div>
+              <div style="font-size:7px;padding:2px 6px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%)">NM</div>
+              <div style="font-size:7px;padding:2px 6px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%)">OK</div>
+              <div style="font-size:7px;padding:2px 6px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%)">KS</div>
+              <div style="font-size:7px;padding:2px 6px;border:1px solid rgba(93,202,165,.3);color:#5DCAA5;letter-spacing:.08em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%)">AR</div>
+            </div>
+          </div>
+          <div style="margin-left:auto;padding:8px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end">
+            <div id="ac-clock" style="font-size:18px;color:#5DCAA5;letter-spacing:.1em;font-variant-numeric:tabular-nums">00:00:00</div>
+            <div id="ac-date" style="font-size:7px;color:rgba(93,202,165,.4);letter-spacing:.12em;margin-top:2px">--</div>
+          </div>
+        </div>
+        <!-- BODY -->
+        <div style="position:relative;z-index:5;display:grid;grid-template-columns:1fr 180px;flex:1;overflow:hidden">
+          <div style="display:flex;flex-direction:column;border-right:1px solid rgba(93,202,165,.1);overflow:hidden">
+            <!-- CONTROLS -->
+            <div style="display:flex;align-items:center;gap:6px;padding:7px 14px;border-bottom:1px solid rgba(93,202,165,.07);background:rgba(0,5,10,.6);flex-shrink:0;flex-wrap:wrap">
+              <div id="ac-alpha" style="display:flex;flex-wrap:wrap;gap:1px;max-width:320px"></div>
+              <div style="width:1px;height:26px;background:rgba(93,202,165,.1);margin:0 3px"></div>
+              <div style="display:flex;gap:3px" id="ac-filters">
+                <button onclick="acSetFilter('all',this)" style="font-family:'Share Tech Mono',monospace;font-size:7px;padding:3px 8px;background:rgba(93,202,165,.14);border:1px solid #5DCAA5;color:#5DCAA5;cursor:pointer;letter-spacing:.1em;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)">ALL</button>
+                <button onclick="acSetFilter('critical',this)" style="font-family:'Share Tech Mono',monospace;font-size:7px;padding:3px 8px;background:transparent;border:1px solid rgba(226,75,74,.3);color:rgba(226,75,74,.5);cursor:pointer;letter-spacing:.1em;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)">CRITICAL</button>
+                <button onclick="acSetFilter('active',this)" style="font-family:'Share Tech Mono',monospace;font-size:7px;padding:3px 8px;background:transparent;border:1px solid rgba(239,159,39,.28);color:rgba(239,159,39,.5);cursor:pointer;letter-spacing:.1em;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)">ACTIVE</button>
+                <button onclick="acSetFilter('clear',this)" style="font-family:'Share Tech Mono',monospace;font-size:7px;padding:3px 8px;background:transparent;border:1px solid rgba(93,202,165,.2);color:rgba(93,202,165,.4);cursor:pointer;letter-spacing:.1em;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)">CLEAR</button>
+              </div>
+              <span id="ac-count" style="margin-left:auto;font-size:7px;color:rgba(93,202,165,.35);letter-spacing:.1em;white-space:nowrap">-- ACCOUNTS</span>
+            </div>
+            <!-- ACCOUNT GRID -->
+            <div id="ac-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:7px;padding:10px 14px;overflow-y:auto;flex:1"></div>
+            <!-- COMMS FEED -->
+            <div style="background:rgba(0,4,9,.92);border-top:1px solid rgba(93,202,165,.09);flex-shrink:0">
+              <div style="padding:5px 14px;border-bottom:1px solid rgba(93,202,165,.07);display:flex;align-items:center;gap:7px">
+                <div style="width:4px;height:4px;border-radius:50%;background:#5DCAA5;animation:hpulse 1s ease-in-out infinite"></div>
+                <div style="font-size:7px;color:rgba(93,202,165,.38);letter-spacing:.14em">LIVE COMMS — ACTIVITY LOG // SLA MONITOR</div>
+              </div>
+              <div id="ac-comms" style="display:flex;gap:8px;padding:5px 14px;overflow-x:auto;min-height:52px"></div>
+            </div>
+          </div>
+          <!-- SIDEBAR -->
+          <div style="display:flex;flex-direction:column;background:rgba(0,3,8,.92);overflow-y:auto">
+            <div style="padding:10px 12px;border-bottom:1px solid rgba(93,202,165,.07)">
+              <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.18em;margin-bottom:7px">SYSTEM PRESSURE — PSI</div>
+              <div id="ac-gauges"></div>
+            </div>
+            <div style="padding:10px 12px;border-bottom:1px solid rgba(93,202,165,.07)">
+              <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.18em;margin-bottom:6px">OPERATOR CREDENTIALS</div>
+              <div style="font-size:8px;color:rgba(93,202,165,.45);line-height:1.9;letter-spacing:.03em">
+                <div>LIC // TX · NM · OK · KS · AR</div>
+                <div style="color:rgba(93,202,165,.28);margin-top:2px">EOD CLEARANCE // ACTIVE</div>
+                <div style="color:rgba(93,202,165,.28)">TCEQ // COMPLIANT</div>
+                <div style="color:rgba(93,202,165,.28)">15+ YRS FIELD EXP</div>
+              </div>
+            </div>
+            <div style="padding:10px 12px;flex:1">
+              <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.18em;margin-bottom:7px">MISSION CLOCK</div>
+              <div style="text-align:center;padding:8px 0">
+                <div id="ac-mission" style="font-family:'Exo',sans-serif;font-size:24px;font-weight:800;color:#5DCAA5;letter-spacing:.08em;line-height:1">00:00</div>
+                <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.14em;margin-top:3px">SESSION ACTIVE</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:10px">
+                  <div style="border:1px solid rgba(93,202,165,.09);padding:5px 3px;text-align:center">
+                    <div id="ac-swo" style="font-family:'Exo',sans-serif;font-size:14px;font-weight:800;color:#EF9F27;line-height:1">0</div>
+                    <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.07em;margin-top:2px">OPEN WO</div>
+                  </div>
+                  <div style="border:1px solid rgba(93,202,165,.09);padding:5px 3px;text-align:center">
+                    <div id="ac-sod" style="font-family:'Exo',sans-serif;font-size:14px;font-weight:800;color:#E24B4A;line-height:1">0</div>
+                    <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.07em;margin-top:2px">OVERDUE</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- HOTBAR -->
+        <div style="position:relative;z-index:5;display:flex;align-items:center;justify-content:center;gap:3px;padding:6px 14px;border-top:1px solid rgba(93,202,165,.14);background:rgba(0,3,8,.96);flex-shrink:0">
+          <div class="ac-hb ac-hb-al"><span class="ac-hb-sn">1</span><span class="ac-hb-ic">⚡</span><span id="ahb0" class="ac-hb-n ac-hb-n-al">0</span><span class="ac-hb-l">OPEN WOs</span></div>
+          <div class="ac-hb ac-hb-al"><span class="ac-hb-sn">2</span><span class="ac-hb-ic">🚨</span><span id="ahb1" class="ac-hb-n ac-hb-n-al">0</span><span class="ac-hb-l">OVERDUE INV</span></div>
+          <div class="ac-hb ac-hb-wn"><span class="ac-hb-sn">3</span><span class="ac-hb-ic">📋</span><span id="ahb2" class="ac-hb-n ac-hb-n-wn">0</span><span class="ac-hb-l">QUOTES PEND</span></div>
+          <div class="ac-hb"><span class="ac-hb-sn">4</span><span class="ac-hb-ic">🏢</span><span id="ahb3" class="ac-hb-n">0</span><span class="ac-hb-l">ACCOUNTS</span></div>
+          <div class="ac-hb"><span class="ac-hb-sn">5</span><span class="ac-hb-ic">🗺</span><span id="ahb4" class="ac-hb-n">0</span><span class="ac-hb-l">INFRA PEND</span></div>
+          <div style="font-size:6px;color:rgba(93,202,165,.22);letter-spacing:.1em;margin:0 5px">// MARTIN DIRECT CONSULTING //</div>
+          <div class="ac-hb"><span class="ac-hb-sn">6</span><span class="ac-hb-ic">✅</span><span id="ahb5" class="ac-hb-n">0</span><span class="ac-hb-l">COMPLETE</span></div>
+          <div class="ac-hb ac-hb-wn"><span class="ac-hb-sn">7</span><span class="ac-hb-ic">⏱</span><span class="ac-hb-n ac-hb-n-wn">SLA</span><span class="ac-hb-l">MONITOR</span></div>
+          <div class="ac-hb"><span class="ac-hb-sn">8</span><span class="ac-hb-ic">📡</span><span class="ac-hb-n" style="font-size:8px;color:rgba(93,202,165,.5)">LIVE</span><span class="ac-hb-l">SCADA FEED</span></div>
+          <div class="ac-hb"><span class="ac-hb-sn">9</span><span class="ac-hb-ic">🔱</span><span class="ac-hb-n" style="font-size:8px;color:rgba(93,202,165,.45)">EOD</span><span class="ac-hb-l">CLEARANCE</span></div>
+        </div>
+      </div>
     </div>
 
     <!-- INFRASTRUCTURE LOG -->
@@ -480,7 +596,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
    Username is case-sensitive. You manage this list.
    ============================================================ */
 const ADMIN_USERS = [
-  { user: 'cwmartin', pass: 'W@ter0ps23!' }
+  { user: 'cwmartin', pass: 'PASTE_PASSWORD_HERE' }
 ];
 
 const { createClient } = supabase;
@@ -731,24 +847,157 @@ function renderCustomers(){
     </tr>`).join(''):`<tr><td colspan="6" class="empty-ops"><p>No customers found</p></td></tr>`;
 }
 
+/* ── ACCOUNT HUD STATE ── */
+let acFilter='all', acAlpha='', acSessionStart=Date.now(), acClockInt=null;
+
+function acCls(a){return a.overdueInv>0?'cr':a.openWOs>0?'wn':'cl';}
+function acBdg(a){if(a.overdueInv>0)return{c:'bdg-cr',t:'CRITICAL'};if(a.openWOs>0)return{c:'bdg-wn',t:'ACTIVE'};return{c:'bdg-cl',t:'CLEAR'};}
+function acCard(a,i){
+  const c=acCls(a);const b=acBdg(a);
+  const bdr=c==='cr'?'rgba(226,75,74,.22)':c==='wn'?'rgba(239,159,39,.18)':'rgba(93,202,165,.11)';
+  const cornerClr=c==='cr'?'rgba(226,75,74,.35)':c==='wn'?'rgba(239,159,39,.3)':'rgba(93,202,165,.14)';
+  const barBg=c==='cr'?'linear-gradient(90deg,#E24B4A 25%,transparent)':c==='wn'?'linear-gradient(90deg,#EF9F27 25%,transparent)':'linear-gradient(90deg,#5DCAA5 25%,transparent)';
+  const bdgStyle=c==='cr'?'background:rgba(226,75,74,.18);color:#E24B4A;border:1px solid rgba(226,75,74,.32);animation:hpulse 1.5s ease-in-out infinite':c==='wn'?'background:rgba(239,159,39,.1);color:#EF9F27;border:1px solid rgba(239,159,39,.22)':'background:rgba(93,202,165,.07);color:#5DCAA5;border:1px solid rgba(93,202,165,.18)';
+  const woClr=a.openWOs>0?'#EF9F27':'rgba(93,202,165,.18)';
+  const odClr=a.overdueInv>0?'#E24B4A':'rgba(93,202,165,.18)';
+  return`<div style="background:rgba(3,12,22,.9);border:1px solid ${bdr};position:relative;cursor:pointer;clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px));font-family:'Share Tech Mono',monospace">
+    <div style="position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 9px 9px 0;border-color:transparent ${cornerClr} transparent transparent"></div>
+    <div style="height:2px;background:${barBg}"></div>
+    <div style="padding:9px 11px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px">
+        <div style="min-width:0">
+          <div style="font-size:7px;color:rgba(93,202,165,.28);letter-spacing:.08em;margin-bottom:3px">[ ACCT-${String(i+1).padStart(3,'0')} // ${a.state||'TX'} ]</div>
+          <div style="font-family:'Exo',sans-serif;font-size:11px;font-weight:800;color:#e8edf2;letter-spacing:.04em;line-height:1.2">${a.name}</div>
+          <div style="font-size:8px;color:rgba(93,202,165,.38);margin-top:2px;letter-spacing:.03em">${a.email||a.loc||''}</div>
+        </div>
+        <span style="font-size:6px;font-weight:700;padding:2px 6px;letter-spacing:.14em;clip-path:polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%);white-space:nowrap;flex-shrink:0;${bdgStyle}">${b.t}</span>
+      </div>
+      <div style="border:none;border-top:1px solid rgba(93,202,165,.06);margin:7px 0"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr">
+        <div style="text-align:center;padding:2px 0">
+          <div style="font-family:'Exo',sans-serif;font-size:18px;font-weight:800;line-height:1;color:${woClr}">${a.openWOs}</div>
+          <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.1em;margin-top:2px">OPEN WO</div>
+        </div>
+        <div style="text-align:center;padding:2px 0;border-left:1px solid rgba(93,202,165,.06);border-right:1px solid rgba(93,202,165,.06)">
+          <div style="font-family:'Exo',sans-serif;font-size:18px;font-weight:800;line-height:1;color:#5DCAA5">${a.totalJobs}</div>
+          <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.1em;margin-top:2px">TOTAL</div>
+        </div>
+        <div style="text-align:center;padding:2px 0">
+          <div style="font-family:'Exo',sans-serif;font-size:18px;font-weight:800;line-height:1;color:${odClr}">${a.overdueInv}</div>
+          <div style="font-size:6px;color:rgba(93,202,165,.28);letter-spacing:.1em;margin-top:2px">OVERDUE</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
 function renderAccounts(){
+  /* Build account data from Supabase arrays */
   const clients=allCustomers.filter(c=>c.status==='client');
-  document.getElementById('accounts-grid').innerHTML=clients.length?clients.map(c=>{
+  const acData=clients.map(c=>{
     const email=c.email||'';
     const name=[c.first_name,c.last_name].filter(Boolean).join(' ')||email;
     const wos=allWorkOrders.filter(w=>w.email===email);
     const openWos=wos.filter(w=>!['complete','closed'].includes((w.status||'').toLowerCase()));
     const overdueInv=allInvoices.filter(i=>i.email===email&&(i.status||'').toLowerCase()==='overdue');
-    return `<div class="account-card">
-      <div class="account-name">${name}</div>
-      <div class="account-contact">${email}</div>
-      <div class="account-stats">
-        <div><div class="acc-stat-num${openWos.length>0?' red':''}">${openWos.length}</div><div class="acc-stat-label">Open WOs</div></div>
-        <div><div class="acc-stat-num">${wos.length}</div><div class="acc-stat-label">Total jobs</div></div>
-        <div><div class="acc-stat-num${overdueInv.length>0?' red':''}">${overdueInv.length}</div><div class="acc-stat-label">Overdue inv.</div></div>
-      </div>
-    </div>`;
-  }).join(''):'<div class="empty-ops" style="grid-column:1/-1"><i class="fas fa-building"></i><p>No client accounts found</p></div>';
+    const st=overdueInv.length>0?'critical':openWos.length>0?'active':'clear';
+    return {name,email,openWOs:openWos.length,totalJobs:wos.length,overdueInv:overdueInv.length,status:st,state:'TX'};
+  });
+
+  /* Build alpha dial */
+  const alphaEl=document.getElementById('ac-alpha');
+  if(alphaEl&&!alphaEl.children.length){
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l=>{
+      const b=document.createElement('div');
+      b.style.cssText='font-size:7px;width:14px;height:14px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(93,202,165,.14);color:rgba(93,202,165,.35);cursor:pointer;font-family:Share Tech Mono,monospace;transition:all .1s';
+      b.textContent=l;
+      b.onclick=()=>{
+        if(acAlpha===l){acAlpha='';document.querySelectorAll('#ac-alpha div').forEach(x=>{x.style.background='';x.style.borderColor='rgba(93,202,165,.14)';x.style.color='rgba(93,202,165,.35)'});}
+        else{acAlpha=l;document.querySelectorAll('#ac-alpha div').forEach(x=>{x.style.background='';x.style.borderColor='rgba(93,202,165,.14)';x.style.color='rgba(93,202,165,.35)'});b.style.background='rgba(93,202,165,.18)';b.style.borderColor='#5DCAA5';b.style.color='#5DCAA5';}
+        acRender(acData);
+      };
+      alphaEl.appendChild(b);
+    });
+  }
+
+  acRender(acData);
+
+  /* Build gauges */
+  const gEl=document.getElementById('ac-gauges');
+  if(gEl&&!gEl.children.length){
+    [{name:'TX-01',val:68},{name:'TX-02',val:72},{name:'TX-03',val:45},{name:'NM-01',val:81}].forEach(g=>{
+      const p=Math.round(g.val/100*100);
+      const clr=p>75?'#E24B4A':p>60?'#EF9F27':'#5DCAA5';
+      const row=document.createElement('div');
+      row.style.cssText='display:flex;align-items:center;gap:5px;margin-bottom:5px';
+      row.innerHTML=`<div style="font-size:7px;color:rgba(93,202,165,.45);width:26px;flex-shrink:0;font-family:Share Tech Mono,monospace">${g.name}</div><div style="flex:1;height:3px;background:rgba(93,202,165,.07)"><div style="height:100%;width:${p}%;background:${clr}"></div></div><div style="font-size:8px;color:${clr};width:22px;text-align:right;font-family:Share Tech Mono,monospace">${g.val}</div>`;
+      gEl.appendChild(row);
+    });
+  }
+
+  /* Build comms feed */
+  const cEl=document.getElementById('ac-comms');
+  if(cEl&&!cEl.children.length){
+    [{type:'rd',time:'15:44',msg:'OVERDUE INV — MASON COUNTY WCID // $1,425.00',clr:'#E24B4A',bdr:'#E24B4A'},
+     {type:'am',time:'15:31',msg:'WO AGING 8HRS — BRADY IRRIGATION // PRV SVC',clr:'#EF9F27',bdr:'#EF9F27'},
+     {type:'bl',time:'15:12',msg:'NEW REQUEST — MANAGER NWS // ALTITUDE VALVE',clr:'#85B7EB',bdr:'#0080FF'},
+     {type:'am',time:'14:55',msg:'QUOTE PENDING 3 DAYS — DEBRA TEST // BOOSTER PUMP',clr:'#EF9F27',bdr:'#EF9F27'},
+     {type:'gr',time:'14:22',msg:'COMPLETE — RANDY SAMPLE // LIC OP SUPPORT',clr:'#5DCAA5',bdr:'#5DCAA5'},
+     {type:'gr',time:'12:30',msg:'INVOICE PAID — RANDY SAMPLE // $875.00',clr:'#5DCAA5',bdr:'#5DCAA5'},
+    ].forEach(c=>{
+      const div=document.createElement('div');
+      div.style.cssText=`display:flex;flex-direction:column;flex-shrink:0;border-left:2px solid ${c.bdr};padding:2px 7px;min-width:150px`;
+      div.innerHTML=`<div style="font-size:6px;color:rgba(93,202,165,.32);letter-spacing:.07em;margin-bottom:2px;font-family:Share Tech Mono,monospace">${c.time}</div><div style="font-size:8px;color:${c.clr};letter-spacing:.03em;font-family:Share Tech Mono,monospace">${c.msg}</div>`;
+      cEl.appendChild(div);
+    });
+  }
+
+  /* Start clock if not running */
+  if(!acClockInt) acClockInt=setInterval(acTick,1000);
+  acTick();
+}
+
+function acRender(acData){
+  const filtered=acData.filter(a=>{
+    const mf=acFilter==='all'||a.status===acFilter;
+    const ma=!acAlpha||a.name.toUpperCase().startsWith(acAlpha);
+    return mf&&ma;
+  });
+  const grid=document.getElementById('ac-grid');
+  if(!grid)return;
+  grid.innerHTML=filtered.length?filtered.map((a,i)=>acCard(a,i)).join(''):'<div style="color:rgba(93,202,165,.28);font-size:9px;letter-spacing:.1em;padding:16px;grid-column:1/-1;font-family:Share Tech Mono,monospace">NO UNITS MATCH FILTER</div>';
+  const cnt=document.getElementById('ac-count');if(cnt)cnt.textContent=filtered.length+' ACCOUNTS ONLINE';
+  /* Hotbar */
+  const wo=acData.reduce((s,a)=>s+a.openWOs,0);
+  const od=acData.reduce((s,a)=>s+a.overdueInv,0);
+  [['ahb0',wo],['ahb1',od],['ahb2',allQuotes.filter(q=>(q.status||'').toLowerCase()==='pending').length],['ahb3',acData.length],['ahb4',allMapEdits.filter(m=>!['complete','closed'].includes((m.status||'').toLowerCase())).length],['ahb5',acData.filter(a=>a.status==='clear').length]].forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
+  const swo=document.getElementById('ac-swo');if(swo)swo.textContent=wo;
+  const sod=document.getElementById('ac-sod');if(sod)sod.textContent=od;
+}
+
+function acSetFilter(f,btn){
+  acFilter=f;
+  document.querySelectorAll('#ac-filters button').forEach(b=>{b.style.background='transparent';b.style.color=b.textContent==='CRITICAL'?'rgba(226,75,74,.5)':b.textContent==='ACTIVE'?'rgba(239,159,39,.5)':'rgba(93,202,165,.4)';b.style.borderColor=b.textContent==='CRITICAL'?'rgba(226,75,74,.3)':b.textContent==='ACTIVE'?'rgba(239,159,39,.28)':'rgba(93,202,165,.2)';});
+  btn.style.background=f==='critical'?'rgba(226,75,74,.1)':f==='active'?'rgba(239,159,39,.08)':'rgba(93,202,165,.14)';
+  btn.style.borderColor=f==='critical'?'#E24B4A':f==='active'?'#EF9F27':'#5DCAA5';
+  btn.style.color=f==='critical'?'#E24B4A':f==='active'?'#EF9F27':'#5DCAA5';
+  const clients=allCustomers.filter(c=>c.status==='client');
+  const acData=clients.map(c=>{
+    const email=c.email||'';const name=[c.first_name,c.last_name].filter(Boolean).join(' ')||email;
+    const wos=allWorkOrders.filter(w=>w.email===email);
+    const openWos=wos.filter(w=>!['complete','closed'].includes((w.status||'').toLowerCase()));
+    const overdueInv=allInvoices.filter(i=>i.email===email&&(i.status||'').toLowerCase()==='overdue');
+    const st=overdueInv.length>0?'critical':openWos.length>0?'active':'clear';
+    return {name,email,openWOs:openWos.length,totalJobs:wos.length,overdueInv:overdueInv.length,status:st,state:'TX'};
+  });
+  acRender(acData);
+}
+
+function acTick(){
+  const n=new Date();
+  const cl=document.getElementById('ac-clock');if(cl)cl.textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
+  const dt=document.getElementById('ac-date');if(dt)dt.textContent=['SUN','MON','TUE','WED','THU','FRI','SAT'][n.getDay()]+' '+n.getDate()+' '+['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][n.getMonth()]+' '+n.getFullYear();
+  const el=Math.floor((Date.now()-acSessionStart)/1000);
+  const mc=document.getElementById('ac-mission');if(mc)mc.textContent=String(Math.floor(el/60)).padStart(2,'0')+':'+String(el%60).padStart(2,'0');
 }
 
 /* ── FULL CALENDAR ── */
