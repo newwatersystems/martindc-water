@@ -217,7 +217,6 @@
 
     /* ── ACCOUNT HUD ── */
     @keyframes acscan{0%{top:-60px}100%{top:100%}}
-    @keyframes ticker{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
     .ac-hb{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 14px;border:1px solid rgba(93,202,165,.14);background:rgba(3,12,22,.8);position:relative;min-width:62px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);cursor:pointer}
     .ac-hb.ac-hb-al{border-color:rgba(226,75,74,.3)}.ac-hb.ac-hb-wn{border-color:rgba(239,159,39,.25)}
     .ac-hb-sn{position:absolute;top:-1px;right:4px;font-size:7px;color:rgba(93,202,165,.28);font-family:'Share Tech Mono',monospace}
@@ -457,8 +456,8 @@
                 <div style="width:5px;height:5px;border-radius:50%;background:#5DCAA5;animation:hpulse 1s ease-in-out infinite"></div>
                 <div style="font-size:10px;color:rgba(93,202,165,.6);letter-spacing:.12em;white-space:nowrap">LIVE COMMS</div>
               </div>
-              <div style="flex:1;overflow:hidden;position:relative;height:100%">
-                <div id="ac-ticker" style="display:flex;align-items:center;height:100%;position:absolute;left:0;top:0;white-space:nowrap"></div>
+              <div id="ac-ticker-wrap" style="flex:1;overflow:hidden;position:relative;height:100%">
+                <div id="ac-ticker" style="display:inline-flex;align-items:center;height:100%;position:absolute;left:0;top:0;white-space:nowrap"></div>
               </div>
             </div>
           </div>
@@ -1016,11 +1015,11 @@ function renderAccounts(){
     }
   }
 
-  /* Build ticker - always rebuild on render */
+  /* Build ticker with JS scroll - reliable across page switches */
   const tickerEl=document.getElementById('ac-ticker');
-  if(tickerEl){
-    tickerEl.innerHTML='';
-    tickerEl.style.animation='none';
+  const tickerWrap=document.getElementById('ac-ticker-wrap');
+  if(tickerEl&&tickerWrap&&!window._tickerRunning){
+    window._tickerRunning=true;
     const items=[
       {msg:'OVERDUE INV — MASON COUNTY WCID // $1,425.00',clr:'#E24B4A',time:'15:44'},
       {msg:'WO AGING 8HRS — BRADY IRRIGATION // PRV SVC',clr:'#EF9F27',time:'15:31'},
@@ -1031,15 +1030,22 @@ function renderAccounts(){
       {msg:'INFRA UPDATE PENDING — DEBRA TEST // DISTRIBUTION LINES',clr:'#EF9F27',time:'11:18'},
       {msg:'NEW LEAD RECEIVED — LLANO CITY WATER',clr:'#85B7EB',time:'10:04'},
     ];
-    [...items,...items].forEach(item=>{
+    [...items,...items,...items].forEach(item=>{
       const span=document.createElement('span');
-      span.style.cssText=`font-family:Share Tech Mono,monospace;font-size:11px;color:${item.clr};padding:0 32px;white-space:nowrap;letter-spacing:.05em`;
+      span.style.cssText=`font-family:Share Tech Mono,monospace;font-size:11px;color:${item.clr};padding:0 36px;white-space:nowrap;letter-spacing:.05em`;
       span.innerHTML=`<span style="color:rgba(93,202,165,.35);margin-right:10px">${item.time}</span>${item.msg}`;
       tickerEl.appendChild(span);
     });
-    /* Force reflow then restart animation */
-    void tickerEl.offsetWidth;
-    tickerEl.style.animation='ticker 400s linear infinite';
+    let pos=0;
+    const speed=0.4;
+    function tickScroll(){
+      pos-=speed;
+      const half=tickerEl.scrollWidth/3;
+      if(Math.abs(pos)>=half) pos=0;
+      tickerEl.style.transform=`translateX(${pos}px)`;
+      window._tickerRAF=requestAnimationFrame(tickScroll);
+    }
+    tickScroll();
   }
 
   /* Start clock if not running */
