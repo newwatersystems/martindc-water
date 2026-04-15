@@ -44,13 +44,22 @@
     }
 
     /* ── ACCESS GATE ── */
-    #accessGate{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:16px}
-    #accessGate p{color:var(--text-secondary);font-size:13px}
-    .gate-spinner{width:32px;height:32px;border:2px solid var(--navy-border-strong);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+    #accessGate{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999}
+    .gate-card{background:var(--navy-panel);border:1px solid var(--navy-border-strong);border-radius:16px;padding:40px 44px;width:100%;max-width:400px;animation:fadeUp .4s ease forwards}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
     @keyframes spin{to{transform:rotate(360deg)}}
-    #accessDenied{display:none;text-align:center}
-    #accessDenied h2{font-family:'Exo',sans-serif;color:var(--red);font-size:20px;margin-bottom:8px}
-    #accessDenied p{color:var(--text-secondary);font-size:13px;margin-bottom:16px}
+    .gate-logo{text-align:center;margin-bottom:28px}
+    .gate-logo img{height:44px;width:auto;margin:0 auto 14px;filter:brightness(0) invert(1);opacity:.9}
+    .gate-logo p{font-size:12px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+    .gate-field{margin-bottom:16px;display:flex;flex-direction:column;gap:6px}
+    .gate-field label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+    .gate-field input{background:rgba(0,0,0,.3);border:1px solid var(--navy-border-strong);color:var(--text-primary);padding:11px 14px;border-radius:8px;font-size:14px;font-family:'Manrope',sans-serif;outline:none;width:100%;transition:border-color .2s}
+    .gate-field input:focus{border-color:var(--blue)}
+    .gate-field input::placeholder{color:var(--text-muted)}
+    .gate-btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:50px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:background .2s;margin-top:4px}
+    .gate-btn:hover{background:#006acc}
+    .gate-btn:disabled{opacity:.5;cursor:not-allowed}
+    .gate-error{font-size:12px;color:var(--red);text-align:center;margin-top:12px;display:none;padding:8px 12px;background:var(--red-bg);border-radius:6px;border:1px solid rgba(226,75,74,.2)}
 
     /* ── TOP NAV ── */
     .ops-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);background:var(--navy-mid);border-bottom:1px solid var(--navy-border-strong);display:flex;align-items:center;padding:0 20px 0 0;gap:0}
@@ -277,12 +286,21 @@
 
 <!-- ── ACCESS GATE ── -->
 <div id="accessGate">
-  <div class="gate-spinner" id="gateSpinner"></div>
-  <p id="gateMsg">Verifying operator credentials...</p>
-  <div id="accessDenied">
-    <h2><i class="fas fa-ban" style="margin-right:8px;"></i>Access Restricted</h2>
-    <p>This ops center is restricted to authorized personnel.<br>Contact Christopher Martin to request access.</p>
-    <a href="portal.html" style="display:inline-block;margin-top:8px;padding:9px 22px;background:var(--blue);color:#fff;border-radius:50px;font-size:13px;font-weight:700;">Go to Customer Portal</a>
+  <div class="gate-card">
+    <div class="gate-logo">
+      <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC Water Utility Consultants">
+      <p>Ops Center — Authorized Personnel Only</p>
+    </div>
+    <div class="gate-field">
+      <label>Username</label>
+      <input type="text" id="gateUser" placeholder="username" autocomplete="username" onkeydown="if(event.key==='Enter')doAdminLogin()">
+    </div>
+    <div class="gate-field">
+      <label>Password</label>
+      <input type="password" id="gatePass" placeholder="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAdminLogin()">
+    </div>
+    <button class="gate-btn" onclick="doAdminLogin()" id="gateBtn">Access Ops Center</button>
+    <div class="gate-error" id="gateError">Invalid credentials. Access denied.</div>
   </div>
 </div>
 
@@ -587,11 +605,19 @@
 <script>
 const SUPABASE_URL  = 'https://mnytmsmjpsuzgwzeriwq.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueXRtc21qcHN1emd3emVyaXdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMjY3MzIsImV4cCI6MjA5MTgwMjczMn0.vmtbculI08fDMle7YdC9LdSIRUaKdLqaHdFI3JtW120';
-const ADMIN_EMAIL   = 'office@waterutilityconsultant.com';
+/* ============================================================
+   ADMIN CREDENTIALS
+   To add a new admin: add a line below in the same format.
+   Username is case-sensitive. You manage this list — no one else.
+   ============================================================ */
+const ADMIN_USERS = [
+  { user: 'cwmartin', pass: 'W@ter0ps23!' }
+];
+
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+const SESSION_KEY = 'martindc_ops_auth';
 
-let currentUser = null;
 let allWorkOrders = [];
 let allMapEdits = [];
 let allInvoices = [];
@@ -611,27 +637,44 @@ function tickClock(){
 tickClock();
 setInterval(tickClock, 10000);
 
-/* ── AUTH ── */
-sb.auth.onAuthStateChange(async (event, session) => {
-  if (session) {
-    const email = session.user.email;
-    if (email !== ADMIN_EMAIL) {
-      document.getElementById('gateSpinner').style.display = 'none';
-      document.getElementById('gateMsg').style.display = 'none';
-      document.getElementById('accessDenied').style.display = 'block';
-      return;
-    }
-    currentUser = session.user;
-    document.getElementById('accessGate').style.display = 'none';
-    document.getElementById('opsNav').style.display = 'flex';
-    document.getElementById('opsWrap').style.display = 'flex';
-    loadAll();
+/* ── ADMIN LOGIN ── */
+function doAdminLogin(){
+  const user = document.getElementById('gateUser').value.trim();
+  const pass = document.getElementById('gatePass').value;
+  const btn  = document.getElementById('gateBtn');
+  const err  = document.getElementById('gateError');
+  const match = ADMIN_USERS.find(u => u.user === user && u.pass === pass);
+  if(match){
+    sessionStorage.setItem(SESSION_KEY, user);
+    err.style.display = 'none';
+    grantAccess();
   } else {
-    window.location.href = 'portal.html';
+    err.style.display = 'block';
+    document.getElementById('gatePass').value = '';
+    btn.disabled = true;
+    setTimeout(()=>{ btn.disabled = false; }, 2000);
   }
-});
+}
 
-async function doLogout(){ await sb.auth.signOut(); window.location.href = 'portal.html'; }
+function checkSession(){
+  const stored = sessionStorage.getItem(SESSION_KEY);
+  const match  = stored && ADMIN_USERS.find(u => u.user === stored);
+  if(match){ grantAccess(); }
+}
+
+function grantAccess(){
+  document.getElementById('accessGate').style.display = 'none';
+  document.getElementById('opsNav').style.display     = 'flex';
+  document.getElementById('opsWrap').style.display    = 'flex';
+  loadAll();
+}
+
+function doLogout(){
+  sessionStorage.removeItem(SESSION_KEY);
+  window.location.reload();
+}
+
+checkSession();
 
 /* ── LOAD ALL DATA ── */
 async function loadAll(){
