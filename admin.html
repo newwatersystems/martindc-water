@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+  <title>Ops Center — Martin DC Water Utility Consultants</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="https://waterutilityconsultant.com/wp-content/uploads/2025/01/Picture33-150x150.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Manrope',sans-serif;font-size:14px;color:#192a3d;background:#0d1f2f;line-height:1.5;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}
+    ul{list-style:none}
+    img{display:block;max-width:100%}
+    button,input,select,textarea{font-family:'Manrope',sans-serif}
+
+    :root{
+      --navy:#0d1f2f;
+      --navy-mid:#192a3d;
+      --navy-panel:#1a2e42;
+      --navy-border:rgba(255,255,255,0.08);
+      --navy-border-strong:rgba(255,255,255,0.14);
+      --blue:#0080FF;
+      --blue-mid:#185FA5;
+      --blue-light:#E0F6FE;
+      --text-primary:#e8edf2;
+      --text-secondary:#7a9ab5;
+      --text-muted:#4a6680;
+      --red:#E24B4A;
+      --red-bg:rgba(226,75,74,0.12);
+      --amber:#EF9F27;
+      --amber-bg:rgba(239,159,39,0.12);
+      --green:#1D9E75;
+      --green-bg:rgba(29,158,117,0.12);
+      --teal:#5DCAA5;
+      --shadow:0 2px 16px rgba(0,0,0,0.4);
+      --nav-h:60px;
+      --sidebar-w:220px;
+    }
+
+    /* ── ACCESS GATE ── */
+    #accessGate{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:16px}
+    #accessGate p{color:var(--text-secondary);font-size:13px}
+    .gate-spinner{width:32px;height:32px;border:2px solid var(--navy-border-strong);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    #accessDenied{display:none;text-align:center}
+    #accessDenied h2{font-family:'Exo',sans-serif;color:var(--red);font-size:20px;margin-bottom:8px}
+    #accessDenied p{color:var(--text-secondary);font-size:13px;margin-bottom:16px}
+
+    /* ── TOP NAV ── */
+    .ops-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);background:var(--navy-mid);border-bottom:1px solid var(--navy-border-strong);display:flex;align-items:center;padding:0 20px 0 0;gap:0}
+    .nav-brand{width:var(--sidebar-w);flex-shrink:0;display:flex;align-items:center;gap:12px;padding:0 18px;border-right:1px solid var(--navy-border)}
+    .nav-brand img{height:36px;width:auto;filter:brightness(0) invert(1);opacity:.92}
+    .nav-center{flex:1;display:flex;align-items:center;gap:8px;padding:0 20px}
+    .nav-system-status{display:flex;align-items:center;gap:7px}
+    .status-pip{width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0}
+    .status-pip.warn{background:var(--amber)}
+    .status-pip.alert{background:var(--red);animation:pulse 1.4s ease infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .status-text{font-size:11px;color:var(--text-secondary);letter-spacing:.06em;text-transform:uppercase}
+    .nav-divider{width:1px;height:20px;background:var(--navy-border);margin:0 16px}
+    .nav-clock{font-size:12px;color:var(--text-muted);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .nav-user{display:flex;align-items:center;gap:10px;padding:6px 14px;border:1px solid var(--navy-border);border-radius:50px;cursor:pointer;transition:border-color .2s}
+    .nav-user:hover{border-color:var(--navy-border-strong)}
+    .nav-avatar{width:28px;height:28px;border-radius:50%;background:var(--blue-mid);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+    .nav-username{font-size:12px;color:var(--text-secondary);font-weight:600}
+    .nav-logout{font-size:12px;color:var(--text-muted);cursor:pointer;padding:6px 10px;border-radius:6px;transition:color .2s}
+    .nav-logout:hover{color:var(--red)}
+    .nav-back{font-size:12px;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;transition:color .2s}
+    .nav-back:hover{color:var(--text-primary)}
+
+    /* ── LAYOUT ── */
+    .ops-wrap{display:flex;padding-top:var(--nav-h);min-height:100vh}
+
+    /* ── SIDEBAR ── */
+    .ops-sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--navy-mid);border-right:1px solid var(--navy-border);position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));overflow-y:auto;display:flex;flex-direction:column;padding:20px 0}
+    .sidebar-section-label{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);padding:0 16px;margin-bottom:6px;margin-top:16px}
+    .sidebar-section-label:first-child{margin-top:0}
+    .sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:12px;font-weight:600;color:var(--text-secondary);cursor:pointer;transition:all .15s;border:none;background:none;width:100%;text-align:left;border-left:2px solid transparent}
+    .sidebar-item i{width:16px;text-align:center;font-size:13px;flex-shrink:0;opacity:.7}
+    .sidebar-item:hover{color:var(--text-primary);background:rgba(255,255,255,.05)}
+    .sidebar-item.active{color:#fff;background:rgba(0,128,255,.15);border-left-color:var(--blue)}
+    .sidebar-item.active i{opacity:1}
+    .sidebar-badge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center}
+    .sidebar-badge.amber{background:var(--amber);color:#1a1200}
+    .sidebar-divider{border:none;border-top:1px solid var(--navy-border);margin:12px 16px}
+    .sidebar-logout-btn{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:12px;font-weight:600;color:rgba(226,75,74,.7);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:color .2s}
+    .sidebar-logout-btn:hover{color:var(--red)}
+
+    /* ── MAIN ── */
+    .ops-main{flex:1;min-width:0;background:var(--navy);overflow-x:hidden}
+    .ops-page{display:none;padding:24px}
+    .ops-page.active{display:block}
+
+    /* ── SITREP BAR ── */
+    .sitrep-bar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--navy-border);border:1px solid var(--navy-border);border-radius:10px;overflow:hidden;margin-bottom:20px}
+    .sitrep-cell{background:var(--navy-panel);padding:16px 18px;cursor:default}
+    .sitrep-cell:hover{background:#1f3549}
+    .sitrep-num{font-family:'Exo',sans-serif;font-size:36px;font-weight:700;line-height:1;margin-bottom:5px}
+    .sitrep-num.red{color:var(--red)}
+    .sitrep-num.amber{color:var(--amber)}
+    .sitrep-num.blue{color:#378ADD}
+    .sitrep-num.green{color:var(--teal)}
+    .sitrep-label{font-size:10px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+    .sitrep-sub{font-size:11px;color:var(--text-secondary);margin-top:4px}
+
+    /* ── HUD GRID ── */
+    .hud-grid{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);gap:16px}
+
+    /* ── PANEL ── */
+    .panel{background:var(--navy-panel);border:1px solid var(--navy-border);border-radius:10px;overflow:hidden}
+    .panel-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--navy-border);background:rgba(0,0,0,.15)}
+    .panel-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+    .panel-action{font-size:11px;color:var(--blue);cursor:pointer;font-weight:600;transition:color .2s}
+    .panel-action:hover{color:#60b0ff}
+    .panel-body{padding:0}
+
+    /* ── MISSION PIPELINE ── */
+    .mission-row{display:grid;grid-template-columns:3px minmax(0,1fr) 90px 88px;gap:12px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--navy-border);cursor:pointer;transition:background .15s}
+    .mission-row:last-child{border-bottom:none}
+    .mission-row:hover{background:rgba(255,255,255,.04)}
+    .mission-accent{border-radius:2px;align-self:stretch;min-height:36px}
+    .accent-red{background:var(--red)}
+    .accent-amber{background:var(--amber)}
+    .accent-blue{background:var(--blue)}
+    .accent-green{background:var(--green)}
+    .accent-gray{background:var(--text-muted)}
+    .mission-account{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .mission-service{font-size:11px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .mission-date{font-size:11px;color:var(--text-muted);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .mission-date.overdue{color:var(--red);font-weight:700}
+    .mission-date.urgent{color:var(--amber);font-weight:600}
+
+    /* ── STATUS PILLS ── */
+    .pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;text-align:center;letter-spacing:.04em;white-space:nowrap;display:inline-block}
+    .pill-received{background:rgba(55,138,221,.18);color:#85B7EB;border:1px solid rgba(55,138,221,.25)}
+    .pill-acknowledged{background:rgba(239,159,39,.15);color:#EF9F27;border:1px solid rgba(239,159,39,.2)}
+    .pill-staged{background:rgba(212,83,126,.15);color:#ED93B1;border:1px solid rgba(212,83,126,.2)}
+    .pill-infield{background:rgba(29,158,117,.18);color:#5DCAA5;border:1px solid rgba(29,158,117,.25)}
+    .pill-complete{background:rgba(99,153,34,.15);color:#97C459;border:1px solid rgba(99,153,34,.2)}
+    .pill-closed{background:rgba(136,135,128,.15);color:#B4B2A9;border:1px solid rgba(136,135,128,.2)}
+
+    /* ── PRIORITY ACTIONS ── */
+    .priority-item{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-bottom:1px solid var(--navy-border);cursor:pointer;transition:background .15s}
+    .priority-item:last-child{border-bottom:none}
+    .priority-item:hover{background:rgba(255,255,255,.04)}
+    .priority-icon{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700}
+    .picon-red{background:var(--red-bg);color:var(--red)}
+    .picon-amber{background:var(--amber-bg);color:var(--amber)}
+    .picon-blue{background:rgba(0,128,255,.12);color:#60b0ff}
+    .priority-text{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:2px;line-height:1.4}
+    .priority-sub{font-size:11px;color:var(--text-secondary);line-height:1.4}
+
+    /* ── DEPLOY WEEK ── */
+    .deploy-body{padding:14px 16px}
+    .week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-top:8px}
+    .day-col{text-align:center}
+    .day-name{font-size:9px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+    .day-num{font-size:11px;font-weight:600;color:var(--text-secondary);padding:4px 3px;border-radius:4px;margin-bottom:4px}
+    .day-num.today{background:var(--blue-mid);color:#fff}
+    .job-tick{height:4px;border-radius:2px;margin-bottom:2px}
+    .tick-red{background:var(--red)}
+    .tick-amber{background:var(--amber)}
+    .tick-blue{background:var(--blue)}
+    .tick-green{background:var(--green)}
+
+    /* ── INFRA LOG ── */
+    .infra-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--navy-border);cursor:pointer;transition:background .15s}
+    .infra-row:hover{background:rgba(255,255,255,.04)}
+    .infra-row:last-child{border-bottom:none}
+    .infra-account{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:2px}
+    .infra-layer{font-size:11px;color:var(--text-secondary)}
+    .infra-age{font-size:11px;color:var(--red);font-weight:600;white-space:nowrap;margin-left:12px;flex-shrink:0}
+
+    /* ── RIGHT COLUMN STACK ── */
+    .right-col{display:flex;flex-direction:column;gap:16px}
+
+    /* ── BILLING PANEL ── */
+    .billing-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--navy-border);cursor:pointer;transition:background .15s}
+    .billing-row:hover{background:rgba(255,255,255,.04)}
+    .billing-row:last-child{border-bottom:none}
+    .billing-account{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:2px}
+    .billing-service{font-size:11px;color:var(--text-secondary)}
+    .billing-right{text-align:right;flex-shrink:0;margin-left:12px}
+    .billing-amount{font-size:13px;font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums}
+    .billing-amount.overdue{color:var(--red)}
+
+    /* ── FULL-PAGE TABS (pipeline, accounts, billing, infra) ── */
+    .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    .page-title{font-family:'Exo',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary)}
+    .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .filter-btn{padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--navy-border);background:transparent;color:var(--text-secondary);transition:all .15s;letter-spacing:.04em}
+    .filter-btn:hover{border-color:var(--blue);color:var(--text-primary)}
+    .filter-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+
+    /* Full pipeline table */
+    .ops-table{width:100%;border-collapse:collapse;font-size:12px}
+    .ops-table th{background:rgba(0,0,0,.3);color:var(--text-muted);padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--navy-border);white-space:nowrap}
+    .ops-table td{padding:11px 14px;border-bottom:1px solid var(--navy-border);color:var(--text-primary);vertical-align:middle}
+    .ops-table tr:hover td{background:rgba(255,255,255,.03);cursor:pointer}
+    .ops-table tr:last-child td{border-bottom:none}
+    .table-wrap{background:var(--navy-panel);border:1px solid var(--navy-border);border-radius:10px;overflow:hidden}
+
+    /* Status select inline */
+    .status-select{background:transparent;border:none;color:inherit;font-family:'Manrope',sans-serif;font-size:10px;font-weight:700;cursor:pointer;outline:none;letter-spacing:.04em}
+
+    /* Account cards */
+    .account-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+    .account-card{background:var(--navy-panel);border:1px solid var(--navy-border);border-radius:10px;padding:16px;cursor:pointer;transition:border-color .2s}
+    .account-card:hover{border-color:rgba(0,128,255,.4)}
+    .account-name{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:4px}
+    .account-contact{font-size:11px;color:var(--text-secondary);margin-bottom:12px}
+    .account-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+    .acc-stat-num{font-size:18px;font-weight:700;color:var(--text-primary);line-height:1}
+    .acc-stat-num.red{color:var(--red)}
+    .acc-stat-label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;margin-top:2px}
+
+    /* Slide-out detail */
+    .detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300}
+    .detail-overlay.open{display:block}
+    .detail-panel{position:fixed;top:0;right:0;width:460px;height:100vh;background:var(--navy-panel);border-left:1px solid var(--navy-border-strong);z-index:301;overflow-y:auto;transform:translateX(100%);transition:transform .25s ease}
+    .detail-panel.open{transform:translateX(0)}
+    .detail-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--navy-border);background:rgba(0,0,0,.2)}
+    .detail-close{background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:16px;transition:color .2s;padding:4px}
+    .detail-close:hover{color:var(--text-primary)}
+    .detail-body{padding:20px}
+    .detail-service-title{font-family:'Exo',sans-serif;font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:4px}
+    .detail-account-name{font-size:13px;color:var(--text-secondary);margin-bottom:16px}
+    .detail-field{margin-bottom:14px}
+    .detail-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:4px}
+    .detail-value{font-size:13px;color:var(--text-primary);line-height:1.6}
+    .detail-scope{background:rgba(0,0,0,.2);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--text-secondary);line-height:1.7}
+    .detail-divider{border:none;border-top:1px solid var(--navy-border);margin:16px 0}
+    .detail-status-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .status-change-select{background:var(--navy);border:1px solid var(--navy-border-strong);color:var(--text-primary);padding:7px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;outline:none;font-family:'Manrope',sans-serif}
+    .status-change-select:focus{border-color:var(--blue)}
+    .field-note-wrap{margin-top:14px}
+    .field-note-input{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--navy-border-strong);border-radius:8px;padding:10px 12px;color:var(--text-primary);font-size:12px;font-family:'Manrope',sans-serif;resize:vertical;min-height:80px;outline:none;line-height:1.6}
+    .field-note-input:focus{border-color:var(--blue)}
+    .field-note-input::placeholder{color:var(--text-muted)}
+    .btn-save{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--blue);color:#fff;border:none;border-radius:50px;font-size:12px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:10px}
+    .btn-save:hover{background:#006acc}
+    .btn-save:disabled{opacity:.5;cursor:not-allowed}
+    .detail-msg{font-size:12px;margin-top:8px;padding:8px 12px;border-radius:6px;display:none}
+    .detail-msg.success{display:block;background:rgba(29,158,117,.15);color:var(--teal);border:1px solid rgba(29,158,117,.25)}
+    .detail-msg.error{display:block;background:var(--red-bg);color:var(--red);border:1px solid rgba(226,75,74,.25)}
+
+    /* Empty states */
+    .empty-ops{text-align:center;padding:48px 24px;color:var(--text-muted)}
+    .empty-ops i{font-size:28px;margin-bottom:10px;display:block;opacity:.4}
+    .empty-ops p{font-size:13px}
+
+    /* Loading */
+    .ops-spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--navy-border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
+
+    /* Billing create form */
+    .form-field{margin-bottom:14px}
+    .form-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:5px;display:block}
+    .form-input,.form-select,.form-textarea{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--navy-border-strong);color:var(--text-primary);padding:9px 12px;border-radius:7px;font-size:12px;font-family:'Manrope',sans-serif;outline:none}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue)}
+    .form-input::placeholder,.form-textarea::placeholder{color:var(--text-muted)}
+    .form-select option{background:#1a2e42}
+    .form-textarea{resize:vertical;min-height:70px;line-height:1.6}
+    .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+    @media(max-width:1100px){.hud-grid{grid-template-columns:1fr}.right-col{}}
+    @media(max-width:768px){.ops-sidebar{display:none}.sitrep-bar{grid-template-columns:1fr 1fr}.detail-panel{width:100%}}
+  </style>
+</head>
+<body>
+
+<!-- ── ACCESS GATE ── -->
+<div id="accessGate">
+  <div class="gate-spinner" id="gateSpinner"></div>
+  <p id="gateMsg">Verifying operator credentials...</p>
+  <div id="accessDenied">
+    <h2><i class="fas fa-ban" style="margin-right:8px;"></i>Access Restricted</h2>
+    <p>This ops center is restricted to authorized personnel.<br>Contact Christopher Martin to request access.</p>
+    <a href="portal.html" style="display:inline-block;margin-top:8px;padding:9px 22px;background:var(--blue);color:#fff;border-radius:50px;font-size:13px;font-weight:700;">Go to Customer Portal</a>
+  </div>
+</div>
+
+<!-- ── TOP NAV ── -->
+<nav class="ops-nav" id="opsNav" style="display:none">
+  <div class="nav-brand">
+    <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC Water Utility Consultants">
+  </div>
+  <div class="nav-center">
+    <div class="nav-system-status">
+      <div class="status-pip" id="statusPip"></div>
+      <span class="status-text" id="statusText">All systems nominal</span>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-clock" id="navClock"></div>
+  </div>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back"><i class="fas fa-globe" style="font-size:12px;"></i> Website</a>
+    <div class="nav-user">
+      <div class="nav-avatar">CM</div>
+      <span class="nav-username">Christopher Martin</span>
+    </div>
+    <span class="nav-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></span>
+  </div>
+</nav>
+
+<!-- ── MAIN WRAP ── -->
+<div class="ops-wrap" id="opsWrap" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="ops-sidebar">
+    <div class="sidebar-section-label">Operations</div>
+    <button class="sidebar-item active" onclick="showPage('dashboard',this)">
+      <i class="fas fa-th-large"></i> Ops Center
+    </button>
+    <button class="sidebar-item" onclick="showPage('pipeline',this)">
+      <i class="fas fa-stream"></i> Mission Pipeline
+      <span class="sidebar-badge" id="sb-pipeline">—</span>
+    </button>
+    <button class="sidebar-item" onclick="showPage('schedule',this)">
+      <i class="fas fa-calendar-week"></i> Deployment Schedule
+    </button>
+    <button class="sidebar-item" onclick="showPage('accounts',this)">
+      <i class="fas fa-building"></i> Account Dossiers
+    </button>
+    <button class="sidebar-item" onclick="showPage('infra',this)">
+      <i class="fas fa-project-diagram"></i> Infrastructure Log
+      <span class="sidebar-badge amber" id="sb-infra">—</span>
+    </button>
+    <div class="sidebar-section-label">Billing</div>
+    <button class="sidebar-item" onclick="showPage('invoices',this)">
+      <i class="fas fa-file-invoice-dollar"></i> Invoices
+    </button>
+    <button class="sidebar-item" onclick="showPage('quotes',this)">
+      <i class="fas fa-file-signature"></i> Quotes
+    </button>
+    <div class="sidebar-section-label">Customers</div>
+    <button class="sidebar-item" onclick="showPage('customers',this)">
+      <i class="fas fa-users"></i> All Accounts
+    </button>
+    <hr class="sidebar-divider">
+    <button class="sidebar-logout-btn" onclick="doLogout()">
+      <i class="fas fa-sign-out-alt"></i> Log Out
+    </button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="ops-main">
+
+    <!-- ═══ OPS CENTER (DASHBOARD) ═══ -->
+    <div class="ops-page active" id="page-dashboard">
+
+      <!-- SITREP BAR -->
+      <div class="sitrep-bar">
+        <div class="sitrep-cell">
+          <div class="sitrep-num red" id="sitrep-priority">—</div>
+          <div class="sitrep-label">Needs action</div>
+          <div class="sitrep-sub" id="sitrep-priority-sub">Overdue or unacknowledged</div>
+        </div>
+        <div class="sitrep-cell">
+          <div class="sitrep-num amber" id="sitrep-pipeline">—</div>
+          <div class="sitrep-label">In pipeline</div>
+          <div class="sitrep-sub" id="sitrep-pipeline-sub">Open service orders</div>
+        </div>
+        <div class="sitrep-cell">
+          <div class="sitrep-num blue" id="sitrep-quotes">—</div>
+          <div class="sitrep-label">Quotes pending</div>
+          <div class="sitrep-sub">Awaiting customer response</div>
+        </div>
+        <div class="sitrep-cell">
+          <div class="sitrep-num green" id="sitrep-accounts">—</div>
+          <div class="sitrep-label">Active accounts</div>
+          <div class="sitrep-sub">Client status</div>
+        </div>
+      </div>
+
+      <div class="hud-grid">
+
+        <!-- LEFT: MISSION PIPELINE + INFRA -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Mission pipeline — open orders</span>
+              <span class="panel-action" onclick="showPage('pipeline', document.querySelector('[onclick*=pipeline]'))">View all →</span>
+            </div>
+            <div class="panel-body" id="dash-pipeline">
+              <div class="empty-ops"><div class="ops-spinner"></div></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Infrastructure log — pending</span>
+              <span class="panel-action" onclick="showPage('infra', document.querySelector('[onclick*=infra]'))">View all →</span>
+            </div>
+            <div class="panel-body" id="dash-infra">
+              <div class="empty-ops"><div class="ops-spinner"></div></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="right-col">
+
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Priority actions</span>
+            </div>
+            <div class="panel-body" id="dash-priority">
+              <div class="empty-ops"><div class="ops-spinner"></div></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Deployment — this week</span>
+            </div>
+            <div class="deploy-body" id="dash-deploy">
+              <div class="empty-ops"><div class="ops-spinner"></div></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">Outstanding AR</span>
+              <span class="panel-action" onclick="showPage('invoices', document.querySelector('[onclick*=invoices]'))">View all →</span>
+            </div>
+            <div class="panel-body" id="dash-ar">
+              <div class="empty-ops"><div class="ops-spinner"></div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ FULL PIPELINE ═══ -->
+    <div class="ops-page" id="page-pipeline">
+      <div class="page-header">
+        <h1 class="page-title">Mission Pipeline</h1>
+      </div>
+      <div class="filter-row" id="pipeline-filters">
+        <button class="filter-btn active" onclick="filterPipeline('all',this)">All</button>
+        <button class="filter-btn" onclick="filterPipeline('received',this)">Received</button>
+        <button class="filter-btn" onclick="filterPipeline('acknowledged',this)">Acknowledged</button>
+        <button class="filter-btn" onclick="filterPipeline('staged',this)">Staged</button>
+        <button class="filter-btn" onclick="filterPipeline('in-field',this)">In-Field</button>
+        <button class="filter-btn" onclick="filterPipeline('complete',this)">Complete</button>
+      </div>
+      <div class="table-wrap">
+        <table class="ops-table">
+          <thead><tr>
+            <th>Account</th><th>Service</th><th>Address</th>
+            <th>Preferred date</th><th>Submitted</th><th>Status</th>
+          </tr></thead>
+          <tbody id="pipeline-tbody">
+            <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted)"><div class="ops-spinner"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ DEPLOYMENT SCHEDULE ═══ -->
+    <div class="ops-page" id="page-schedule">
+      <div class="page-header">
+        <h1 class="page-title">Deployment Schedule</h1>
+        <div style="display:flex;gap:8px">
+          <button class="filter-btn active" onclick="changeCalView('month',this)">Month</button>
+          <button class="filter-btn" onclick="changeCalView('week',this)">Week</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div style="display:flex;align-items:center;gap:12px">
+            <button onclick="navCal(-1)" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:14px;"><i class="fas fa-chevron-left"></i></button>
+            <span class="panel-title" id="cal-label" style="min-width:140px;text-align:center;">—</span>
+            <button onclick="navCal(1)" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:14px;"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+        <div id="cal-body" style="padding:16px"></div>
+      </div>
+    </div>
+
+    <!-- ═══ ACCOUNT DOSSIERS ═══ -->
+    <div class="ops-page" id="page-accounts">
+      <div class="page-header">
+        <h1 class="page-title">Account Dossiers</h1>
+      </div>
+      <div class="account-grid" id="accounts-grid">
+        <div class="empty-ops"><div class="ops-spinner"></div></div>
+      </div>
+    </div>
+
+    <!-- ═══ INFRASTRUCTURE LOG ═══ -->
+    <div class="ops-page" id="page-infra">
+      <div class="page-header">
+        <h1 class="page-title">Infrastructure Log</h1>
+      </div>
+      <div class="table-wrap">
+        <table class="ops-table">
+          <thead><tr>
+            <th>Account</th><th>Layer</th><th>Edit needed</th>
+            <th>Address / GPS</th><th>Submitted</th><th>Status</th>
+          </tr></thead>
+          <tbody id="infra-tbody">
+            <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted)"><div class="ops-spinner"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ INVOICES ═══ -->
+    <div class="ops-page" id="page-invoices">
+      <div class="page-header">
+        <h1 class="page-title">Invoices</h1>
+        <button class="btn-save" onclick="openCreateInvoice()"><i class="fas fa-plus"></i> New Invoice</button>
+      </div>
+      <div class="table-wrap">
+        <table class="ops-table">
+          <thead><tr>
+            <th>Customer</th><th>Service</th><th>Service date</th>
+            <th>Amount</th><th>Status</th><th>Invoice</th>
+          </tr></thead>
+          <tbody id="invoices-tbody">
+            <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted)"><div class="ops-spinner"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ QUOTES ═══ -->
+    <div class="ops-page" id="page-quotes">
+      <div class="page-header">
+        <h1 class="page-title">Quotes</h1>
+        <button class="btn-save" onclick="openCreateQuote()"><i class="fas fa-plus"></i> New Quote</button>
+      </div>
+      <div class="table-wrap">
+        <table class="ops-table">
+          <thead><tr>
+            <th>Customer</th><th>Service</th><th>Submitted</th>
+            <th>Amount</th><th>Status</th><th>Notes</th>
+          </tr></thead>
+          <tbody id="quotes-tbody">
+            <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted)"><div class="ops-spinner"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ ALL CUSTOMERS ═══ -->
+    <div class="ops-page" id="page-customers">
+      <div class="page-header">
+        <h1 class="page-title">All Accounts</h1>
+      </div>
+      <div class="table-wrap">
+        <table class="ops-table">
+          <thead><tr>
+            <th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Source</th><th>Joined</th>
+          </tr></thead>
+          <tbody id="customers-tbody">
+            <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--text-muted)"><div class="ops-spinner"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── DETAIL SLIDE-OUT ── -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-nav">
+    <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)" id="detailType">Work Order</span>
+    <button class="detail-close" onclick="closeDetail()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+</div>
+
+<script>
+const SUPABASE_URL  = 'https://mnytmsmjpsuzgwzeriwq.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueXRtc21qcHN1emd3emVyaXdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMjY3MzIsImV4cCI6MjA5MTgwMjczMn0.vmtbculI08fDMle7YdC9LdSIRUaKdLqaHdFI3JtW120';
+const ADMIN_EMAIL   = 'office@waterutilityconsultant.com';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+let currentUser = null;
+let allWorkOrders = [];
+let allMapEdits = [];
+let allInvoices = [];
+let allQuotes = [];
+let allCustomers = [];
+let calYear, calMonth, calView = 'month';
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+/* ── CLOCK ── */
+function tickClock(){
+  const now = new Date();
+  document.getElementById('navClock').textContent =
+    DAYS[now.getDay()] + ' ' + now.getDate() + ' ' + MONTHS[now.getMonth()] + ' ' + now.getFullYear() +
+    ' · ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+}
+tickClock();
+setInterval(tickClock, 10000);
+
+/* ── AUTH ── */
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (session) {
+    const email = session.user.email;
+    if (email !== ADMIN_EMAIL) {
+      document.getElementById('gateSpinner').style.display = 'none';
+      document.getElementById('gateMsg').style.display = 'none';
+      document.getElementById('accessDenied').style.display = 'block';
+      return;
+    }
+    currentUser = session.user;
+    document.getElementById('accessGate').style.display = 'none';
+    document.getElementById('opsNav').style.display = 'flex';
+    document.getElementById('opsWrap').style.display = 'flex';
+    loadAll();
+  } else {
+    window.location.href = 'portal.html';
+  }
+});
+
+async function doLogout(){ await sb.auth.signOut(); window.location.href = 'portal.html'; }
+
+/* ── LOAD ALL DATA ── */
+async function loadAll(){
+  const { data: { session } } = await sb.auth.getSession();
+  const token = session?.access_token || SUPABASE_ANON;
+  const h = { apikey: SUPABASE_ANON, Authorization: `Bearer ${token}` };
+
+  const [woRes, meRes, invRes, qRes, custRes] = await Promise.all([
+    fetch(`${SUPABASE_URL}/rest/v1/work_orders?order=submitted_at.desc&select=*`, { headers: h }),
+    fetch(`${SUPABASE_URL}/rest/v1/map_edit_requests?order=submitted_at.desc&select=*`, { headers: h }),
+    fetch(`${SUPABASE_URL}/rest/v1/invoices?order=created_at.desc&select=*`, { headers: h }),
+    fetch(`${SUPABASE_URL}/rest/v1/quotes?order=created_at.desc&select=*`, { headers: h }),
+    fetch(`${SUPABASE_URL}/rest/v1/customers?order=created_at.desc&select=*`, { headers: h }),
+  ]);
+
+  allWorkOrders = woRes.ok ? await woRes.json() : [];
+  allMapEdits   = meRes.ok ? await meRes.json() : [];
+  allInvoices   = invRes.ok ? await invRes.json() : [];
+  allQuotes     = qRes.ok ? await qRes.json() : [];
+  allCustomers  = custRes.ok ? await custRes.json() : [];
+
+  renderDashboard();
+  renderPipeline('all');
+  renderInfra();
+  renderInvoices();
+  renderQuotes();
+  renderCustomers();
+  renderAccounts();
+  const n = new Date();
+  calYear = n.getFullYear(); calMonth = n.getMonth();
+  renderCal();
+}
+
+/* ── HELPERS ── */
+const fmt = v => v || '—';
+const fmtDate = v => v ? new Date((v.length===10?v+'T12:00:00':v)).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+const daysAgo = v => { if(!v) return ''; const d = Math.floor((Date.now()-new Date(v))/86400000); return d===0?'Today':d===1?'Yesterday':`${d}d ago`; };
+const isOverdue = v => v && new Date(v+'T23:59:59') < new Date();
+const pillClass = s => { const m={'received':'pill-received','acknowledged':'pill-acknowledged','staged':'pill-staged','in-field':'pill-infield','in_field':'pill-infield','complete':'pill-complete','closed':'pill-closed','closed out':'pill-closed'}; return m[(s||'').toLowerCase()]||'pill-received'; };
+const accentClass = s => { const m={'received':'accent-blue','acknowledged':'accent-amber','staged':'accent-amber','in-field':'accent-green','in_field':'accent-green','complete':'accent-gray','closed':'accent-gray'}; return m[(s||'').toLowerCase()]||'accent-blue'; };
+
+/* ── DASHBOARD ── */
+function renderDashboard(){
+  const open = allWorkOrders.filter(w => !['complete','closed','closed out'].includes((w.status||'').toLowerCase()));
+  const needsAction = allWorkOrders.filter(w => {
+    const s = (w.status||'').toLowerCase();
+    return s === 'received' || (w.preferred_date && isOverdue(w.preferred_date) && s !== 'complete' && s !== 'closed');
+  });
+  const pendingQuotes = allQuotes.filter(q => (q.status||'').toLowerCase() === 'pending');
+  const activeAccts = allCustomers.filter(c => c.status === 'client');
+  const pendingInfra = allMapEdits.filter(m => !['complete','closed'].includes((m.status||'').toLowerCase()));
+
+  document.getElementById('sitrep-priority').textContent = needsAction.length;
+  document.getElementById('sitrep-pipeline').textContent = open.length;
+  document.getElementById('sitrep-quotes').textContent   = pendingQuotes.length;
+  document.getElementById('sitrep-accounts').textContent = activeAccts.length;
+
+  const pip = (needsAction.length > 0 || pendingInfra.length > 0);
+  document.getElementById('statusPip').className = 'status-pip' + (pip ? ' alert' : '');
+  document.getElementById('statusText').textContent = pip ? `${needsAction.length} item${needsAction.length!==1?'s':''} need attention` : 'All systems nominal';
+
+  document.getElementById('sb-pipeline').textContent = open.length || '0';
+  document.getElementById('sb-infra').textContent    = pendingInfra.length || '0';
+
+  /* Mission pipeline panel — top 6 open orders */
+  const topOrders = [...open].sort((a,b)=>{
+    const priority = {'received':0,'acknowledged':1,'staged':2,'in-field':3,'in_field':3};
+    const pa = priority[(a.status||'').toLowerCase()]??4;
+    const pb = priority[(b.status||'').toLowerCase()]??4;
+    if(pa!==pb) return pa-pb;
+    return new Date(b.submitted_at)-new Date(a.submitted_at);
+  }).slice(0,6);
+
+  document.getElementById('dash-pipeline').innerHTML = topOrders.length ? topOrders.map(wo=>`
+    <div class="mission-row" onclick="openDetail('wo','${wo.id}')">
+      <div class="mission-accent ${accentClass(wo.status)}"></div>
+      <div>
+        <div class="mission-account">${fmt(wo.name||wo.email)}</div>
+        <div class="mission-service">${fmt(wo.service)}${wo.scope?' — '+wo.scope.substring(0,55)+(wo.scope.length>55?'…':''):''}</div>
+      </div>
+      <div class="mission-date${wo.preferred_date&&isOverdue(wo.preferred_date)?' overdue':''}">${wo.preferred_date?fmtDate(wo.preferred_date):daysAgo(wo.submitted_at)}</div>
+      <span class="pill ${pillClass(wo.status)}">${wo.status||'Received'}</span>
+    </div>`).join('') :
+    '<div class="empty-ops"><i class="fas fa-check-circle"></i><p>Pipeline clear</p></div>';
+
+  /* Priority actions */
+  const actions = [];
+  allWorkOrders.filter(w=>(w.status||'').toLowerCase()==='received').forEach(w=>{
+    actions.push({level:'blue',icon:'+',text:`New service request — ${w.name||w.email}`,sub:`${w.service||'Service request'} · ${daysAgo(w.submitted_at)}`});
+  });
+  const overdueInvoices = allInvoices.filter(i=>(i.status||'').toLowerCase()==='overdue');
+  overdueInvoices.forEach(i=>{
+    actions.push({level:'red',icon:'!',text:`Overdue invoice — ${i.customer_name||i.email}`,sub:`$${Number(i.amount||0).toFixed(2)} outstanding`});
+  });
+  pendingQuotes.filter(q=>q.created_at&&Math.floor((Date.now()-new Date(q.created_at))/86400000)>5).forEach(q=>{
+    actions.push({level:'amber',icon:'↑',text:`Quote aging — ${q.customer_name||q.email}`,sub:`${q.service||'Quote'} · ${daysAgo(q.created_at)}`});
+  });
+  pendingInfra.slice(0,2).forEach(m=>{
+    actions.push({level:'amber',icon:'◈',text:`Infra update pending — ${m.email||'Customer'}`,sub:`${m.layer_name||'Layer'} · ${daysAgo(m.submitted_at)}`});
+  });
+
+  document.getElementById('dash-priority').innerHTML = actions.length ? actions.slice(0,6).map(a=>`
+    <div class="priority-item">
+      <div class="priority-icon picon-${a.level}">${a.icon}</div>
+      <div>
+        <div class="priority-text">${a.text}</div>
+        <div class="priority-sub">${a.sub}</div>
+      </div>
+    </div>`).join('') :
+    '<div class="empty-ops"><i class="fas fa-check-double"></i><p>No priority actions</p></div>';
+
+  /* Deploy week strip */
+  const today = new Date();
+  const startOfWeek = new Date(today); startOfWeek.setDate(today.getDate()-today.getDay());
+  const weekDays = Array.from({length:7},(_,i)=>{ const d=new Date(startOfWeek); d.setDate(startOfWeek.getDate()+i); return d; });
+  const woByDay = {};
+  allWorkOrders.forEach(w=>{
+    if(!w.preferred_date) return;
+    const d = new Date(w.preferred_date+'T12:00:00');
+    const key = d.toDateString();
+    if(!woByDay[key]) woByDay[key]=[];
+    woByDay[key].push(w);
+  });
+  document.getElementById('dash-deploy').innerHTML = `
+    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Deployment — this week</div>
+    <div class="week-strip">${weekDays.map(d=>{
+      const key = d.toDateString();
+      const jobs = woByDay[key]||[];
+      const isToday = d.toDateString()===today.toDateString();
+      const ticks = jobs.slice(0,4).map(j=>{
+        const s=(j.status||'').toLowerCase();
+        const c=s==='received'?'tick-blue':s==='acknowledged'||s==='staged'?'tick-amber':s.includes('field')?'tick-green':'tick-red';
+        return `<div class="job-tick ${c}" title="${j.service||'Job'}"></div>`;
+      }).join('');
+      return `<div class="day-col">
+        <div class="day-name">${DAYS[d.getDay()]}</div>
+        <div class="day-num${isToday?' today':''}">${d.getDate()}</div>
+        ${ticks}
+        ${jobs.length?`<div style="font-size:9px;color:var(--text-muted);margin-top:2px;">${jobs.length} job${jobs.length!==1?'s':''}</div>`:''}
+      </div>`;
+    }).join('')}</div>`;
+
+  /* Outstanding AR */
+  const arItems = allInvoices.filter(i=>['overdue','unpaid','pending'].includes((i.status||'').toLowerCase())).slice(0,5);
+  document.getElementById('dash-ar').innerHTML = arItems.length ? arItems.map(i=>`
+    <div class="billing-row" onclick="showPage('invoices',document.querySelector('[onclick*=invoices]'))">
+      <div>
+        <div class="billing-account">${fmt(i.customer_name||i.email)}</div>
+        <div class="billing-service">${fmt(i.service)}</div>
+      </div>
+      <div class="billing-right">
+        <div class="billing-amount${(i.status||'').toLowerCase()==='overdue'?' overdue':''}">${i.amount?'$'+Number(i.amount).toFixed(2):'—'}</div>
+        <span class="pill ${pillClass(i.status)||'pill-acknowledged'}" style="margin-top:4px;">${i.status||'—'}</span>
+      </div>
+    </div>`).join('') :
+    '<div class="empty-ops"><i class="fas fa-check-circle"></i><p>No outstanding AR</p></div>';
+
+  /* Infra panel */
+  const infraItems = pendingInfra.slice(0,4);
+  document.getElementById('dash-infra').innerHTML = infraItems.length ? infraItems.map(m=>`
+    <div class="infra-row" onclick="openDetail('infra','${m.id}')">
+      <div>
+        <div class="infra-account">${fmt(m.email)}</div>
+        <div class="infra-layer">${fmt(m.layer_name)}${m.edit_explanation?' — '+m.edit_explanation.substring(0,50):''}${m.edit_explanation&&m.edit_explanation.length>50?'…':''}</div>
+      </div>
+      <div class="infra-age">${daysAgo(m.submitted_at)}</div>
+    </div>`).join('') :
+    '<div class="empty-ops"><i class="fas fa-check-circle"></i><p>No pending infra updates</p></div>';
+}
+
+/* ── FULL PIPELINE ── */
+let pipelineFilter = 'all';
+function renderPipeline(filter){
+  pipelineFilter = filter;
+  const rows = filter==='all' ? allWorkOrders : allWorkOrders.filter(w=>(w.status||'received').toLowerCase()===filter.toLowerCase());
+  document.getElementById('pipeline-tbody').innerHTML = rows.length ? rows.map(wo=>`
+    <tr onclick="openDetail('wo','${wo.id}')">
+      <td><strong>${fmt(wo.name||wo.email)}</strong></td>
+      <td>${fmt(wo.service)}</td>
+      <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${fmt(wo.address)}</td>
+      <td class="${wo.preferred_date&&isOverdue(wo.preferred_date)?'':''}"><span style="${wo.preferred_date&&isOverdue(wo.preferred_date)?'color:var(--red);font-weight:700;':''}">${fmtDate(wo.preferred_date)}</span></td>
+      <td>${fmtDate(wo.submitted_at)}</td>
+      <td><span class="pill ${pillClass(wo.status)}">${wo.status||'Received'}</span></td>
+    </tr>`).join('') :
+    `<tr><td colspan="6" class="empty-ops"><i class="fas fa-inbox"></i><p>No orders in this status</p></td></tr>`;
+}
+function filterPipeline(f, btn){
+  document.querySelectorAll('#pipeline-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPipeline(f);
+}
+
+/* ── INFRA LOG ── */
+function renderInfra(){
+  document.getElementById('infra-tbody').innerHTML = allMapEdits.length ? allMapEdits.map(m=>`
+    <tr onclick="openDetail('infra','${m.id}')">
+      <td><strong>${fmt(m.email)}</strong></td>
+      <td>${fmt(m.layer_name)}</td>
+      <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${fmt(m.edit_explanation)}</td>
+      <td>${fmt(m.address_or_gps)}</td>
+      <td>${fmtDate(m.submitted_at)}</td>
+      <td><span class="pill ${pillClass(m.status||'received')}">${m.status||'Pending'}</span></td>
+    </tr>`).join('') :
+    `<tr><td colspan="6" class="empty-ops"><p>No infrastructure updates</p></td></tr>`;
+}
+
+/* ── INVOICES ── */
+function renderInvoices(){
+  document.getElementById('invoices-tbody').innerHTML = allInvoices.length ? allInvoices.map(i=>`
+    <tr>
+      <td><strong>${fmt(i.customer_name||i.email)}</strong></td>
+      <td>${fmt(i.service)}</td>
+      <td>${fmtDate(i.service_date)}</td>
+      <td style="font-variant-numeric:tabular-nums;font-weight:700;">${i.amount?'$'+Number(i.amount).toFixed(2):'—'}</td>
+      <td><span class="pill ${pillClass(i.status)}">${i.status||'—'}</span></td>
+      <td>${i.invoice_url?`<a href="${i.invoice_url}" target="_blank" style="color:var(--blue);font-size:11px;font-weight:700;"><i class="fas fa-download" style="margin-right:4px;"></i>View</a>`:'<span style="color:var(--text-muted);font-size:11px;">Not uploaded</span>'}</td>
+    </tr>`).join('') :
+    `<tr><td colspan="6" class="empty-ops"><p>No invoices found</p></td></tr>`;
+}
+
+/* ── QUOTES ── */
+function renderQuotes(){
+  document.getElementById('quotes-tbody').innerHTML = allQuotes.length ? allQuotes.map(q=>`
+    <tr>
+      <td><strong>${fmt(q.customer_name||q.email)}</strong></td>
+      <td>${fmt(q.service)}</td>
+      <td>${fmtDate(q.submitted_at||q.created_at)}</td>
+      <td style="font-variant-numeric:tabular-nums;font-weight:700;">${q.amount?'$'+Number(q.amount).toFixed(2):'—'}</td>
+      <td><span class="pill ${pillClass(q.status)}">${q.status||'Pending'}</span></td>
+      <td style="max-width:160px;font-size:11px;color:var(--text-secondary);">${fmt(q.notes)}</td>
+    </tr>`).join('') :
+    `<tr><td colspan="6" class="empty-ops"><p>No quotes found</p></td></tr>`;
+}
+
+/* ── CUSTOMERS TABLE ── */
+function renderCustomers(){
+  document.getElementById('customers-tbody').innerHTML = allCustomers.length ? allCustomers.map(c=>`
+    <tr>
+      <td><strong>${[c.first_name,c.last_name].filter(Boolean).join(' ')||'—'}</strong></td>
+      <td style="color:var(--text-secondary);">${fmt(c.email)}</td>
+      <td>${fmt(c.phone)}</td>
+      <td><span class="pill ${c.status==='client'?'pill-infield':'pill-received'}">${c.status||'—'}</span></td>
+      <td style="color:var(--text-muted);">${fmt(c.source)}</td>
+      <td style="color:var(--text-muted);">${fmtDate(c.created_at)}</td>
+    </tr>`).join('') :
+    `<tr><td colspan="6" class="empty-ops"><p>No customers found</p></td></tr>`;
+}
+
+/* ── ACCOUNT DOSSIERS ── */
+function renderAccounts(){
+  const clients = allCustomers.filter(c=>c.status==='client');
+  document.getElementById('accounts-grid').innerHTML = clients.length ? clients.map(c=>{
+    const email = c.email||'';
+    const name = [c.first_name,c.last_name].filter(Boolean).join(' ')||email;
+    const wos = allWorkOrders.filter(w=>w.email===email||w.user_id===c.id);
+    const openWos = wos.filter(w=>!['complete','closed'].includes((w.status||'').toLowerCase()));
+    const invs = allInvoices.filter(i=>i.email===email);
+    const overdueInv = invs.filter(i=>(i.status||'').toLowerCase()==='overdue');
+    return `<div class="account-card">
+      <div class="account-name">${name}</div>
+      <div class="account-contact">${email}</div>
+      <div class="account-stats">
+        <div>
+          <div class="acc-stat-num${openWos.length>0?' red':''}">${openWos.length}</div>
+          <div class="acc-stat-label">Open WOs</div>
+        </div>
+        <div>
+          <div class="acc-stat-num">${wos.length}</div>
+          <div class="acc-stat-label">Total jobs</div>
+        </div>
+        <div>
+          <div class="acc-stat-num${overdueInv.length>0?' red':''}">${overdueInv.length}</div>
+          <div class="acc-stat-label">Overdue inv.</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('') :
+  '<div class="empty-ops" style="grid-column:1/-1"><i class="fas fa-building"></i><p>No client accounts found</p></div>';
+}
+
+/* ── CALENDAR ── */
+function navCal(dir){
+  if(calView==='month'){ calMonth+=dir; if(calMonth>11){calMonth=0;calYear++;} if(calMonth<0){calMonth=11;calYear--;} }
+  else { const d=new Date(calYear,calMonth,1); d.setDate(d.getDate()+dir*7); calYear=d.getFullYear();calMonth=d.getMonth(); }
+  renderCal();
+}
+function changeCalView(v,btn){ calView=v; document.querySelectorAll('[onclick*=changeCalView]').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderCal(); }
+function renderCal(){
+  const label = document.getElementById('cal-label');
+  label.textContent = MONTHS[calMonth]+' '+calYear;
+  const body = document.getElementById('cal-body');
+  const today = new Date(); const firstDay=new Date(calYear,calMonth,1).getDay(); const daysIn=new Date(calYear,calMonth+1,0).getDate();
+  const woByDay={};
+  allWorkOrders.forEach(w=>{ if(!w.preferred_date)return; const d=new Date(w.preferred_date+'T12:00:00'); if(d.getFullYear()===calYear&&d.getMonth()===calMonth){ const day=d.getDate(); if(!woByDay[day])woByDay[day]=[]; woByDay[day].push(w); } });
+  const calCss=`display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--navy-border)`;
+  const dayHeaderHtml=DAYS.map(d=>`<div style="text-align:center;padding:8px 4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);background:var(--navy-panel);">${d}</div>`).join('');
+  let cellHtml='';
+  for(let i=0;i<firstDay;i++) cellHtml+=`<div style="background:var(--navy);min-height:72px;"></div>`;
+  for(let d=1;d<=daysIn;d++){
+    const isToday=d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear();
+    const jobs=woByDay[d]||[];
+    const jobTicks=jobs.slice(0,3).map(j=>`<div style="font-size:9px;font-weight:600;color:#85B7EB;background:rgba(55,138,221,.15);border-radius:3px;padding:1px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${j.name||j.service||'Job'}</div>`).join('');
+    cellHtml+=`<div style="background:var(--navy-panel);min-height:72px;padding:6px 8px;${isToday?'outline:1px solid var(--blue);':''}" >
+      <div style="font-size:11px;font-weight:700;color:${isToday?'var(--blue)':'var(--text-secondary)'};margin-bottom:4px;">${d}</div>
+      ${jobTicks}
+      ${jobs.length>3?`<div style="font-size:9px;color:var(--text-muted);">+${jobs.length-3} more</div>`:''}
+    </div>`;
+  }
+  body.innerHTML=`<div style="${calCss}">${dayHeaderHtml}</div><div style="${calCss}">${cellHtml}</div>`;
+}
+
+/* ── DETAIL SLIDE-OUT ── */
+function openDetail(type, id){
+  const overlay=document.getElementById('detailOverlay'); const panel=document.getElementById('detailPanel');
+  const body=document.getElementById('detailBody'); const typeLabel=document.getElementById('detailType');
+  overlay.classList.add('open'); panel.classList.add('open');
+
+  if(type==='wo'){
+    const wo = allWorkOrders.find(w=>String(w.id)===String(id));
+    if(!wo){ body.innerHTML='<p style="color:var(--text-muted)">Record not found</p>'; return; }
+    typeLabel.textContent='Service Order';
+    body.innerHTML=`
+      <div class="detail-service-title">${fmt(wo.service)}</div>
+      <div class="detail-account-name">${fmt(wo.name||wo.email)}</div>
+      <div class="detail-status-row">
+        <span class="pill ${pillClass(wo.status)}">${wo.status||'Received'}</span>
+        <select class="status-change-select" id="detail-status-sel" onchange="updateWOStatus('${wo.id}',this.value)">
+          <option value="received"${(wo.status||'')==='received'?' selected':''}>Received</option>
+          <option value="acknowledged"${wo.status==='acknowledged'?' selected':''}>Acknowledged</option>
+          <option value="staged"${wo.status==='staged'?' selected':''}>Staged</option>
+          <option value="in-field"${wo.status==='in-field'?' selected':''}>In-Field</option>
+          <option value="complete"${wo.status==='complete'?' selected':''}>Complete</option>
+          <option value="closed"${wo.status==='closed'?' selected':''}>Closed Out</option>
+        </select>
+      </div>
+      <hr class="detail-divider">
+      <div class="detail-field"><div class="detail-label">Account / Contact</div><div class="detail-value">${fmt(wo.name)} · ${fmt(wo.email)}</div></div>
+      <div class="detail-field"><div class="detail-label">Address</div><div class="detail-value">${fmt(wo.address)}</div></div>
+      <div class="detail-field"><div class="detail-label">Preferred date</div><div class="detail-value" style="${wo.preferred_date&&isOverdue(wo.preferred_date)?'color:var(--red);font-weight:700;':''}">${fmtDate(wo.preferred_date)}</div></div>
+      <div class="detail-field"><div class="detail-label">Quote required</div><div class="detail-value">${fmt(wo.quote_needed)}</div></div>
+      <div class="detail-field"><div class="detail-label">POC on-site</div><div class="detail-value">${fmt(wo.poc_name)} · ${fmt(wo.poc_phone)}</div></div>
+      <div class="detail-field"><div class="detail-label">Submitted</div><div class="detail-value">${fmtDate(wo.submitted_at)}</div></div>
+      <hr class="detail-divider">
+      <div class="detail-field"><div class="detail-label">Scope of work</div><div class="detail-scope">${fmt(wo.scope)}</div></div>
+      ${wo.attachment_path?`<div class="detail-field" style="margin-top:12px;"><a href="#" onclick="viewAttachment('${wo.attachment_path}');return false;" style="color:var(--blue);font-size:12px;font-weight:700;"><i class="fas fa-paperclip" style="margin-right:5px;"></i>View attachment</a></div>`:''}
+      <hr class="detail-divider">
+      <div class="field-note-wrap">
+        <div class="detail-label">Operator field log</div>
+        <textarea class="field-note-input" id="detail-note" placeholder="Log findings, actions taken, next steps...">${wo.operator_notes||''}</textarea>
+        <button class="btn-save" onclick="saveFieldNote('${wo.id}')" id="note-save-btn"><i class="fas fa-save"></i> Save log entry</button>
+        <div class="detail-msg" id="note-msg"></div>
+      </div>`;
+  } else if(type==='infra'){
+    const m = allMapEdits.find(x=>String(x.id)===String(id));
+    if(!m){ body.innerHTML='<p style="color:var(--text-muted)">Record not found</p>'; return; }
+    typeLabel.textContent='Infrastructure Update';
+    const specs=[
+      ['Line size',m.line_size],['Line depth',m.line_depth],['Line material',m.line_material],
+      ['Repair method',m.repair_method],['Valve size',m.valve_size],['Valve type',m.valve_type],
+      ['Line pressure',m.line_pressure],['Inlet pressure',m.inlet_pressure],['Outlet pressure',m.outlet_pressure],
+      ['Manufacturer',m.item_manufacturer],['Road distance',m.distance_from_road]
+    ].filter(s=>s[1]);
+    body.innerHTML=`
+      <div class="detail-service-title">${fmt(m.layer_name)}</div>
+      <div class="detail-account-name">${fmt(m.email)}</div>
+      <div class="detail-status-row">
+        <span class="pill ${pillClass(m.status||'received')}">${m.status||'Pending'}</span>
+        <select class="status-change-select" onchange="updateInfraStatus('${m.id}',this.value)">
+          <option value="pending"${(!m.status||m.status==='pending')?' selected':''}>Pending</option>
+          <option value="acknowledged"${m.status==='acknowledged'?' selected':''}>Acknowledged</option>
+          <option value="complete"${m.status==='complete'?' selected':''}>Complete</option>
+        </select>
+      </div>
+      <hr class="detail-divider">
+      <div class="detail-field"><div class="detail-label">Layer</div><div class="detail-value">${fmt(m.layer_name)}</div></div>
+      <div class="detail-field"><div class="detail-label">Address / GPS</div><div class="detail-value">${fmt(m.address_or_gps)}</div></div>
+      <div class="detail-field"><div class="detail-label">Submitted</div><div class="detail-value">${fmtDate(m.submitted_at)}</div></div>
+      ${m.edit_explanation?`<div class="detail-field"><div class="detail-label">Edit needed</div><div class="detail-scope">${m.edit_explanation}</div></div>`:''}
+      ${specs.length?`<hr class="detail-divider"><div class="detail-label" style="margin-bottom:10px;">Field specs</div>${specs.map(s=>`<div class="detail-field"><div class="detail-label">${s[0]}</div><div class="detail-value">${s[1]}</div></div>`).join('')}`:''}
+      <hr class="detail-divider">
+      <div class="field-note-wrap">
+        <div class="detail-label">Operator field log</div>
+        <textarea class="field-note-input" id="detail-note" placeholder="Log what was changed, verified, or actioned...">${m.operator_notes||''}</textarea>
+        <button class="btn-save" onclick="saveInfraNote('${m.id}')" id="note-save-btn"><i class="fas fa-save"></i> Save log entry</button>
+        <div class="detail-msg" id="note-msg"></div>
+      </div>`;
+  }
+}
+
+function closeDetail(){
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.getElementById('detailPanel').classList.remove('open');
+}
+
+/* ── STATUS UPDATES ── */
+async function updateWOStatus(id, status){
+  const { data:{session} } = await sb.auth.getSession();
+  const token = session?.access_token||SUPABASE_ANON;
+  await fetch(`${SUPABASE_URL}/rest/v1/work_orders?id=eq.${id}`,{
+    method:'PATCH',
+    headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify({status,updated_at:new Date().toISOString()})
+  });
+  const wo = allWorkOrders.find(w=>String(w.id)===String(id));
+  if(wo) wo.status=status;
+  renderDashboard(); renderPipeline(pipelineFilter);
+}
+
+async function updateInfraStatus(id, status){
+  const { data:{session} } = await sb.auth.getSession();
+  const token = session?.access_token||SUPABASE_ANON;
+  await fetch(`${SUPABASE_URL}/rest/v1/map_edit_requests?id=eq.${id}`,{
+    method:'PATCH',
+    headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify({status,updated_at:new Date().toISOString()})
+  });
+  const m = allMapEdits.find(x=>String(x.id)===String(id));
+  if(m) m.status=status;
+  renderDashboard(); renderInfra();
+}
+
+async function saveFieldNote(id){
+  const note = document.getElementById('detail-note').value;
+  const btn = document.getElementById('note-save-btn');
+  const msg = document.getElementById('note-msg');
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving...';
+  const { data:{session} } = await sb.auth.getSession();
+  const token = session?.access_token||SUPABASE_ANON;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/work_orders?id=eq.${id}`,{
+    method:'PATCH',
+    headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify({operator_notes:note,updated_at:new Date().toISOString()})
+  });
+  if(res.ok){ msg.textContent='Field log saved.'; msg.className='detail-msg success'; const wo=allWorkOrders.find(w=>String(w.id)===String(id)); if(wo) wo.operator_notes=note; }
+  else { msg.textContent='Save failed. Try again.'; msg.className='detail-msg error'; }
+  btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> Save log entry';
+  setTimeout(()=>msg.className='detail-msg',3000);
+}
+
+async function saveInfraNote(id){
+  const note = document.getElementById('detail-note').value;
+  const btn = document.getElementById('note-save-btn');
+  const msg = document.getElementById('note-msg');
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving...';
+  const { data:{session} } = await sb.auth.getSession();
+  const token = session?.access_token||SUPABASE_ANON;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/map_edit_requests?id=eq.${id}`,{
+    method:'PATCH',
+    headers:{apikey:SUPABASE_ANON,Authorization:`Bearer ${token}`,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify({operator_notes:note,updated_at:new Date().toISOString()})
+  });
+  if(res.ok){ msg.textContent='Field log saved.'; msg.className='detail-msg success'; const m=allMapEdits.find(x=>String(x.id)===String(id)); if(m) m.operator_notes=note; }
+  else { msg.textContent='Save failed. Try again.'; msg.className='detail-msg error'; }
+  btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> Save log entry';
+  setTimeout(()=>msg.className='detail-msg',3000);
+}
+
+async function viewAttachment(path){
+  const { data } = await sb.storage.from('work-order-attachments').createSignedUrl(path,60);
+  if(data?.signedUrl) window.open(data.signedUrl,'_blank');
+}
+
+/* ── PAGE NAV ── */
+function showPage(pageId, el){
+  document.querySelectorAll('.ops-page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+pageId).classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(l=>l.classList.remove('active'));
+  if(el) el.classList.add('active');
+  closeDetail();
+}
+
+/* ── PLACEHOLDER MODALS ── */
+function openCreateInvoice(){ alert('Invoice creation form — coming next build.'); }
+function openCreateQuote(){ alert('Quote creation form — coming next build.'); }
+</script>
+</body>
+</html>
