@@ -453,7 +453,7 @@
         })
       });
 
-      if (!leadRes.ok) throw new Error('Lead insert failed');
+     if (!leadRes.ok && leadRes.status !== 409) throw new Error('Lead insert failed');
 
       // ── Step 2: Log the message/inquiry ───────────────────────────────────
       // Stored separately so one customer can have multiple messages over time.
