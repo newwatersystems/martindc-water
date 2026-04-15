@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+  <title>Projects – Martin DC Water Utility Consultants</title>
+  <meta name="description" content="Real-world water utility projects completed by Martin DC — valve vault rehabilitation, pump rebuilds, PRV restoration, and well pump servicing across rural Texas.">
+  <link rel="icon" href="https://waterutilityconsultant.com/wp-content/uploads/2025/01/Picture33-150x150.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-1: #2872fa;
+      --color-2: #1559ed;
+      --color-3: #3A4F66;
+      --color-4: #192a3d;
+      --color-5: #e1e8ed;
+      --color-6: #f2f5f7;
+      --color-7: #FAFBFC;
+      --color-8: #ffffff;
+      --blue:    #0080FF;
+      --card-bg: #EBF3FC;
+      --nav-pill-bg:     rgba(220,235,248,0.85);
+      --nav-pill-border: rgba(180,219,252,0.90);
+      --max-w: 1290px;
+      --container-pad: 0 90px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000000;
+      background-color: var(--color-7);
+      line-height: 1.65;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: var(--container-pad);
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 18px 40px;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(255,255,255,0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo img { height: 60px; width: auto; }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--nav-pill-bg);
+      border: 1px solid var(--nav-pill-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 50px;
+      padding: 6px 10px;
+    }
+
+    .nav-pill a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-4);
+      padding: 8px 16px;
+      border-radius: 50px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-pill a:hover { background: rgba(180,219,252,0.30); }
+
+    .nav-dropdown { position: relative; }
+
+    .nav-dropdown > a { display: flex; align-items: center; gap: 4px; }
+    .nav-dropdown > a::after {
+      content: '';
+      border: 4px solid transparent;
+      border-top-color: var(--color-4);
+      margin-top: 2px;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.97);
+      border: 1px solid var(--color-5);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      padding: 8px 0;
+      min-width: 220px;
+      z-index: 100;
+    }
+
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-4);
+      transition: background 0.15s;
+    }
+
+    .dropdown-menu a:hover { background: var(--card-bg); }
+    .dropdown-menu a.current { color: var(--blue); }
+
+    .nav-contact {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px !important;
+      font-weight: 700;
+      color: var(--color-4) !important;
+      background: var(--nav-pill-bg);
+      border: 1px solid var(--nav-pill-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 50px;
+      padding: 8px 18px !important;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-contact:hover {
+      background: rgba(0,128,255,0.15) !important;
+      color: var(--blue) !important;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-4);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    nav:not(.scrolled) .nav-hamburger span { background: #fff; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.98);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-4);
+    }
+
+    .mobile-menu a:hover { color: var(--blue); }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--color-4);
+      background: none;
+      border: none;
+    }
+
+    .mobile-sub {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-sub a { font-size: 15px; color: var(--color-3); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/water-resources-and-the-environment-scaled.avif');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.07);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Exo', sans-serif;
+      font-size: 60px;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 15px 12px 39px #000000;
+      line-height: 1.2;
+    }
+
+    /* ─── PROJECTS SECTION ─── */
+    .projects-section {
+      background: var(--color-7);
+      padding: 80px 0;
+    }
+
+    /* Alternating project rows */
+    .project-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .project-row:last-child { margin-bottom: 0; }
+
+    /* Even rows flip image to right */
+    .project-row.reverse .project-img { order: 2; }
+    .project-row.reverse .project-text { order: 1; }
+
+    .project-img img {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+      max-height: 400px;
+    }
+
+    .project-text h2 {
+      font-family: 'Exo', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--color-4);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .project-text p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000000;
+      line-height: 1.65;
+    }
+
+    /* Divider between rows */
+    .project-divider {
+      height: 1px;
+      background: var(--color-5);
+      margin-bottom: 80px;
+    }
+
+    /* ─── CTA ─── */
+    .cta {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/african-woman-pouring-water-recipient-outdoors-scaled.jpg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,128,255,0.18);
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      padding: 0 20px;
+    }
+
+    .cta-content h2 {
+      font-family: 'Exo', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: capitalize;
+      color: #ffffff;
+      background: var(--blue);
+      border: 1px solid var(--blue);
+      border-radius: 37px;
+      padding: 19px 25px;
+      transition: background 0.25s, color 0.25s;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover { background: #ffffff; color: var(--blue); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--color-6);
+      background-image: url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/Footer.png');
+      background-size: cover;
+      background-position: center;
+      padding: 60px 0 30px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-logo { height: 60px; width: auto; margin-bottom: 20px; }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000;
+      font-size: 16px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .footer-social a:hover { background: var(--blue); color: #ffffff; }
+
+    .footer-col h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-4);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-col ul li a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: #000000;
+      text-transform: capitalize;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--blue); }
+
+    .footer-contact-item {
+      font-family: 'Manrope', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #000000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+
+    .footer-contact-item:hover { color: var(--blue); }
+    .footer-contact-item svg { flex-shrink: 0; }
+
+    .footer-portal-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: #000000;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .footer-portal-btn {
+      display: inline-block;
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: capitalize;
+      color: #ffffff;
+      background: var(--blue);
+      border: 1px solid var(--blue);
+      border-radius: 37px;
+      padding: 19px 25px;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .footer-portal-btn:hover { background: #ffffff; color: var(--blue); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(0,0,0,0.11);
+      padding-top: 24px;
+      text-align: center;
+    }
+
+    .footer-bottom p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: #000000;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      :root { --container-pad: 0 40px; }
+      .project-row { gap: 40px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
+    }
+
+    @media (max-width: 767px) {
+      :root { --container-pad: 0 20px; }
+
+      nav { padding: 14px 20px; }
+      .nav-pill { display: none; }
+      .nav-contact { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero { min-height: 53vh; }
+      .hero-content h1 { font-size: 45px; }
+
+      .projects-section { padding: 40px 0; }
+
+      .project-row {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 48px;
+      }
+      .project-row.reverse .project-img { order: 0; }
+      .project-row.reverse .project-text { order: 1; }
+
+      .project-text h2 { font-size: 25px; }
+
+      .project-divider { margin-bottom: 48px; }
+
+      .cta { min-height: 37vh; }
+      .cta-content h2 { font-size: 35px; }
+
+      .footer-top { grid-template-columns: 1fr; gap: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC Water Utility Consultants">
+      </a>
+
+      <div class="nav-pill">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <div class="nav-dropdown">
+          <a href="services.html">Services</a>
+          <div class="dropdown-menu">
+            <a href="altitude-valve-services.html">Altitude Valve Services</a>
+            <a href="pressure-valve-services.html">Pressure Valve Services</a>
+            <a href="booster-pump-maintenance.html">Booster Pump Maintenance</a>
+            <a href="licensed-operator-support.html">Licensed Operator Support</a>
+            <a href="emergency-solutions.html">Emergency Solutions</a>
+            <a href="well-maintenance.html">Well Maintenance</a>
+          </div>
+        </div>
+        <a href="projects.html" class="current">Projects</a>
+        <a href="blog.html">Blog</a>
+      </div>
+
+      <a href="contact.html" class="nav-contact">Contact Us</a>
+
+      <div class="nav-hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">✕</button>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <div class="mobile-sub">
+      <a href="services.html">Services</a>
+      <a href="altitude-valve-services.html">Altitude Valve Services</a>
+      <a href="pressure-valve-services.html">Pressure Valve Services</a>
+      <a href="booster-pump-maintenance.html">Booster Pump Maintenance</a>
+      <a href="licensed-operator-support.html">Licensed Operator Support</a>
+      <a href="emergency-solutions.html">Emergency Solutions</a>
+      <a href="well-maintenance.html">Well Maintenance</a>
+    </div>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Projects</h1>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ─── -->
+  <section class="projects-section">
+    <div class="container">
+
+      <!-- PROJECT 1: Town of Sterling — image left -->
+      <div class="project-row">
+        <div class="project-img">
+          <img
+            src="https://waterutilityconsultant.com/wp-content/uploads/2025/02/20241015_095315-1-2048x1536-2-e1741819175136.webp"
+            alt="Town of Sterling valve vault rehabilitation"
+            loading="eager"
+          >
+        </div>
+        <div class="project-text">
+          <h2>Town of Sterling</h2>
+          <p>This project involves the rehabilitation of an existing valve vault, including the full replacement of all piping and the installation of a new altitude valve. The current piping has deteriorated, and the existing valves are seized, preventing proper operation and maintenance. The new system will ensure reliable water level control, improved functionality, and long-term durability, addressing both operational efficiency and compliance needs.</p>
+        </div>
+      </div>
+
+      <div class="project-divider"></div>
+
+      <!-- PROJECT 2: City of Scobell — image right -->
+      <div class="project-row reverse">
+        <div class="project-img">
+          <img
+            src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/booster-pump-header-image.png"
+            alt="City of Scobell pump and motor rebuild"
+            loading="lazy"
+          >
+        </div>
+        <div class="project-text">
+          <h2>City of Scobell</h2>
+          <p>This project includes the complete rebuilding of two pump and motors. Additionally, all gaskets and hardware will be replaced to ensure proper sealing and functionality. These upgrades will extend the service life of the pumps and improve the reliability of the water system.</p>
+        </div>
+      </div>
+
+      <div class="project-divider"></div>
+
+      <!-- PROJECT 3: West Test Rural District — image left -->
+      <div class="project-row">
+        <div class="project-img">
+          <img
+            src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/Project-3-Image.jpg"
+            alt="West Test Rural District PRV rebuild"
+            loading="lazy"
+          >
+        </div>
+        <div class="project-text">
+          <h2>West Test Rural District</h2>
+          <p>This project involves the complete rebuild of a 90 Series Pressure Reducing Valve (PRV) to restore its functionality and extend its service life. By replacing worn components such as diaphragms, seals, and pilot controls, the rebuild eliminates the need for the utility to purchase a costly new valve. This cost-effective solution ensures reliable pressure regulation and reduces long-term system expenses.</p>
+        </div>
+      </div>
+
+      <div class="project-divider"></div>
+
+      <!-- PROJECT 4: Sellers Estates — image right -->
+      <div class="project-row reverse">
+        <div class="project-img">
+          <img
+            src="https://waterutilityconsultant.com/wp-content/uploads/elementor/thumbs/20241219_133625-2048x1536-1-r119yf26rc1gkf322cxki1i86bjrj6l7x7hyx62yhs.webp"
+            alt="Sellers Estates Water System well pump control box"
+            loading="lazy"
+          >
+        </div>
+        <div class="project-text">
+          <h2>Sellers Estates Water System</h2>
+          <p>This project involves servicing a well pump control box to address a blown capacitor and a worn-out contact switch. The repairs include replacing the faulty components to restore proper functionality and ensure reliable pump operation. This maintenance helps prevent further system interruptions and extends the lifespan of the control box.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Let's Optimize Your Water System</h2>
+      <a href="contact.html" class="cta-btn">Contact Us Today</a>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <a href="index.html">
+            <img class="footer-logo" src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC Water Utility Consultants">
+          </a>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h2>Contact Us</h2>
+          <a class="footer-contact-item" href="tel:325-266-1407">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M27.4062 12.7812C27.75 12.875 28 13.1562 28 13.5C28 21.5312 21.5 28 13.5 28C13.125 28 12.8438 27.7812 12.75 27.4375L12 24.1875C11.9375 23.8438 12.0938 23.4688 12.4375 23.3125L15.9375 21.8125C16.25 21.6875 16.5938 21.7812 16.8125 22.0312L18.375 23.9375C20.8125 22.7812 22.7812 20.7812 23.9062 18.4062L22 16.8438C21.75 16.625 21.6562 16.2812 21.7812 15.9688L23.2812 12.4688C23.4375 12.125 23.8125 11.9375 24.1562 12.0312L27.4062 12.7812Z" fill="#0080FF"/></svg>
+            325-266-1407
+          </a>
+          <a class="footer-contact-item" href="mailto:office@waterutilityconsultant.com">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M27.6875 17.9688C27.8125 17.875 28 17.9688 28 18.125V24.5C28 25.3438 27.3125 26 26.5 26H13.5C12.6562 26 12 25.3438 12 24.5V18.125C12 17.9688 12.1562 17.875 12.2812 17.9688C13 18.5312 13.9062 19.2188 17.0938 21.5312C17.75 22 18.875 23.0312 20 23.0312C21.0938 23.0312 22.25 22 22.875 21.5312C26.0625 19.2188 26.9688 18.5312 27.6875 17.9688ZM20 22C19.25 22.0312 18.2188 21.0938 17.6875 20.7188C13.5312 17.7188 13.2188 17.4375 12.2812 16.6875C12.0938 16.5625 12 16.3438 12 16.0938V15.5C12 14.6875 12.6562 14 13.5 14H26.5C27.3125 14 28 14.6875 28 15.5V16.0938C28 16.3438 27.875 16.5625 27.6875 16.6875C26.75 17.4375 26.4375 17.7188 22.2812 20.7188C21.75 21.0938 20.7188 22.0312 20 22Z" fill="#0080FF"/></svg>
+            office@waterutilityconsultant.com
+          </a>
+          <span class="footer-contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M26.875 12.125C27.4062 11.8125 28.0938 12.25 27.9688 12.875L25.7188 26.375C25.6562 26.875 25.125 27.1562 24.6875 26.9688L20.8125 25.3125L18.8125 27.75C18.375 28.2812 17.5 28 17.5 27.25V24.7188L25 15.5625C25.1562 15.375 24.9062 15.1562 24.75 15.3125L15.7812 23.2188L12.4375 21.8125C11.875 21.5938 11.8125 20.7812 12.375 20.4688L26.875 12.125Z" fill="#0080FF"/></svg>
+            1775 CR 356 Doole, TX 76836
+          </span>
+        </div>
+
+        <div class="footer-col">
+          <h2>Useful Links</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Our Service</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h2>Access Your System</h2>
+          <p class="footer-portal-desc">Log in to your personalized dashboard for real-time updates, service requests, and system performance insights.</p>
+          <a href="contact.html" class="footer-portal-btn">Schedule Your Free Consultation Today</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.add('open');
+    });
+    document.getElementById('mobile-close').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>

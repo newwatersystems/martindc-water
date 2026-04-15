@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pressure Valve Services – Martin DC Water Utility Consultants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', sans-serif; color: #000; background: #fff; line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1290px; margin: 0 auto; padding: 0 40px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      background: transparent;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    nav.scrolled { background: rgba(255,255,255,0.97); box-shadow: 0 2px 16px rgba(0,0,0,0.09); }
+    .nav-logo img { height: 72px; width: auto; }
+    .nav-pill {
+      display: flex; align-items: center;
+      background: rgba(180,219,252,0.20);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(180,219,252,0.6);
+      border-radius: 50px; padding: 8px 32px;
+      box-shadow: none; flex: 1; max-width: 600px;
+    }
+    .nav-pill > a, .nav-drop > a {
+      font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 13px;
+      color: #192a3d; padding: 10px 28px; border-radius: 50px; font-size: 15px;
+      transition: color 0.2s; white-space: nowrap;
+      display: flex; align-items: center; gap: 3px;
+    }
+    .nav-pill > a:hover, .nav-drop > a:hover { color: #0080FF; }
+    .nav-pill > a.active, .nav-drop > a.active { color: #192a3d; }
+    .nav-cta:hover { background: rgba(210,232,248,0.65) !important; }
+    .nav-cta {
+      display: inline-flex; align-items: center;
+      background: rgba(180,219,252,0.20); color: #192a3d !important;
+      font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 12px;
+      padding: 10px 20px; border-radius: 50px;
+      border: 1px solid rgba(180,219,252,0.6);
+      transition: background 0.2s; backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .nav-cta:hover { background: #0062cc; }
+    .nav-drop { position: relative; }
+    .nav-drop:hover .drop { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .drop {
+      position: absolute; top: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: #fff; border-radius: 12px; padding: 8px 0;
+      min-width: 220px; box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+      opacity: 0; pointer-events: none; transition: all 0.2s;
+    }
+    .drop a { display: block; padding: 10px 20px; font-size: 13px !important; font-weight: 500 !important; color: #3A4F66 !important; }
+    .drop a:hover { color: #0080FF !important; background: #f5f8ff; }
+    .drop a.cur { color: #0080FF !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: background 0.3s; }
+    nav.scrolled .hamburger span { background: #192a3d; }
+    .mob-menu { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 2000; flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+    .mob-menu.open { display: flex; }
+    .mob-menu a { font-size: 20px; font-weight: 700; color: #192a3d; }
+    .mob-close { position: absolute; top: 24px; right: 28px; font-size: 28px; cursor: pointer; background: none; border: none; color: #192a3d; }
+
+    /* HERO */
+    .hero {
+      position: relative; width: 100%; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding-top: 80px; overflow: hidden;
+    }
+    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.20); z-index: 1; }
+    .hero h1 {
+      position: relative; z-index: 2;
+      font-family: 'Exo', sans-serif; font-weight: 700;
+      font-size: 60px; color: #fff; text-align: center;
+      text-shadow: 15px 12px 39px #000;
+    }
+
+    /* INTRO: image left, text right — padding-top 80px */
+    .intro { padding: 80px 0 40px; background: #FAFBFC; }
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .intro-grid img { width: 100%; border-radius: 12px; }
+    .intro-text h2 { font-family: 'Exo', sans-serif; font-size: 42px; font-weight: 700; color: #192a3d; margin-bottom: 16px; }
+    .intro-text p { font-family: 'Manrope', sans-serif; font-size: 16px; font-weight: 400; color: #000; line-height: 1.75; }
+    .intro-text strong { font-weight: 700; }
+
+    /* BAND: blue bg, two cards with light-blue fill */
+    .band { background: #0080FF; padding: 80px 0; }
+    .band-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .band-card {
+      background: #EBF3FC;
+      border-radius: 12px;
+      padding: 50px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .band-card h3 { font-family: 'Exo', sans-serif; font-size: 42px; font-weight: 700; color: #192a3d; margin-bottom: 16px; }
+    .band-card p { font-family: 'Manrope', sans-serif; font-size: 16px; color: #000; line-height: 1.75; }
+    .band-card ul { display: flex; flex-direction: column; gap: 7px; }
+    .band-card ul li { font-family: 'Manrope', sans-serif; font-size: 16px; color: #000; display: flex; align-items: center; gap: 6px; }
+    .band-card ul li::before { content: "•"; font-size: 6px; color: #000; flex-shrink: 0; }
+
+    /* CASE STUDIES: white bg, padding 80px */
+    .cases { padding: 80px 0; background: #f2f5f7; }
+    .cases-head { text-align: center; margin-bottom: 16px; }
+    .cases-head h2 { font-family: 'Exo', sans-serif; font-size: 51px; font-weight: 700; color: #192a3d; margin-bottom: 8px; }
+    .cases-head p { font-family: 'Exo', sans-serif; font-size: 32px; font-weight: 700; color: #192a3d; }
+    .cases-img { margin: 24px 0; border-radius: 12px; overflow: hidden; }
+    .cases-img img { width: 100%; height: 350px; object-fit: cover; border-radius: 12px; }
+    .cases-body-wrap { background: #EBF3FC; border-radius: 12px; padding: 25px; margin-top: 0; }
+    .cases-body { display: flex; flex-direction: column; gap: 24px; }
+    .cases-body h3 { font-family: 'Exo', sans-serif; font-size: 32px; font-weight: 700; color: #192a3d; margin-bottom: 8px; }
+    .cases-body p { font-family: 'Manrope', sans-serif; font-size: 16px; color: #000; line-height: 1.75; }
+
+    /* CTA: steel pipes bg image, 60vh min */
+    .cta {
+      position: relative; min-height: 60vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background-image: url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/steel-pipelines-cables-plant-scaled.jpg');
+      background-position: center; background-size: cover;
+      text-align: center; padding: 60px 40px;
+    }
+    .cta::before { content: ''; position: absolute; inset: 0; background: rgba(0,128,255,0.18); }
+    .cta h2 { position: relative; z-index: 1; font-family: 'Exo', sans-serif; font-size: 48px; font-weight: 700; color: #fff; margin-bottom: 28px; text-align: center; }
+    .cta a {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #0080FF; color: #fff;
+      font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 14px;
+      text-transform: capitalize;
+      padding: 19px 25px; border-radius: 37px;
+      border: 1px solid #0080FF;
+      transition: all 0.2s;
+    }
+    .cta a:hover { background: #fff; color: #0080FF; }
+
+    /* FOOTER */
+    footer { background: #EBF3FC; padding: 52px 0 24px; }
+    .foot-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.07); margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+    .foot-logo img { height: 52px; }
+    .foot-social { display: flex; gap: 10px; }
+    .foot-social a { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #192a3d; background: #fff; transition: all 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    .foot-social a:hover { background: #0080FF; color: #fff; border-color: #0080FF; }
+    .foot-grid { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 40px; margin-bottom: 36px; }
+    .foot-col h4 { font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700; color: #192a3d; margin-bottom: 16px; }
+    .foot-col ul li { margin-bottom: 9px; }
+    .foot-col ul li a { font-size: 13px; color: #3A4F66; transition: color 0.2s; }
+    .foot-col ul li a:hover { color: #0080FF; }
+    .foot-contact li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #3A4F66; margin-bottom: 11px; line-height: 1.5; }
+    .foot-contact li i { color: #0080FF; margin-top: 2px; flex-shrink: 0; }
+    .foot-portal p { font-size: 13px; color: #3A4F66; line-height: 1.65; margin-bottom: 16px; }
+    .btn-blue { display: inline-flex; background: #0080FF; color: #fff; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 12px; padding: 11px 20px; border-radius: 50px; transition: background 0.2s; }
+    .btn-blue:hover { background: #0062cc; }
+    .foot-bottom { border-top: 1px solid rgba(0,0,0,0.07); padding-top: 16px; text-align: center; }
+    .foot-bottom p { font-size: 12px; color: #3A4F66; }
+
+    @media (max-width: 1024px) {
+      .intro-grid { grid-template-columns: 1fr; }
+      .band-grid { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    }
+    @media (max-width: 767px) {
+      .hero { min-height: 53vh; }
+      .hero h1 { font-size: 45px; }
+      .band-card h3, .intro-text h2 { font-size: 25px; }
+      .cases-head h2 { font-size: 35px; }
+      .cases-head p { font-size: 25px; }
+      .cases-body h3 { font-size: 25px; }
+      .cta h2 { font-size: 35px; }
+      nav { padding: 14px 20px; }
+      .nav-pill, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .foot-grid { grid-template-columns: 1fr; }
+      .band-card { padding: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC">
+  </a>
+  <div class="nav-pill">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <div class="nav-drop">
+      <a href="services.html" class="active">Services ▾</a>
+      <div class="drop">
+        <a href="altitude-valve-services.html">Altitude Valve Services</a>
+        <a href="pressure-valve-services.html" class="cur">Pressure Valve Services</a>
+        <a href="booster-pump-maintenance.html">Booster Pump Maintenance</a>
+        <a href="licensed-operator-support.html">Licensed Operator Support</a>
+        <a href="emergency-solutions.html">Emergency Solutions</a>
+        <a href="well-maintenance.html">Well Maintenance</a>
+      </div>
+    </div>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose">✕</button>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="projects.html">Projects</a>
+  <a href="blog.html">Blog</a>
+  <a href="contact.html">Contact Us</a>
+</div>
+
+<section class="hero">
+  <video autoplay muted playsinline loop src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/prv-page-header-video.mp4"></video>
+  <div class="hero-overlay"></div>
+  <h1>Pressure Valve Services</h1>
+</section>
+
+<section class="intro">
+  <div class="container">
+    <div class="intro-grid">
+      <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/PRV-thumbnail.png" alt="Pressure reducing valve">
+      <div class="intro-text">
+        <h2>Pressure Valve Services</h2>
+        <p><strong>Pressure Valve Services</strong> are essential to ensure the safe and efficient operation of your water systems. We specialize in the inspection, maintenance, repair, and replacement of pressure valves to prevent leaks, maintain system pressure, and enhance performance. Our expert team ensures compliance with safety standards while minimizing downtime. Rely on us for dependable and cost-effective solutions tailored to your pressure valve needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <div class="band-grid">
+      <div class="band-card">
+        <h3>Key Benefits</h3>
+        <ul>
+          <li>Extended System Lifespan.</li>
+          <li>Reduced Downtime And Costs.</li>
+          <li>Reliable Water Level Or Pressure Control.</li>
+        </ul>
+      </div>
+      <div class="band-card">
+        <h3>Process</h3>
+        <p>We inspect components such as diaphragms, seals, pilot controls, and control tubing, ensuring optimal functionality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cases">
+  <div class="container">
+    <div class="cases-head">
+      <h2>Case Studies</h2>
+      <p>Pressure Reducing Valve (PRV) Maintenance Preventing System Overpressure</p>
+    </div>
+    <div class="cases-img">
+      <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/maxresdefault-1.jpg" alt="PRV maintenance">
+    </div>
+    <div class="cases-body-wrap">
+    <div class="cases-body">
+      <div>
+        <h3>Background:</h3>
+        <p>A rural water utility in Texas, serving a community of 300 residents, began experiencing complaints of irregular water pressure, ranging from weak flow to excessively high pressure. The issue was traced to the main Pressure Reducing Valve (PRV), a critical component that regulates downstream pressure to ensure consistent water delivery.</p>
+      </div>
+      <div>
+        <h3>Challenge:</h3>
+        <p>The PRV had not been inspected or serviced in over five years. Internal components, including the diaphragm and pilot control, had become worn and clogged with debris. This caused the valve to intermittently fail, resulting in pressure spikes that risked damaging downstream infrastructure, including residential plumbing and appliances.</p>
+      </div>
+      <div>
+        <h3>Solution:</h3>
+        <p>Martin DC was called to assess and address the issue. The team conducted a full teardown of the PRV, revealing significant wear on the diaphragm, seals, and pilot orifices. These components were replaced, the valve was cleaned, and adjustments were made to recalibrate the pressure settings. Additionally, the team provided training to the utility's staff on regular PRV maintenance best practices.</p>
+      </div>
+      <div>
+        <h3>Outcome:</h3>
+        <p>The maintenance restored the PRV to full functionality, stabilizing water pressure throughout the system and eliminating customer complaints. The proactive repair prevented potential pipe bursts and costly emergency repairs, saving the utility thousands of dollars in damages. The community now enjoys consistent, safe water pressure, and the utility has implemented a maintenance schedule to ensure long-term reliability of the PRV.</p>
+      </div>
+      <div>
+        <h3>Conclusion:</h3>
+        <p>This case highlights the critical role of PRVs in maintaining safe and efficient water systems. Regular maintenance and timely repairs of PRVs not only improve performance but also protect infrastructure and reduce long-term costs for rural water utilities.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Request a Service Quote</h2>
+  <a href="contact.html">Contact Us Today</a>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div class="foot-logo"><img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC"></div>
+      <div class="foot-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+      </div>
+    </div>
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Contact Us</h4>
+        <ul class="foot-contact">
+          <li><i class="fas fa-phone"></i><a href="tel:3252661407">325-266-1407</a></li>
+          <li><i class="fas fa-envelope"></i><a href="mailto:office@waterutilityconsultant.com">office@waterutilityconsultant.com</a></li>
+          <li><i class="fas fa-location-dot"></i><span>1775 CR 356 Doole, TX 76836</span></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Useful Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Our Service</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col foot-portal">
+        <h4>Access Your System</h4>
+        <p>Log in to your personalized dashboard for real-time updates, service requests, and system performance insights.</p>
+        <a href="portal.html" class="btn-blue">Schedule Your Free Consultation Today</a>
+      </div>
+    </div>
+    <div class="foot-bottom"><p>All Rights Reserved</p></div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); });
+  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('mobMenu').classList.add('open'); });
+  document.getElementById('mobClose').addEventListener('click', () => { document.getElementById('mobMenu').classList.remove('open'); });
+</script>
+</body>
+</html>

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+  <title>Booster Pump Maintenance – Martin DC Water Utility Consultants</title>
+  <meta name="description" content="Expert booster pump maintenance services to ensure consistent water pressure and reliable system performance.">
+  <link rel="icon" href="https://waterutilityconsultant.com/wp-content/uploads/2025/01/Picture33-150x150.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-1: #2872fa;
+      --color-2: #1559ed;
+      --color-3: #3A4F66;
+      --color-4: #192a3d;
+      --color-5: #e1e8ed;
+      --color-6: #f2f5f7;
+      --color-7: #FAFBFC;
+      --color-8: #ffffff;
+      --blue:    #0080FF;
+      --card-bg: #EBF3FC;
+      --nav-pill-bg:     rgba(220,235,248,0.85);
+      --nav-pill-border: rgba(180,219,252,0.90);
+      --max-w: 1290px;
+      --container-pad: 0 90px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000000;
+      background-color: var(--color-7);
+      line-height: 1.65;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: var(--container-pad);
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 18px 40px;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(255,255,255,0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo img { height: 60px; width: auto; }
+
+    /* Nav pill wrapper */
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--nav-pill-bg);
+      border: 1px solid var(--nav-pill-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 50px;
+      padding: 6px 10px;
+    }
+
+    .nav-pill a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-4);
+      padding: 8px 16px;
+      border-radius: 50px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-pill a:hover { background: rgba(180,219,252,0.30); }
+    .nav-pill a.active { color: var(--color-4); }
+
+    /* Dropdown */
+    .nav-dropdown { position: relative; }
+
+    .nav-dropdown > a { display: flex; align-items: center; gap: 4px; }
+    .nav-dropdown > a::after {
+      content: '';
+      border: 4px solid transparent;
+      border-top-color: var(--color-4);
+      margin-top: 2px;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.97);
+      border: 1px solid var(--color-5);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      padding: 8px 0;
+      min-width: 220px;
+      z-index: 100;
+    }
+
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-4);
+      border-radius: 0;
+      transition: background 0.15s;
+    }
+
+    .dropdown-menu a:hover { background: var(--card-bg); }
+    .dropdown-menu a.current { color: var(--blue); }
+
+    /* Contact Us pill button */
+    .nav-contact {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px !important;
+      font-weight: 700;
+      color: var(--color-4) !important;
+      background: var(--nav-pill-bg);
+      border: 1px solid var(--nav-pill-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 50px;
+      padding: 8px 18px !important;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-contact:hover {
+      background: rgba(0,128,255,0.15) !important;
+      color: var(--blue) !important;
+    }
+
+    /* Mobile hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-4);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    nav.scrolled .nav-hamburger span { background: var(--color-4); }
+    nav:not(.scrolled) .nav-hamburger span { background: #fff; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.98);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-4);
+    }
+
+    .mobile-menu a:hover { color: var(--blue); }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--color-4);
+      background: none;
+      border: none;
+    }
+
+    .mobile-sub {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-sub a {
+      font-size: 15px;
+      color: var(--color-3);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/two-motor-water-pumps-solar-rooftop-water-pumping-system-scaled.jpg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.20);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Exo', sans-serif;
+      font-size: 60px;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 15px 12px 39px #000000;
+      line-height: 1.2;
+    }
+
+    /* ─── INTRO SECTION ─── */
+    .intro {
+      background: var(--color-7);
+      padding: 80px 0 40px;
+    }
+
+    .intro .container { padding: var(--container-pad); }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .intro-image img {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .intro-text h2 {
+      font-family: 'Exo', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--color-4);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .intro-text p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000000;
+      line-height: 1.65;
+    }
+
+    /* ─── BAND SECTION ─── */
+    .band {
+      background: var(--blue);
+      padding: 80px 0;
+    }
+
+    .band .container { padding: var(--container-pad); }
+
+    .band-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .band-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 50px;
+    }
+
+    .band-card h2 {
+      font-family: 'Exo', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--color-4);
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+
+    .band-card p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000000;
+    }
+
+    .band-card ul { display: flex; flex-direction: column; gap: 12px; }
+
+    .band-card ul li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      color: #000000;
+      text-transform: capitalize;
+    }
+
+    .band-card ul li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #000000;
+      flex-shrink: 0;
+    }
+
+    /* ─── CASE STUDIES ─── */
+    .case-studies {
+      background: #ffffff;
+      padding: 80px 0;
+    }
+
+    .case-studies .container { padding: var(--container-pad); }
+
+    .case-studies-title {
+      font-family: 'Exo', sans-serif;
+      font-size: 51px;
+      font-weight: 700;
+      color: var(--color-4);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .case-study-subtitle {
+      font-family: 'Exo', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--color-4);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .case-study-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .case-study-image {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      object-position: center center;
+      border-radius: 12px;
+    }
+
+    .case-study-section h3 {
+      font-family: 'Exo', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--color-4);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .case-study-section p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000000;
+      line-height: 1.65;
+    }
+
+    .case-study-section ul {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000000;
+      line-height: 1.65;
+      padding-left: 20px;
+      list-style: disc;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ─── CTA ─── */
+    .cta {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('https://waterutilityconsultant.com/wp-content/uploads/2025/01/plumber-installing-modern-smart-water-meter-scaled.jpg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,128,255,0.18);
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      padding: 0 20px;
+    }
+
+    .cta-content h2 {
+      font-family: 'Exo', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: capitalize;
+      color: #ffffff;
+      background: var(--blue);
+      border: 1px solid var(--blue);
+      border-radius: 37px;
+      padding: 19px 25px;
+      transition: background 0.25s, color 0.25s;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover {
+      background: #ffffff;
+      color: var(--blue);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--color-6);
+      padding: 60px 0 30px;
+    }
+
+    footer .container { padding: var(--container-pad); }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand {}
+
+    .footer-logo { height: 60px; width: auto; margin-bottom: 20px; }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+
+    .footer-social a:hover { background: var(--blue); }
+
+    .footer-col h2 {
+      font-family: 'Exo', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-4);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-col ul li a,
+    .footer-contact-item {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      color: var(--color-3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--blue); }
+
+    .footer-contact-item {
+      margin-bottom: 10px;
+      text-decoration: none;
+    }
+
+    .footer-contact-item svg { flex-shrink: 0; }
+
+    .footer-bottom {
+      border-top: 1px solid var(--color-5);
+      padding-top: 24px;
+      text-align: center;
+    }
+
+    .footer-bottom p {
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      color: var(--color-3);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      :root { --container-pad: 0 40px; }
+
+      .intro-grid { gap: 40px; }
+      .band-grid { gap: 20px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
+    }
+
+    @media (max-width: 767px) {
+      :root { --container-pad: 0 20px; }
+
+      nav { padding: 14px 20px; }
+      .nav-pill { display: none; }
+      .nav-contact { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero { min-height: 53vh; }
+      .hero-content h1 { font-size: 45px; }
+
+      .intro { padding: 40px 0; }
+      .intro-grid { grid-template-columns: 1fr; gap: 24px; }
+
+      .intro-text h2 { font-size: 25px; }
+
+      .band { padding: 40px 0; }
+      .band-grid { grid-template-columns: 1fr; }
+      .band-card { padding: 40px; }
+      .band-card h2 { font-size: 25px; }
+
+      .case-studies { padding: 40px 0; }
+      .case-studies-title { font-size: 35px; }
+      .case-study-subtitle { font-size: 25px; }
+      .case-study-image { height: 167px; }
+      .case-study-section h3 { font-size: 25px; }
+
+      .cta { min-height: 37vh; }
+      .cta-content h2 { font-size: 35px; }
+
+      .footer-top { grid-template-columns: 1fr; gap: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC Water Utility Consultants">
+      </a>
+
+      <div class="nav-pill">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <div class="nav-dropdown">
+          <a href="services.html">Services</a>
+          <div class="dropdown-menu">
+            <a href="altitude-valve-services.html">Altitude Valve Services</a>
+            <a href="pressure-valve-services.html">Pressure Valve Services</a>
+            <a href="booster-pump-maintenance.html" class="current">Booster Pump Maintenance</a>
+            <a href="licensed-operator-support.html">Licensed Operator Support</a>
+            <a href="emergency-solutions.html">Emergency Solutions</a>
+            <a href="well-maintenance.html">Well Maintenance</a>
+          </div>
+        </div>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+      </div>
+
+      <a href="contact.html" class="nav-contact">Contact Us</a>
+
+      <div class="nav-hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-menu-close" id="mobile-close" aria-label="Close menu">✕</button>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <div class="mobile-sub">
+      <a href="services.html">Services</a>
+      <a href="altitude-valve-services.html">Altitude Valve Services</a>
+      <a href="pressure-valve-services.html">Pressure Valve Services</a>
+      <a href="booster-pump-maintenance.html">Booster Pump Maintenance</a>
+      <a href="licensed-operator-support.html">Licensed Operator Support</a>
+      <a href="emergency-solutions.html">Emergency Solutions</a>
+      <a href="well-maintenance.html">Well Maintenance</a>
+    </div>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Booster Pump Maintenance</h1>
+    </div>
+  </section>
+
+  <!-- ─── INTRO ─── -->
+  <section class="intro">
+    <div class="container">
+      <div class="intro-grid">
+        <div class="intro-image">
+          <img
+            src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/two-motor-water-pumps-solar-rooftop-water-pumping-system-scaled.jpg"
+            alt="Booster pump system"
+          >
+        </div>
+        <div class="intro-text">
+          <h2>Booster Pump Maintenance</h2>
+          <p><strong>Booster Pump Maintenance</strong> is essential to ensure consistent water pressure and reliable performance in your system. Our expert services include thorough inspection, cleaning, repair, and optimization to keep your booster pumps running efficiently. Regular maintenance helps prevent breakdowns, reduces energy consumption, and extends the lifespan of your equipment. Trust us to deliver dependable and cost-effective solutions tailored to your needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BAND ─── -->
+  <section class="band">
+    <div class="container">
+      <div class="band-grid">
+        <!-- Process card (left in CSS: flex-direction: row-reverse so this renders right visually) -->
+        <div class="band-card">
+          <h2>Process</h2>
+          <p>We inspect components such as diaphragms, seals, pilot controls, and control tubing, ensuring optimal functionality.</p>
+        </div>
+        <!-- Key Benefits card -->
+        <div class="band-card">
+          <h2>Key Benefits</h2>
+          <ul>
+            <li>Extends Pump Lifespan</li>
+            <li>Reduced downtime and costs.</li>
+            <li>Reliable water level or pressure control.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CASE STUDIES ─── -->
+  <section class="case-studies">
+    <div class="container">
+      <h2 class="case-studies-title">Case Studies</h2>
+      <p class="case-study-subtitle">Upgrading a Rural Booster Pump Station for Increased Demand</p>
+
+      <div class="case-study-card">
+        <img
+          class="case-study-image"
+          src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/pump-station-1024x635-1.jpg"
+          alt="Rural booster pump station upgrade"
+        >
+
+        <div class="case-study-section">
+          <h3>Background:</h3>
+          <p>A rural water utility in Texas, supplying water to a growing community and nearby agricultural operations, began struggling to meet peak demand. The aging booster pump station, responsible for maintaining pressure across the system, was undersized and prone to frequent breakdowns, resulting in pressure drops and service disruptions.</p>
+        </div>
+
+        <div class="case-study-section">
+          <h3>Challenge:</h3>
+          <p>The existing booster pump station was equipped with outdated pumps and lacked automation, making it difficult to handle fluctuating demand. Additionally, the station's inefficiency led to high energy costs and increased maintenance expenses. The utility needed a cost-effective upgrade to improve system reliability and efficiency.</p>
+        </div>
+
+        <div class="case-study-section">
+          <h3>Solution:</h3>
+          <p>Martin DC conducted a detailed assessment of the booster pump station and proposed a modernization plan. The project included:</p>
+          <ul>
+            <li>Installing two new variable frequency drive (VFD) pumps to optimize energy use and handle varying demand.</li>
+            <li>Replacing worn gaskets, seals, and bearings in the existing pumps to extend their lifespan as backups.</li>
+            <li>Upgrading the station with a SCADA system for remote monitoring and control, allowing operators to track performance in real-time.</li>
+            <li>Adding a pressure-sustaining valve to protect the system from pressure surges.</li>
+          </ul>
+        </div>
+
+        <div class="case-study-section">
+          <h3>Outcome:</h3>
+          <p>The upgraded booster pump station now operates with increased reliability and efficiency, providing consistent water pressure even during peak demand. Energy costs dropped by 20% due to the VFD pumps, and the SCADA system allows operators to respond quickly to any issues. The community benefits from uninterrupted water service, while the utility has significantly reduced operational and maintenance costs.</p>
+        </div>
+
+        <div class="case-study-section">
+          <h3>Conclusion:</h3>
+          <p>Modernizing booster pump stations is vital for rural water systems facing growing demand. Upgrading to energy-efficient pumps and integrating automation technology not only improves system reliability but also reduces costs, ensuring sustainable water delivery for the future.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Request a Service Quote</h2>
+      <a href="contact.html" class="cta-btn">Contact Us Today</a>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+
+        <!-- Brand + Social -->
+        <div class="footer-brand">
+          <a href="index.html">
+            <img class="footer-logo" src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC Water Utility Consultants">
+          </a>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h2>Contact Us</h2>
+          <a class="footer-contact-item" href="tel:325-266-1407">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M27.4062 12.7812C27.75 12.875 28 13.1562 28 13.5C28 21.5312 21.5 28 13.5 28C13.125 28 12.8438 27.7812 12.75 27.4375L12 24.1875C11.9375 23.8438 12.0938 23.4688 12.4375 23.3125L15.9375 21.8125C16.25 21.6875 16.5938 21.7812 16.8125 22.0312L18.375 23.9375C20.8125 22.7812 22.7812 20.7812 23.9062 18.4062L22 16.8438C21.75 16.625 21.6562 16.2812 21.7812 15.9688L23.2812 12.4688C23.4375 12.125 23.8125 11.9375 24.1562 12.0312L27.4062 12.7812Z" fill="#0080FF"/></svg>
+            325-266-1407
+          </a>
+          <a class="footer-contact-item" href="mailto:office@waterutilityconsultant.com">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M27.6875 17.9688C27.8125 17.875 28 17.9688 28 18.125V24.5C28 25.3438 27.3125 26 26.5 26H13.5C12.6562 26 12 25.3438 12 24.5V18.125C12 17.9688 12.1562 17.875 12.2812 17.9688C13 18.5312 13.9062 19.2188 17.0938 21.5312C17.75 22 18.875 23.0312 20 23.0312C21.0938 23.0312 22.25 22 22.875 21.5312C26.0625 19.2188 26.9688 18.5312 27.6875 17.9688ZM20 22C19.25 22.0312 18.2188 21.0938 17.6875 20.7188C13.5312 17.7188 13.2188 17.4375 12.2812 16.6875C12.0938 16.5625 12 16.3438 12 16.0938V15.5C12 14.6875 12.6562 14 13.5 14H26.5C27.3125 14 28 14.6875 28 15.5V16.0938C28 16.3438 27.875 16.5625 27.6875 16.6875C26.75 17.4375 26.4375 17.7188 22.2812 20.7188C21.75 21.0938 20.7188 22.0312 20 22Z" fill="#0080FF"/></svg>
+            office@waterutilityconsultant.com
+          </a>
+          <span class="footer-contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" fill="white"/><path d="M26.875 12.125C27.4062 11.8125 28.0938 12.25 27.9688 12.875L25.7188 26.375C25.6562 26.875 25.125 27.1562 24.6875 26.9688L20.8125 25.3125L18.8125 27.75C18.375 28.2812 17.5 28 17.5 27.25V24.7188L25 15.5625C25.1562 15.375 24.9062 15.1562 24.75 15.3125L15.7812 23.2188L12.4375 21.8125C11.875 21.5938 11.8125 20.7812 12.375 20.4688L26.875 12.125Z" fill="#0080FF"/></svg>
+            1775 CR 356 Doole, TX 76836
+          </span>
+        </div>
+
+        <!-- Useful Links -->
+        <div class="footer-col">
+          <h2>Useful Links</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Our Service</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>All Rights Reserved &copy; Martin DC Water Utility Consultants</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll behavior
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Mobile menu
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.add('open');
+    });
+    document.getElementById('mobile-close').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>
