@@ -314,7 +314,7 @@
     <div class="ops-page active" id="page-dashboard">
       <div class="sitrep-bar">
         <div class="sitrep-cell"><div class="sitrep-num red" id="sitrep-priority">—</div><div class="sitrep-label">Needs action</div><div class="sitrep-sub">Overdue or unacknowledged</div></div>
-        <div class="sitrep-cell"><div class="sitrep-num amber" id="sitrep-pipeline">—</div><div class="sitrep-label">In pipeline</div><div class="sitrep-sub">Open service orders</div></div>
+        <div class="sitrep-cell"><div class="sitrep-num amber" id="sitrep-pipeline">—</div><div class="sitrep-label">In pipeline</div><div class="sitrep-sub">Open work orders</div></div>
         <div class="sitrep-cell"><div class="sitrep-num blue" id="sitrep-quotes">—</div><div class="sitrep-label">Quotes pending</div><div class="sitrep-sub">Awaiting customer response</div></div>
         <div class="sitrep-cell"><div class="sitrep-num green" id="sitrep-accounts">—</div><div class="sitrep-label">Active accounts</div><div class="sitrep-sub">Client status</div></div>
       </div>
@@ -583,14 +583,17 @@ function renderDashboard(){
   }).slice(0,6);
 
   document.getElementById('dash-pipeline').innerHTML = topOrders.length ? topOrders.map(wo=>`
-    <div class="mission-row" onclick="openDetail('wo','${wo.id}')">
-      <div class="mission-accent ${accentClass(wo.status)}"></div>
-      <div>
-        <div class="mission-account">${wo.wo_number?`<span style="color:var(--text-muted);font-size:10px;margin-right:6px;">${wo.wo_number}</span>`:''}${fmt(wo.name||wo.email)}</div>
-        <div class="mission-service">${fmt(wo.service)}${wo.scope?' — '+wo.scope.substring(0,45)+(wo.scope.length>45?'…':''):''}</div>
+    <div style="display:grid;grid-template-columns:3px minmax(0,1fr) 86px 88px 80px;gap:10px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--navy-border);transition:background .15s;" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background=''">
+      <div class="mission-accent ${accentClass(wo.status)}" style="border-radius:2px;align-self:stretch;min-height:36px;"></div>
+      <div onclick="openDetail('wo','${wo.id}')" style="cursor:pointer;min-width:0;">
+        <div class="mission-account">${wo.wo_number?'<span style=\"color:var(--text-muted);font-size:10px;margin-right:6px;\">' + wo.wo_number + '</span>':''}${fmt(wo.name||wo.email)}</div>
+        <div class="mission-service">${fmt(wo.service)}${wo.scope?' — '+wo.scope.substring(0,38)+(wo.scope.length>38?'…':''):''}</div>
       </div>
-      <div class="mission-date${wo.preferred_date&&isOverdue(wo.preferred_date)?' overdue':''}">${wo.preferred_date?fmtDate(wo.preferred_date):daysAgo(wo.submitted_at)}</div>
-      <span class="pill ${pillClass(wo.status)}">${wo.status||'Received'}</span>
+      <div class="mission-date${wo.preferred_date&&isOverdue(wo.preferred_date)?' overdue':''}" onclick="openDetail('wo','${wo.id}')" style="cursor:pointer;">${wo.preferred_date?fmtDate(wo.preferred_date):daysAgo(wo.submitted_at)}</div>
+      <span class="pill ${pillClass(wo.status)}" onclick="openDetail('wo','${wo.id}')" style="cursor:pointer;">${wo.status||'Received'}</span>
+      <button onclick="event.stopPropagation();openDetail('wo','${wo.id}');setTimeout(()=>{const wrap=document.getElementById('quote-form-wrap');if(wrap&&wrap.style.display==='none')toggleQuoteForm('${wo.id}','${wo.email||''}','${(wo.name||wo.email||'').replace(/'/g,'').replace(/"/g,'')}','${(wo.service||'').replace(/'/g,'').replace(/"/g,'')}')},400)" style="background:rgba(93,202,165,.12);border:1px solid rgba(93,202,165,.3);color:var(--teal);border-radius:50px;padding:5px 8px;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:Manrope,sans-serif;flex-shrink:0;" title="Generate Quote">
+        <i class="fas fa-file-signature" style="margin-right:3px;"></i>Quote
+      </button>
     </div>`).join('') : '<div class="empty-ops"><i class="fas fa-check-circle"></i><p>Pipeline clear</p></div>';
 
   const actions=[];
