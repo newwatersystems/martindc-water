@@ -458,7 +458,7 @@
                 <div style="font-size:10px;color:rgba(93,202,165,.6);letter-spacing:.12em;white-space:nowrap">LIVE COMMS</div>
               </div>
               <div style="flex:1;overflow:hidden;position:relative;height:100%">
-                <div id="ac-ticker" style="display:flex;align-items:center;height:100%;position:absolute;white-space:nowrap;animation:ticker 400s linear infinite"></div>
+                <div id="ac-ticker" style="display:flex;align-items:center;height:100%;position:absolute;left:0;top:0;white-space:nowrap"></div>
               </div>
             </div>
           </div>
@@ -651,7 +651,7 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
    Username is case-sensitive. You manage this list.
    ============================================================ */
 const ADMIN_USERS = [
-  { user: 'cwmartin', pass: 'PASTE_PASSWORD_HERE' }
+  { user: 'cwmartin', pass: 'W@ter0ps23!' }
 ];
 
 const { createClient } = supabase;
@@ -1016,10 +1016,11 @@ function renderAccounts(){
     }
   }
 
-  /* Build ticker */
+  /* Build ticker - always rebuild on render */
   const tickerEl=document.getElementById('ac-ticker');
-  if(tickerEl&&!tickerEl._built){
-    tickerEl._built=true;
+  if(tickerEl){
+    tickerEl.innerHTML='';
+    tickerEl.style.animation='none';
     const items=[
       {msg:'OVERDUE INV — MASON COUNTY WCID // $1,425.00',clr:'#E24B4A',time:'15:44'},
       {msg:'WO AGING 8HRS — BRADY IRRIGATION // PRV SVC',clr:'#EF9F27',time:'15:31'},
@@ -1030,13 +1031,15 @@ function renderAccounts(){
       {msg:'INFRA UPDATE PENDING — DEBRA TEST // DISTRIBUTION LINES',clr:'#EF9F27',time:'11:18'},
       {msg:'NEW LEAD RECEIVED — LLANO CITY WATER',clr:'#85B7EB',time:'10:04'},
     ];
-    /* Duplicate for seamless loop */
     [...items,...items].forEach(item=>{
       const span=document.createElement('span');
       span.style.cssText=`font-family:Share Tech Mono,monospace;font-size:11px;color:${item.clr};padding:0 32px;white-space:nowrap;letter-spacing:.05em`;
       span.innerHTML=`<span style="color:rgba(93,202,165,.35);margin-right:10px">${item.time}</span>${item.msg}`;
       tickerEl.appendChild(span);
     });
+    /* Force reflow then restart animation */
+    void tickerEl.offsetWidth;
+    tickerEl.style.animation='ticker 400s linear infinite';
   }
 
   /* Start clock if not running */
