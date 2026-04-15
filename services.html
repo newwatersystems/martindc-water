@@ -33,8 +33,9 @@
     .nav-dropdown{position:relative}
     .nav-dropdown>a{display:flex;align-items:center;gap:4px}
     .nav-dropdown>a::after{content:'';border:4px solid transparent;border-top-color:var(--navy);margin-top:2px}
-    .dropdown-menu{display:none;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.97);border:1px solid #e1e8ed;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.12);padding:8px 0;min-width:220px;z-index:100}
-    .nav-dropdown:hover .dropdown-menu{display:block}
+   .dropdown-menu{display:block;visibility:hidden;opacity:0;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.97);border:1px solid #e1e8ed;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.12);padding:8px 0;min-width:220px;z-index:100;transition:opacity 0.2s ease,visibility 0.2s ease}
+    .nav-dropdown:hover .dropdown-menu{visibility:visible;opacity:1}
+    .nav-dropdown{padding-bottom:8px}
     .dropdown-menu a{display:block;padding:10px 20px;font-size:13px;font-weight:600;color:var(--navy);transition:background .15s}
     .dropdown-menu a:hover{background:var(--blue-light);color:var(--blue)}
     .nav-contact{font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;color:var(--navy);background:var(--nav-pill-bg);border:1px solid var(--nav-pill-border);backdrop-filter:blur(8px);border-radius:50px;padding:8px 18px;transition:background .2s,color .2s;white-space:nowrap}
