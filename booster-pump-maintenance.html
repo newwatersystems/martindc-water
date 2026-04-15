@@ -133,7 +133,8 @@
       transition: opacity 0.2s ease, visibility 0.2s ease;
     }
     .nav-dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; }
-    .nav-dropdown { padding-bottom: 8px; }
+    .nav-dropdown::after{content:'';position:absolute;top:100%;left:0;right:0;height:16px}
+    
     .dropdown-menu a {
       display: block;
       padding: 10px 20px;
