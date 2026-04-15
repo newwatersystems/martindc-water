@@ -440,7 +440,7 @@
           'Content-Type': 'application/json',
           'apikey': SUPABASE_ANON,
           'Authorization': `Bearer ${SUPABASE_ANON}`,
-          'Prefer': 'resolution=merge-duplicates'   // upsert on unique email
+          'Prefer': 'resolution=ignore-duplicates'   // upsert on unique email
         },
         body: JSON.stringify({
           first_name:  firstName,
