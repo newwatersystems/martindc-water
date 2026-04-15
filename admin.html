@@ -218,13 +218,13 @@
     /* ── ACCOUNT HUD ── */
     @keyframes acscan{0%{top:-60px}100%{top:100%}}
     @keyframes ticker{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
-    .ac-hb{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 12px;border:1px solid rgba(93,202,165,.14);background:rgba(3,12,22,.8);position:relative;min-width:55px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);cursor:pointer}
+    .ac-hb{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 14px;border:1px solid rgba(93,202,165,.14);background:rgba(3,12,22,.8);position:relative;min-width:62px;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);cursor:pointer}
     .ac-hb.ac-hb-al{border-color:rgba(226,75,74,.3)}.ac-hb.ac-hb-wn{border-color:rgba(239,159,39,.25)}
-    .ac-hb-sn{position:absolute;top:-1px;right:3px;font-size:6px;color:rgba(93,202,165,.28);font-family:'Share Tech Mono',monospace}
-    .ac-hb-ic{font-size:18px;line-height:1}
-    .ac-hb-n{font-family:'Exo',sans-serif;font-size:20px;font-weight:800;line-height:1;color:#5DCAA5}
+    .ac-hb-sn{position:absolute;top:-1px;right:4px;font-size:7px;color:rgba(93,202,165,.28);font-family:'Share Tech Mono',monospace}
+    .ac-hb-ic{font-size:20px;line-height:1}
+    .ac-hb-n{font-family:'Exo',sans-serif;font-size:22px;font-weight:800;line-height:1;color:#5DCAA5}
     .ac-hb-n.ac-hb-n-al{color:#E24B4A;text-shadow:0 0 5px rgba(226,75,74,.4)}.ac-hb-n.ac-hb-n-wn{color:#EF9F27}
-    .ac-hb-l{font-size:9px;color:rgba(93,202,165,.4);letter-spacing:.07em;white-space:nowrap;font-family:'Share Tech Mono',monospace}
+    .ac-hb-l{font-size:10px;color:rgba(93,202,165,.4);letter-spacing:.06em;white-space:nowrap;font-family:'Share Tech Mono',monospace}
     #page-accounts.active{display:flex !important}
     #page-mission-map.active{display:flex !important}
     #page-eng-map.active{display:flex !important}
@@ -279,9 +279,9 @@
   <aside class="ops-sidebar">
     <div class="sidebar-section-label">Operations</div>
     <button class="sidebar-item active" onclick="showPage('dashboard',this)"><i class="fas fa-th-large"></i> Ops Center</button>
-    <button class="sidebar-item" onclick="showPage('pipeline',this)"><i class="fas fa-stream"></i> Mission Pipeline<span class="sidebar-badge" id="sb-pipeline">—</span></button>
-    <button class="sidebar-item" onclick="showPage('schedule',this)"><i class="fas fa-calendar-week"></i> Deployment Schedule</button>
     <button class="sidebar-item" onclick="showPage('accounts',this)"><i class="fas fa-broadcast-tower"></i> SITREP</button>
+    <button class="sidebar-item" onclick="showPage('schedule',this)"><i class="fas fa-calendar-week"></i> Deployment Schedule</button>
+    <button class="sidebar-item" onclick="showPage('pipeline',this)"><i class="fas fa-stream"></i> Mission Pipeline<span class="sidebar-badge" id="sb-pipeline">—</span></button>
     <button class="sidebar-item" onclick="showPage('infra',this)"><i class="fas fa-project-diagram"></i> Infrastructure Log<span class="sidebar-badge amber" id="sb-infra">—</span></button>
     <div class="sidebar-section-label">Billing</div>
     <button class="sidebar-item" onclick="showPage('invoices',this)"><i class="fas fa-file-invoice-dollar"></i> Invoices</button>
@@ -414,7 +414,7 @@
               <div style="font-size:10px;color:rgba(93,202,165,.4);letter-spacing:.12em;margin-top:4px;white-space:nowrap"><span id="ac-sdot" style="display:inline-block;width:5px;height:5px;border-radius:50%;background:#5DCAA5;margin-right:4px;animation:hpulse 2s ease-in-out infinite;vertical-align:middle"></span>SITREP // ALL SYSTEMS NOMINAL</div>
             </div>
           </div>
-          <div style="padding:8px 20px;border-right:1px solid rgba(93,202,165,.1);display:flex;flex-direction:column;justify-content:center;flex:1">
+          <div style="padding:8px 28px;border-right:1px solid rgba(93,202,165,.1);display:flex;flex-direction:column;justify-content:center;">
             <div style="font-size:10px;color:rgba(93,202,165,.35);letter-spacing:.12em;margin-bottom:3px">OPERATOR IN COMMAND</div>
             <div style="font-family:'Exo',sans-serif;font-size:15px;font-weight:800;color:#e8edf2;letter-spacing:.08em">MARTIN, CHRISTOPHER W.</div>
             <div style="font-size:10px;color:rgba(93,202,165,.5);letter-spacing:.05em;margin-top:2px">MULTI-STATE LIC. OPERATOR // EOD NAVY VETERAN</div>
@@ -441,13 +441,13 @@
             <div style="display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid rgba(93,202,165,.07);background:rgba(0,5,10,.6);flex-shrink:0;align-items:center">
               <div id="ac-alpha" style="display:flex;flex-wrap:wrap;gap:3px;flex:1"></div>
               <div style="width:1px;height:26px;background:rgba(93,202,165,.1);margin:0 3px"></div>
-              <div style="display:flex;gap:3px" id="ac-filters">
+              <div style="flex:1"></div><div style="display:flex;gap:3px" id="ac-filters">
                 <button onclick="acSetFilter('all',this)" style="font-family:'Share Tech Mono',monospace;font-size:11px;padding:5px 12px;background:rgba(93,202,165,.14);border:1px solid #5DCAA5;color:#5DCAA5;cursor:pointer;letter-spacing:.1em;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)">ALL</button>
                 <button onclick="acSetFilter('critical',this)" style="font-family:'Share Tech Mono',monospace;font-size:11px;padding:5px 12px;background:transparent;border:1px solid rgba(226,75,74,.3);color:rgba(226,75,74,.5);cursor:pointer;letter-spacing:.1em;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)">CRITICAL</button>
                 <button onclick="acSetFilter('active',this)" style="font-family:'Share Tech Mono',monospace;font-size:11px;padding:5px 12px;background:transparent;border:1px solid rgba(239,159,39,.28);color:rgba(239,159,39,.5);cursor:pointer;letter-spacing:.1em;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)">ACTIVE</button>
                 <button onclick="acSetFilter('clear',this)" style="font-family:'Share Tech Mono',monospace;font-size:11px;padding:5px 12px;background:transparent;border:1px solid rgba(93,202,165,.2);color:rgba(93,202,165,.4);cursor:pointer;letter-spacing:.1em;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)">CLEAR</button>
               </div>
-              <span id="ac-count" style="margin-left:auto;font-size:11px;color:rgba(93,202,165,.45);letter-spacing:.08em;white-space:nowrap">-- ACCOUNTS</span>
+              <div style="flex:1"></div><span id="ac-count" style="margin-left:auto;font-size:11px;color:rgba(93,202,165,.45);letter-spacing:.08em;white-space:nowrap">-- ACCOUNTS</span>
             </div>
             <!-- ACCOUNT GRID -->
             <div id="ac-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:12px 16px;overflow-y:auto;flex:1;align-content:start"></div>
@@ -503,7 +503,7 @@
           <div class="ac-hb ac-hb-wn"><span class="ac-hb-sn">3</span><span class="ac-hb-ic">📋</span><span id="ahb2" class="ac-hb-n ac-hb-n-wn">0</span><span class="ac-hb-l">QUOTES PEND</span></div>
           <div class="ac-hb"><span class="ac-hb-sn">4</span><span class="ac-hb-ic">🏢</span><span id="ahb3" class="ac-hb-n">0</span><span class="ac-hb-l">ACCOUNTS</span></div>
           <div class="ac-hb"><span class="ac-hb-sn">5</span><span class="ac-hb-ic">🗺</span><span id="ahb4" class="ac-hb-n">0</span><span class="ac-hb-l">INFRA PEND</span></div>
-          <div style="margin:0 8px;display:flex;align-items:center"><img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" style="height:28px;width:auto;filter:brightness(0) invert(1);opacity:.6" alt="Martin Direct Consulting"></div>
+          <div style="margin:0 10px;display:flex;align-items:center"><img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" style="height:40px;width:auto;filter:brightness(0) invert(1);opacity:.7" alt="Martin Direct Consulting"></div>
           <div class="ac-hb"><span class="ac-hb-sn">6</span><span class="ac-hb-ic">✅</span><span id="ahb5" class="ac-hb-n">0</span><span class="ac-hb-l">COMPLETE</span></div>
           <div class="ac-hb ac-hb-wn"><span class="ac-hb-sn">7</span><span class="ac-hb-ic">⏱</span><span class="ac-hb-n ac-hb-n-wn">SLA</span><span class="ac-hb-l">MONITOR</span></div>
           <div class="ac-hb" onclick="showPage('mission-map',null)" style="border-color:rgba(93,202,165,.25)"><span class="ac-hb-sn">8</span><span class="ac-hb-ic">🌐</span><span class="ac-hb-n" style="font-size:11px;color:#5DCAA5">MAP</span><span class="ac-hb-l">MISSION MAP</span></div>
