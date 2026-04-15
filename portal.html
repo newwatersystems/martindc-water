@@ -801,11 +801,26 @@
     listEl.innerHTML   = `<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div>`;
     detailEl.innerHTML = `<div class="empty-state" style="padding:48px 24px"><i class="fas fa-clipboard-list" style="font-size:36px;color:#c0c8d0;display:block;margin-bottom:12px;"></i><p>Select a work order to view details</p></div>`;
 
+    // Ensure we have a live session token before querying
+    if (!currentUser) {
+      const { data: { session } } = await sb.auth.getSession();
+      if (session) { currentUser = session.user; }
+      else {
+        listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Session expired. Please sign in again.</p></div>`;
+        return;
+      }
+    }
+
     try {
-      const { data, error } = await sb.from('work_orders')
-        .select('*')
-        .eq('user_id', currentUser.id)
-        .order('submitted_at', { ascending: false });
+      const { data: { session } } = await sb.auth.getSession();
+      const token = session?.access_token || SUPABASE_ANON;
+
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/work_orders?user_id=eq.${currentUser.id}&order=submitted_at.desc&select=*`,
+        { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${token}` } }
+      );
+      const data = await res.json();
+      const error = res.ok ? null : data;
 
       if (error) throw error;
 
@@ -844,7 +859,8 @@
       if (sorted.length > 0) selectWorkOrder(0);
 
     } catch(e) {
-      listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not load work orders. Please try again.</p></div>`;
+      console.error('loadMyWorkOrders error:', e);
+      listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not load work orders: ${e?.message || e?.code || 'Unknown error'}.</p></div>`;
     }
   }
 
