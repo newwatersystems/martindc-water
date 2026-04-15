@@ -19,8 +19,6 @@
     a{text-decoration:none;color:inherit}
     ul{list-style:none}
     input,select,textarea,button{font-family:'Manrope',sans-serif}
-
-    /* ── VARIABLES ── */
     :root{
       --blue:#0080FF;--blue-light:#E0F6FE;--navy:#192a3d;--navy-mid:#3A4F66;
       --light:#f2f5f7;--white:#ffffff;--border:#e1e8ed;
@@ -29,8 +27,6 @@
       --shadow:0 4px 24px rgba(25,42,61,0.09);
       --radius:12px;
     }
-
-    /* ── BUTTONS ── */
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:50px;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;white-space:nowrap}
     .btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
     .btn-primary:hover:not(:disabled){background:#006acc;border-color:#006acc}
@@ -38,8 +34,6 @@
     .btn-ghost{background:transparent;color:var(--navy-mid);border-color:var(--border)}
     .btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
     .btn-sm{padding:8px 18px;font-size:13px}
-
-    /* ── LOGIN SCREEN ── */
     #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);padding:24px;position:relative;overflow:hidden}
     #loginScreen::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,128,255,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,128,255,0.06) 1px,transparent 1px);background-size:56px 56px}
     #loginScreen::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,128,255,0.18) 0%,transparent 60%)}
@@ -68,8 +62,6 @@
     .btn-google:hover{border-color:#4285F4;background:#f8f9ff}
     .divider{display:flex;align-items:center;gap:12px;margin-bottom:16px;color:#aab0bc;font-size:12px;font-weight:600}
     .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
-
-    /* ── PORTAL NAV ── */
     .portal-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;justify-content:space-between;box-shadow:var(--shadow)}
     .portal-nav-logo img{height:44px;width:auto}
     .portal-nav-right{display:flex;align-items:center;gap:16px}
@@ -78,12 +70,8 @@
     .user-pill{display:flex;align-items:center;gap:10px;background:var(--light);border:1px solid var(--border);border-radius:100px;padding:7px 16px 7px 7px;font-size:13px;font-weight:600;color:var(--navy)}
     .user-pill .avatar{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
     #portalUserEmail{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-    /* ── PORTAL SCREEN ── */
     #portalScreen{display:none;padding-top:var(--nav-h);min-height:100vh}
     .portal-layout{display:flex;min-height:calc(100vh - var(--nav-h))}
-
-    /* ── SIDEBAR ── */
     .sidebar{width:var(--sidebar-w);background:var(--navy);flex-shrink:0;display:flex;flex-direction:column;padding:24px 0;position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));overflow-y:auto}
     .sidebar-label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:4px 18px;margin-bottom:4px;margin-top:12px}
     .sidebar-link{display:flex;align-items:center;gap:12px;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;margin:2px 10px;border:none;background:none;width:calc(100% - 20px);text-align:left}
@@ -93,22 +81,11 @@
     .sidebar-divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin:16px 18px}
     .sidebar-logout{color:rgba(255,100,100,.8) !important}
     .sidebar-logout:hover{background:rgba(255,80,80,.15) !important;color:#ff8080 !important}
-
-    /* ── MAIN CONTENT ── */
     .portal-main{flex:1;padding:36px;background:var(--light);min-width:0}
     .portal-page{display:none}
     .portal-page.active{display:block}
     .page-title{font-family:'Exo',sans-serif;font-size:26px;font-weight:700;color:var(--navy);margin-bottom:24px}
-    .portal-banner{background:var(--blue-light);border-radius:16px;padding:28px 32px;margin-bottom:28px;display:flex;align-items:center;gap:20px}
-    .portal-banner i{font-size:32px;color:var(--blue);flex-shrink:0}
-    .portal-banner h3{font-family:'Exo',sans-serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:4px}
-    .portal-banner p{font-size:14px;color:var(--navy-mid);line-height:1.6}
-
-    /* ── CARDS ── */
     .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow)}
-    .card-sm{padding:24px}
-
-    /* ── FORM FIELDS (portal) ── */
     .field-group{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
     .field-group label{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.04em;text-transform:uppercase}
     .field-group input,.field-group select,.field-group textarea{padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--navy);background:var(--light);transition:border-color .2s;outline:none;width:100%}
@@ -118,9 +95,6 @@
     .field-group textarea{resize:vertical;min-height:110px}
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
     .form-grid .full{grid-column:1/-1}
-    .field-note{font-size:12px;color:var(--navy-mid);margin-top:4px;line-height:1.5}
-
-    /* File upload */
     .file-upload-wrap{border:2px dashed var(--border);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--light)}
     .file-upload-wrap:hover{border-color:var(--blue)}
     .file-upload-wrap i{font-size:28px;color:var(--blue);margin-bottom:8px;display:block}
@@ -128,13 +102,9 @@
     .file-upload-wrap span{font-size:12px;color:#aab0bc}
     #fileInput,#meFileInput{display:none}
     #fileName,#meFileName{font-size:13px;color:var(--blue);margin-top:8px;font-weight:600}
-
-    /* ── STATUS MESSAGES ── */
     .status-msg{padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-top:16px;display:none}
     .status-msg.success{display:block;background:rgba(34,197,94,.12);color:#166534;border:1px solid rgba(34,197,94,.3)}
     .status-msg.error{display:block;background:rgba(239,68,68,.10);color:#991b1b;border:1px solid rgba(239,68,68,.25)}
-
-    /* ── CALENDAR ── */
     .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
     .cal-header h3{font-family:'Exo',sans-serif;font-size:20px;font-weight:700;color:var(--navy)}
     .cal-nav{display:flex;gap:8px}
@@ -150,8 +120,6 @@
     .cal-day.today .day-num{background:var(--blue);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center}
     .day-num{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;width:28px;height:28px;display:flex;align-items:center;justify-content:center}
     .cal-event{background:var(--blue);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;max-width:100%;text-overflow:ellipsis}
-
-    /* ── TABLE ── */
     .data-table-wrap{overflow-x:auto}
     .data-table{width:100%;border-collapse:collapse;font-size:14px}
     .data-table th{background:var(--blue);color:#fff;padding:12px 16px;text-align:left;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
@@ -161,8 +129,6 @@
     .empty-state{text-align:center;padding:48px 24px;color:var(--navy-mid)}
     .empty-state i{font-size:36px;color:#c0c8d0;margin-bottom:12px;display:block}
     .empty-state p{font-size:14px}
-
-    /* Status badges */
     .badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
     .badge-pending{background:#fef3c7;color:#92400e}
     .badge-scheduled{background:#dbeafe;color:#1e40af}
@@ -171,15 +137,10 @@
     .badge-overdue{background:#fee2e2;color:#991b1b}
     .badge-approved{background:#dcfce7;color:#166534}
     .badge-declined{background:#fee2e2;color:#991b1b}
-
-    /* Coming soon */
     .coming-soon{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:64px 36px;text-align:center;box-shadow:var(--shadow);max-width:520px}
     .coming-soon-icon{width:72px;height:72px;border-radius:50%;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:28px;color:var(--blue)}
     .coming-soon h3{font-family:'Exo',sans-serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:10px}
     .coming-soon p{font-size:14px;color:var(--navy-mid);line-height:1.65}
-    .coming-soon .badge{background:var(--blue);color:#fff;margin-bottom:16px}
-
-    /* ── MY WORK ORDERS SPLIT SCREEN ── */
     .wo-layout{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
     .wo-list{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
     .wo-list-item{padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .18s;display:flex;flex-direction:column;gap:6px;border-left:3px solid transparent}
@@ -195,8 +156,6 @@
     .wo-detail-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy-mid);min-width:150px;padding-top:2px;flex-shrink:0}
     .wo-detail-value{color:var(--navy);font-weight:600;line-height:1.5;flex:1}
     .wo-detail-section{border-top:1px solid var(--border);margin-top:20px;padding-top:20px}
-
-    /* ── RESPONSIVE ── */
     @media(max-width:1100px){.wo-layout{grid-template-columns:280px 1fr}}
     @media(max-width:900px){.sidebar{width:200px}.form-grid{grid-template-columns:1fr}.wo-layout{grid-template-columns:1fr}.wo-detail{display:none}.wo-detail.visible{display:block}}
     @media(max-width:680px){.sidebar{display:none}.portal-main{padding:20px}.login-card{padding:32px 24px}.portal-nav{padding:0 16px}#portalUserEmail{display:none}}
@@ -204,9 +163,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     LOGIN SCREEN
-════════════════════════════════════════════ -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
@@ -214,23 +170,17 @@
       <h2>Customer Portal</h2>
       <p>Access your dashboard and service requests</p>
     </div>
-
     <div class="tab-row">
       <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
       <button class="tab-btn" id="tabSignup" onclick="switchTab('signup')">Create Account</button>
     </div>
-
-    <!-- LOGIN -->
     <div class="form-panel active" id="loginPanel">
       <div class="form-msg" id="loginMsg"></div>
-
       <button class="btn-google" onclick="doGoogleLogin()">
         <svg width="18" height="18" viewBox="0 0 48 48" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
         Sign in with Google
       </button>
-
       <div class="divider"><span>or</span></div>
-
       <div class="fg">
         <label>Email Address</label>
         <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
@@ -246,26 +196,12 @@
         <a href="#" onclick="doResetPwd(); return false;">Forgot your password?</a>
       </div>
     </div>
-
-    <!-- SIGNUP -->
     <div class="form-panel" id="signupPanel">
       <div class="form-msg" id="signupMsg"></div>
-      <div class="fg">
-        <label>Full Name</label>
-        <input type="text" id="signupName" placeholder="Christopher Martin">
-      </div>
-      <div class="fg">
-        <label>Email Address</label>
-        <input type="email" id="signupEmail" placeholder="you@example.com">
-      </div>
-      <div class="fg">
-        <label>Phone Number</label>
-        <input type="tel" id="signupPhone" placeholder="(325) 000-0000">
-      </div>
-      <div class="fg">
-        <label>Password</label>
-        <input type="password" id="signupPwd" placeholder="Min. 8 characters">
-      </div>
+      <div class="fg"><label>Full Name</label><input type="text" id="signupName" placeholder="Christopher Martin"></div>
+      <div class="fg"><label>Email Address</label><input type="email" id="signupEmail" placeholder="you@example.com"></div>
+      <div class="fg"><label>Phone Number</label><input type="tel" id="signupPhone" placeholder="(325) 000-0000"></div>
+      <div class="fg"><label>Password</label><input type="password" id="signupPwd" placeholder="Min. 8 characters"></div>
       <button class="btn btn-primary" style="width:100%;" onclick="doSignup()" id="signupBtn">
         <i class="fas fa-user-plus"></i> Create Account
       </button>
@@ -275,7 +211,6 @@
         if you need access assistance.
       </p>
     </div>
-
     <div style="text-align:center;margin-top:24px;">
       <a href="index.html" style="font-size:12px;color:var(--navy-mid);">
         <i class="fas fa-arrow-left" style="margin-right:4px;"></i> Back to website
@@ -284,12 +219,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     PORTAL DASHBOARD
-════════════════════════════════════════════ -->
 <div id="portalScreen">
-
-  <!-- Top Nav -->
   <nav class="portal-nav">
     <a href="index.html" class="portal-nav-logo">
       <img src="https://waterutilityconsultant.com/wp-content/uploads/2025/01/company_logo-1.svg" alt="Martin DC">
@@ -302,44 +232,22 @@
       </div>
     </div>
   </nav>
-
   <div class="portal-layout">
-
-    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-label">My Account</div>
-      <button class="sidebar-link active" onclick="showPage('calendar',this)">
-        <i class="fas fa-calendar-alt"></i> Calendar
-      </button>
-      <button class="sidebar-link" onclick="showPage('workorder',this)">
-        <i class="fas fa-clipboard-list"></i> Submit Work Order
-      </button>
-      <button class="sidebar-link" onclick="showPage('myworkorders',this)">
-        <i class="fas fa-tasks"></i> My Work Orders
-      </button>
-      <button class="sidebar-link" onclick="showPage('mapedit',this)">
-        <i class="fas fa-map-marked-alt"></i> Request Map Edit
-      </button>
-      <button class="sidebar-link" onclick="showPage('mapview',this)">
-        <i class="fas fa-map"></i> Map View
-      </button>
+      <button class="sidebar-link active" onclick="showPage('calendar',this)"><i class="fas fa-calendar-alt"></i> Calendar</button>
+      <button class="sidebar-link" onclick="showPage('workorder',this)"><i class="fas fa-clipboard-list"></i> Submit Work Order</button>
+      <button class="sidebar-link" onclick="showPage('myworkorders',this)"><i class="fas fa-tasks"></i> My Work Orders</button>
+      <button class="sidebar-link" onclick="showPage('mapedit',this)"><i class="fas fa-map-marked-alt"></i> Request Map Edit</button>
+      <button class="sidebar-link" onclick="showPage('mapview',this)"><i class="fas fa-map"></i> Map View</button>
       <div class="sidebar-label">Billing</div>
-      <button class="sidebar-link" onclick="showPage('invoices',this)">
-        <i class="fas fa-file-invoice-dollar"></i> Invoices
-      </button>
-      <button class="sidebar-link" onclick="showPage('quotes',this)">
-        <i class="fas fa-file-alt"></i> Quotes
-      </button>
+      <button class="sidebar-link" onclick="showPage('invoices',this)"><i class="fas fa-file-invoice-dollar"></i> Invoices</button>
+      <button class="sidebar-link" onclick="showPage('quotes',this)"><i class="fas fa-file-alt"></i> Quotes</button>
       <hr class="sidebar-divider">
-      <button class="sidebar-link sidebar-logout" onclick="doLogout()">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </button>
+      <button class="sidebar-link sidebar-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </aside>
-
-    <!-- Main -->
     <main class="portal-main">
 
-      <!-- ═══ CALENDAR ═══ -->
       <div class="portal-page active" id="page-calendar">
         <div class="cal-header">
           <h3 id="calMonthLabel">Loading...</h3>
@@ -350,74 +258,42 @@
         </div>
         <div class="cal-wrap">
           <div class="cal-grid">
-            <div class="cal-day-header">Sun</div>
-            <div class="cal-day-header">Mon</div>
-            <div class="cal-day-header">Tue</div>
-            <div class="cal-day-header">Wed</div>
-            <div class="cal-day-header">Thu</div>
-            <div class="cal-day-header">Fri</div>
-            <div class="cal-day-header">Sat</div>
+            <div class="cal-day-header">Sun</div><div class="cal-day-header">Mon</div><div class="cal-day-header">Tue</div>
+            <div class="cal-day-header">Wed</div><div class="cal-day-header">Thu</div><div class="cal-day-header">Fri</div><div class="cal-day-header">Sat</div>
           </div>
           <div class="cal-grid" id="calBody"></div>
         </div>
         <p style="font-size:12px;color:var(--navy-mid);margin-top:12px;"><i class="fas fa-circle" style="color:var(--blue);font-size:8px;margin-right:6px;"></i>Blue dots indicate scheduled work orders</p>
       </div>
 
-      <!-- ═══ SUBMIT WORK ORDER ═══ -->
       <div class="portal-page" id="page-workorder">
         <h2 class="page-title">Submit Work Order Request</h2>
         <div class="card">
           <p style="font-size:14px;color:var(--navy-mid);margin-bottom:28px;line-height:1.7;">Use this form to request a new service. Our team will review and follow up within 1 business day to confirm scheduling.</p>
-
           <div class="form-grid">
-            <div class="field-group">
-              <label>Your Name *</label>
-              <input type="text" id="wofName" placeholder="Full name">
-            </div>
-            <div class="field-group">
-              <label>Date of Request</label>
-              <input type="date" id="wofDate" readonly>
-            </div>
+            <div class="field-group"><label>Your Name *</label><input type="text" id="wofName" placeholder="Full name"></div>
+            <div class="field-group"><label>Date of Request</label><input type="date" id="wofDate" readonly></div>
             <div class="field-group full">
               <label>Service Requested *</label>
               <select id="wofService">
                 <option value="">— Select a Service —</option>
-                <option>Altitude Valve Services</option>
-                <option>Pressure Valve Services</option>
-                <option>Booster Pump Maintenance</option>
-                <option>Licensed Operator Support</option>
-                <option>Emergency Solutions</option>
-                <option>Well Maintenance</option>
+                <option>Altitude Valve Services</option><option>Pressure Valve Services</option>
+                <option>Booster Pump Maintenance</option><option>Licensed Operator Support</option>
+                <option>Emergency Solutions</option><option>Well Maintenance</option>
               </select>
             </div>
-            <div class="field-group">
-              <label>Point of Contact Name *</label>
-              <input type="text" id="wofPOCName" placeholder="Name on-site">
-            </div>
-            <div class="field-group">
-              <label>Point of Contact Phone *</label>
-              <input type="tel" id="wofPOCPhone" placeholder="(xxx) xxx-xxxx">
-            </div>
+            <div class="field-group"><label>Point of Contact Name *</label><input type="text" id="wofPOCName" placeholder="Name on-site"></div>
+            <div class="field-group"><label>Point of Contact Phone *</label><input type="tel" id="wofPOCPhone" placeholder="(xxx) xxx-xxxx"></div>
             <div class="field-group full">
               <label>Quote Required Before Scheduling?</label>
               <select id="wofQuote">
                 <option value="">— Select —</option>
-                <option>Yes – Please provide a quote first</option>
-                <option>No – Schedule directly</option>
+                <option>Yes – Please provide a quote first</option><option>No – Schedule directly</option>
               </select>
             </div>
-            <div class="field-group full">
-              <label>Address of Worksite *</label>
-              <input type="text" id="wofAddress" placeholder="Street address, City, TX  ZIP">
-            </div>
-            <div class="field-group">
-              <label>Preferred Arrival Date</label>
-              <input type="date" id="wofPreferred">
-            </div>
-            <div class="field-group full">
-              <label>Project Scope of Work *</label>
-              <textarea id="wofScope" placeholder="Describe the issue or work needed in as much detail as possible..."></textarea>
-            </div>
+            <div class="field-group full"><label>Address of Worksite *</label><input type="text" id="wofAddress" placeholder="Street address, City, TX  ZIP"></div>
+            <div class="field-group"><label>Preferred Arrival Date</label><input type="date" id="wofPreferred"></div>
+            <div class="field-group full"><label>Project Scope of Work *</label><textarea id="wofScope" placeholder="Describe the issue or work needed in as much detail as possible..."></textarea></div>
             <div class="field-group full">
               <label>Attach Images (optional)</label>
               <div class="file-upload-wrap" onclick="document.getElementById('fileInput').click()">
@@ -429,23 +305,15 @@
               <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf" onchange="handleFileSelect(this)">
             </div>
           </div>
-
-          <div style="margin-top:8px;">
-            <button class="btn btn-primary" onclick="submitWorkOrder()" id="wofBtn">
-              <i class="fas fa-paper-plane"></i> Submit Work Order
-            </button>
-          </div>
+          <div style="margin-top:8px;"><button class="btn btn-primary" onclick="submitWorkOrder()" id="wofBtn"><i class="fas fa-paper-plane"></i> Submit Work Order</button></div>
           <div class="status-msg" id="wofMsg"></div>
         </div>
       </div>
 
-      <!-- ═══ MY WORK ORDERS ═══ -->
       <div class="portal-page" id="page-myworkorders">
         <h2 class="page-title">My Work Orders</h2>
         <div class="wo-layout">
-          <div class="wo-list" id="woList">
-            <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div>
-          </div>
+          <div class="wo-list" id="woList"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div></div>
           <div class="wo-detail" id="woDetail">
             <div class="empty-state" style="padding:48px 24px">
               <i class="fas fa-clipboard-list" style="font-size:36px;color:#c0c8d0;display:block;margin-bottom:12px;"></i>
@@ -455,103 +323,45 @@
         </div>
       </div>
 
-      <!-- ═══ MAP EDIT ═══ -->
       <div class="portal-page" id="page-mapedit">
         <h2 class="page-title">Request Map Edit</h2>
         <div class="card">
           <p style="font-size:14px;color:var(--navy-mid);margin-bottom:28px;line-height:1.7;">Submit a request to update your water system map. Fill in only the fields relevant to your edit.</p>
-
           <div class="form-grid">
-            <div class="field-group">
-              <label>Your Name</label>
-              <input type="text" id="meName" placeholder="Full name">
-            </div>
-            <div class="field-group">
-              <label>Date of Request</label>
-              <input type="date" id="meDate" readonly>
-            </div>
-            <div class="field-group full">
-              <label>Name of Layer Needing Edit *</label>
-              <input type="text" id="meLayerName" placeholder="e.g. Distribution Lines, Valve Layer">
-            </div>
-            <div class="field-group full">
-              <label>Explanation of Edit Needed</label>
-              <textarea id="meExplanation" placeholder="Describe what needs to be changed or added..."></textarea>
-            </div>
-            <div class="field-group full">
-              <label>Address or GPS Coordinates *</label>
-              <input type="text" id="meAddress" placeholder="Street address or GPS coordinates">
-            </div>
+            <div class="field-group"><label>Your Name</label><input type="text" id="meName" placeholder="Full name"></div>
+            <div class="field-group"><label>Date of Request</label><input type="date" id="meDate" readonly></div>
+            <div class="field-group full"><label>Name of Layer Needing Edit *</label><input type="text" id="meLayerName" placeholder="e.g. Distribution Lines, Valve Layer"></div>
+            <div class="field-group full"><label>Explanation of Edit Needed</label><textarea id="meExplanation" placeholder="Describe what needs to be changed or added..."></textarea></div>
+            <div class="field-group full"><label>Address or GPS Coordinates *</label><input type="text" id="meAddress" placeholder="Street address or GPS coordinates"></div>
             <div class="field-group full">
               <label>Attach Images (optional)</label>
               <div class="file-upload-wrap" onclick="document.getElementById('meFileInput').click()">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Click to attach photos</p>
+                <i class="fas fa-cloud-upload-alt"></i><p>Click to attach photos</p>
                 <span>JPEG, PNG, WEBP, HEIC, PDF — max 50MB</span>
                 <div id="meFileName"></div>
               </div>
               <input type="file" id="meFileInput" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf" onchange="handleMeFileSelect(this)">
             </div>
           </div>
-
           <p style="font-size:13px;font-weight:700;color:var(--navy);margin:24px 0 16px;padding-top:24px;border-top:1px solid var(--border);">Repair Layer Details <span style="font-weight:400;color:var(--navy-mid);">(fill in only if applicable)</span></p>
           <div class="form-grid">
-            <div class="field-group">
-              <label>Line Size</label>
-              <input type="text" id="meLineSize" placeholder='e.g. 6"'>
-            </div>
-            <div class="field-group">
-              <label>Line Depth</label>
-              <input type="text" id="meLineDepth" placeholder='e.g. 36"'>
-            </div>
-            <div class="field-group">
-              <label>Line Material</label>
-              <input type="text" id="meLineMaterial" placeholder="e.g. PVC, Ductile Iron">
-            </div>
-            <div class="field-group">
-              <label>Repair Method Used</label>
-              <input type="text" id="meRepairMethod" placeholder="e.g. Clamp, Full Replace">
-            </div>
-            <div class="field-group">
-              <label>Valve Size</label>
-              <input type="text" id="meValveSize" placeholder='e.g. 4"'>
-            </div>
-            <div class="field-group">
-              <label>Valve Type</label>
-              <input type="text" id="meValveType" placeholder="e.g. Gate, Ball, PRV">
-            </div>
-            <div class="field-group">
-              <label>Line Pressure</label>
-              <input type="text" id="meLinePressure" placeholder="e.g. 65 PSI">
-            </div>
-            <div class="field-group">
-              <label>Inlet Pressure</label>
-              <input type="text" id="meInletPressure" placeholder="e.g. 80 PSI">
-            </div>
-            <div class="field-group">
-              <label>Outlet Pressure</label>
-              <input type="text" id="meOutletPressure" placeholder="e.g. 55 PSI">
-            </div>
-            <div class="field-group">
-              <label>Item Manufacturer</label>
-              <input type="text" id="meManufacturer" placeholder="e.g. Bermad, Cla-Val">
-            </div>
-            <div class="field-group full">
-              <label>Distance from Road Center to Middle of Line</label>
-              <input type="text" id="meRoadDistance" placeholder="e.g. 8' from centerline">
-            </div>
+            <div class="field-group"><label>Line Size</label><input type="text" id="meLineSize" placeholder='e.g. 6"'></div>
+            <div class="field-group"><label>Line Depth</label><input type="text" id="meLineDepth" placeholder='e.g. 36"'></div>
+            <div class="field-group"><label>Line Material</label><input type="text" id="meLineMaterial" placeholder="e.g. PVC, Ductile Iron"></div>
+            <div class="field-group"><label>Repair Method Used</label><input type="text" id="meRepairMethod" placeholder="e.g. Clamp, Full Replace"></div>
+            <div class="field-group"><label>Valve Size</label><input type="text" id="meValveSize" placeholder='e.g. 4"'></div>
+            <div class="field-group"><label>Valve Type</label><input type="text" id="meValveType" placeholder="e.g. Gate, Ball, PRV"></div>
+            <div class="field-group"><label>Line Pressure</label><input type="text" id="meLinePressure" placeholder="e.g. 65 PSI"></div>
+            <div class="field-group"><label>Inlet Pressure</label><input type="text" id="meInletPressure" placeholder="e.g. 80 PSI"></div>
+            <div class="field-group"><label>Outlet Pressure</label><input type="text" id="meOutletPressure" placeholder="e.g. 55 PSI"></div>
+            <div class="field-group"><label>Item Manufacturer</label><input type="text" id="meManufacturer" placeholder="e.g. Bermad, Cla-Val"></div>
+            <div class="field-group full"><label>Distance from Road Center to Middle of Line</label><input type="text" id="meRoadDistance" placeholder="e.g. 8' from centerline"></div>
           </div>
-
-          <div style="margin-top:8px;">
-            <button class="btn btn-primary" onclick="submitMapEdit()" id="meBtn">
-              <i class="fas fa-paper-plane"></i> Submit Map Edit Request
-            </button>
-          </div>
+          <div style="margin-top:8px;"><button class="btn btn-primary" onclick="submitMapEdit()" id="meBtn"><i class="fas fa-paper-plane"></i> Submit Map Edit Request</button></div>
           <div class="status-msg" id="meMsg"></div>
         </div>
       </div>
 
-      <!-- ═══ MAP VIEW ═══ -->
       <div class="portal-page" id="page-mapview">
         <h2 class="page-title">Map View</h2>
         <div class="coming-soon">
@@ -562,31 +372,21 @@
         </div>
       </div>
 
-      <!-- ═══ INVOICES ═══ -->
       <div class="portal-page" id="page-invoices">
         <h2 class="page-title">Invoices</h2>
-        <div class="card" id="invoicesContent">
-          <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading invoices...</p></div>
-        </div>
+        <div class="card" id="invoicesContent"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading invoices...</p></div></div>
       </div>
 
-      <!-- ═══ QUOTES ═══ -->
       <div class="portal-page" id="page-quotes">
         <h2 class="page-title">Quotes</h2>
-        <div class="card" id="quotesContent">
-          <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading quotes...</p></div>
-        </div>
+        <div class="card" id="quotesContent"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading quotes...</p></div></div>
       </div>
 
     </main>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════════════ -->
 <script>
-  // ── SUPABASE ──────────────────────────────────────────────────────────────
   const SUPABASE_URL  = 'https://mnytmsmjpsuzgwzeriwq.supabase.co';
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ueXRtc21qcHN1emd3emVyaXdxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMjY3MzIsImV4cCI6MjA5MTgwMjczMn0.vmtbculI08fDMle7YdC9LdSIRUaKdLqaHdFI3JtW120';
   const { createClient } = supabase;
@@ -597,25 +397,17 @@
   let selectedMeFile = null;
   let woData = [];
 
-  // ── AUTH STATE ────────────────────────────────────────────────────────────
   sb.auth.onAuthStateChange((event, session) => {
-    if (session) {
-      currentUser = session.user;
-      showPortal(session.user);
-    } else {
-      currentUser = null;
-      showLogin();
-    }
+    if (session) { currentUser = session.user; showPortal(session.user); }
+    else { currentUser = null; showLogin(); }
   });
 
   async function showPortal(user) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('portalScreen').style.display = 'block';
-
     const email = user.email || '';
     document.getElementById('portalUserEmail').textContent = email;
     document.getElementById('userInitial').textContent = email.charAt(0).toUpperCase();
-
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('wofDate').value = today;
     document.getElementById('meDate').value  = today;
@@ -639,9 +431,24 @@
           });
         }
       } else {
+        // Google OAuth user not yet in customers table — insert them now
         const meta = user.user_metadata?.full_name || '';
         document.getElementById('wofName').value = meta;
         document.getElementById('meName').value  = meta;
+        const parts = meta.split(' ');
+        await fetch(`${SUPABASE_URL}/rest/v1/customers`, {
+          method: 'POST',
+          headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}`, 'Content-Type': 'application/json', Prefer: 'resolution=ignore-duplicates' },
+          body: JSON.stringify({
+            first_name: parts[0] || meta || email,
+            last_name: parts.slice(1).join(' ') || '',
+            email: email,
+            phone: 'not provided',
+            status: 'client',
+            source: 'google_oauth',
+            updated_at: new Date().toISOString()
+          })
+        });
       }
     } catch(e) {}
 
@@ -653,12 +460,8 @@
     document.getElementById('portalScreen').style.display = 'none';
   }
 
-  // ── AUTH ACTIONS ──────────────────────────────────────────────────────────
   async function doGoogleLogin() {
-    const { error } = await sb.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: window.location.href }
-    });
+    const { error } = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href } });
     if (error) showMsg(document.getElementById('loginMsg'), error.message, 'error');
   }
 
@@ -685,13 +488,10 @@
     const pwd   = document.getElementById('signupPwd').value;
     const msg   = document.getElementById('signupMsg');
     const btn   = document.getElementById('signupBtn');
-
     if (!name || !email || !phone || !pwd) { showMsg(msg, 'Please fill in all fields.', 'error'); return; }
     if (pwd.length < 8) { showMsg(msg, 'Password must be at least 8 characters.', 'error'); return; }
-
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
-
     const { error } = await sb.auth.signUp({ email, password: pwd, options: { data: { full_name: name } } });
     if (error) {
       showMsg(msg, error.message, 'error');
@@ -699,14 +499,12 @@
       btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
       return;
     }
-
     const parts = name.split(' ');
     await fetch(`${SUPABASE_URL}/rest/v1/customers`, {
       method: 'POST',
       headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}`, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates' },
       body: JSON.stringify({ first_name: parts[0] || name, last_name: parts.slice(1).join(' ') || '', email, phone, status: 'client', source: 'portal_signup', updated_at: new Date().toISOString() })
     });
-
     showMsg(msg, 'Account created! Check your email to confirm before signing in.', 'success');
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
@@ -723,7 +521,6 @@
     else { showMsg(msg, 'Password reset email sent! Check your inbox.', 'success'); }
   }
 
-  // ── WORK ORDER SUBMIT ─────────────────────────────────────────────────────
   function handleFileSelect(input) {
     selectedFile = input.files[0];
     document.getElementById('fileName').textContent = selectedFile ? `✓ ${selectedFile.name}` : '';
@@ -738,38 +535,21 @@
     const pocPh   = document.getElementById('wofPOCPhone').value.trim();
     const address = document.getElementById('wofAddress').value.trim();
     const scope   = document.getElementById('wofScope').value.trim();
-
-    if (!name || !service || !poc || !pocPh || !address || !scope) {
-      showStatusMsg(msg, 'Please fill in all required fields.', 'error'); return;
-    }
-
+    if (!name || !service || !poc || !pocPh || !address || !scope) { showStatusMsg(msg, 'Please fill in all required fields.', 'error'); return; }
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-
     let attachmentUrl = null;
     if (selectedFile) {
       const filePath = `${currentUser.id}/${Date.now()}-${selectedFile.name}`;
-      const { data, error: upErr } = await sb.storage
-        .from('work-order-attachments')
-        .upload(filePath, selectedFile, { cacheControl: '3600', upsert: false });
+      const { data, error: upErr } = await sb.storage.from('work-order-attachments').upload(filePath, selectedFile, { cacheControl: '3600', upsert: false });
       if (!upErr && data) attachmentUrl = data.path;
     }
-
     const { error } = await sb.from('work_orders').insert({
-      user_id:         currentUser.id,
-      email:           currentUser.email,
-      name,
-      service,
-      poc_name:        poc,
-      poc_phone:       pocPh,
-      quote_needed:    document.getElementById('wofQuote').value,
-      address,
-      preferred_date:  document.getElementById('wofPreferred').value || null,
-      scope,
-      attachment_path: attachmentUrl,
-      submitted_at:    new Date().toISOString()
+      user_id: currentUser.id, email: currentUser.email, name, service,
+      poc_name: poc, poc_phone: pocPh, quote_needed: document.getElementById('wofQuote').value,
+      address, preferred_date: document.getElementById('wofPreferred').value || null,
+      scope, attachment_path: attachmentUrl, submitted_at: new Date().toISOString()
     });
-
     if (error) {
       showStatusMsg(msg, 'Submission failed. Please try again.', 'error');
     } else {
@@ -781,18 +561,16 @@
       }).catch(()=>{});
       ['wofPOCName','wofPOCPhone','wofAddress','wofScope','wofPreferred'].forEach(id => document.getElementById(id).value = '');
       document.getElementById('wofService').value = '';
-      document.getElementById('wofQuote').value   = '';
+      document.getElementById('wofQuote').value = '';
       document.getElementById('fileName').textContent = '';
       selectedFile = null;
       document.getElementById('fileInput').value = '';
       buildCalendar(currentYear, currentMonth);
     }
-
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Work Order';
   }
 
-  // ── MY WORK ORDERS ────────────────────────────────────────────────────────
   const STATUS_ORDER = { pending: 0, scheduled: 1, completed: 2 };
 
   async function loadMyWorkOrders() {
@@ -800,45 +578,29 @@
     const detailEl = document.getElementById('woDetail');
     listEl.innerHTML   = `<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading...</p></div>`;
     detailEl.innerHTML = `<div class="empty-state" style="padding:48px 24px"><i class="fas fa-clipboard-list" style="font-size:36px;color:#c0c8d0;display:block;margin-bottom:12px;"></i><p>Select a work order to view details</p></div>`;
-
-    // Ensure we have a live session token before querying
     if (!currentUser) {
       const { data: { session } } = await sb.auth.getSession();
       if (session) { currentUser = session.user; }
-      else {
-        listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Session expired. Please sign in again.</p></div>`;
-        return;
-      }
+      else { listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Session expired. Please sign in again.</p></div>`; return; }
     }
-
     try {
       const { data: { session } } = await sb.auth.getSession();
       const token = session?.access_token || SUPABASE_ANON;
-
       const res = await fetch(
         `${SUPABASE_URL}/rest/v1/work_orders?user_id=eq.${currentUser.id}&order=submitted_at.desc&select=*`,
         { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${token}` } }
       );
       const data = await res.json();
       const error = res.ok ? null : data;
-
       if (error) throw error;
-
-      if (!data || data.length === 0) {
-        listEl.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i><p>No work orders found.</p></div>`;
-        return;
-      }
-
-      // Sort: open statuses first (pending → scheduled → completed), then newest first
+      if (!data || data.length === 0) { listEl.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i><p>No work orders found.</p></div>`; return; }
       const sorted = [...data].sort((a, b) => {
         const sa = STATUS_ORDER[a.status] ?? 0;
         const sb2 = STATUS_ORDER[b.status] ?? 0;
         if (sa !== sb2) return sa - sb2;
         return new Date(b.submitted_at) - new Date(a.submitted_at);
       });
-
       woData = sorted;
-
       listEl.innerHTML = sorted.map((wo, i) => `
         <div class="wo-list-item" id="wo-item-${i}" onclick="selectWorkOrder(${i})">
           <div class="wo-list-item-top">
@@ -846,18 +608,9 @@
             <span class="badge badge-${wo.status || 'pending'}">${wo.status || 'pending'}</span>
           </div>
           <div class="wo-list-address">${wo.address || '—'}</div>
-          <div class="wo-list-date">${
-            wo.preferred_date
-              ? 'Preferred: ' + new Date(wo.preferred_date + 'T12:00:00').toLocaleDateString()
-              : wo.submitted_at
-                ? 'Submitted: ' + new Date(wo.submitted_at).toLocaleDateString()
-                : '—'
-          }</div>
+          <div class="wo-list-date">${wo.preferred_date ? 'Preferred: ' + new Date(wo.preferred_date + 'T12:00:00').toLocaleDateString() : wo.submitted_at ? 'Submitted: ' + new Date(wo.submitted_at).toLocaleDateString() : '—'}</div>
         </div>`).join('');
-
-      // Auto-select first item
       if (sorted.length > 0) selectWorkOrder(0);
-
     } catch(e) {
       console.error('loadMyWorkOrders error:', e);
       listEl.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not load work orders: ${e?.message || e?.code || 'Unknown error'}.</p></div>`;
@@ -868,68 +621,29 @@
     document.querySelectorAll('.wo-list-item').forEach(el => el.classList.remove('selected'));
     const row = document.getElementById('wo-item-' + index);
     if (row) row.classList.add('selected');
-
     const wo     = woData[index];
     const detail = document.getElementById('woDetail');
     detail.classList.add('visible');
-
     const fmt = v => v || '<span style="color:#aab0bc;">—</span>';
-    const fmtDate = v => {
-      if (!v) return null;
-      return new Date(v.length === 10 ? v + 'T12:00:00' : v).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
-    };
-
+    const fmtDate = v => { if (!v) return null; return new Date(v.length === 10 ? v + 'T12:00:00' : v).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); };
     detail.innerHTML = `
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
         <h3 style="font-family:'Exo',sans-serif;font-size:20px;font-weight:700;color:var(--navy);">${wo.service || 'Work Order'}</h3>
         <span class="badge badge-${wo.status || 'pending'}" style="font-size:12px;padding:5px 14px;">${wo.status || 'pending'}</span>
       </div>
-
-      <div class="wo-detail-row">
-        <span class="wo-detail-label">Address</span>
-        <span class="wo-detail-value">${fmt(wo.address)}</span>
-      </div>
-      <div class="wo-detail-row">
-        <span class="wo-detail-label">Preferred Date</span>
-        <span class="wo-detail-value">${fmt(fmtDate(wo.preferred_date))}</span>
-      </div>
-      <div class="wo-detail-row">
-        <span class="wo-detail-label">Date Submitted</span>
-        <span class="wo-detail-value">${fmt(fmtDate(wo.submitted_at))}</span>
-      </div>
-      <div class="wo-detail-row">
-        <span class="wo-detail-label">Quote Required</span>
-        <span class="wo-detail-value">${fmt(wo.quote_needed)}</span>
-      </div>
-
+      <div class="wo-detail-row"><span class="wo-detail-label">Address</span><span class="wo-detail-value">${fmt(wo.address)}</span></div>
+      <div class="wo-detail-row"><span class="wo-detail-label">Preferred Date</span><span class="wo-detail-value">${fmt(fmtDate(wo.preferred_date))}</span></div>
+      <div class="wo-detail-row"><span class="wo-detail-label">Date Submitted</span><span class="wo-detail-value">${fmt(fmtDate(wo.submitted_at))}</span></div>
+      <div class="wo-detail-row"><span class="wo-detail-label">Quote Required</span><span class="wo-detail-value">${fmt(wo.quote_needed)}</span></div>
       <div class="wo-detail-section">
-        <div class="wo-detail-row">
-          <span class="wo-detail-label">Point of Contact</span>
-          <span class="wo-detail-value">${fmt(wo.poc_name)}</span>
-        </div>
-        <div class="wo-detail-row">
-          <span class="wo-detail-label">POC Phone</span>
-          <span class="wo-detail-value">${fmt(wo.poc_phone)}</span>
-        </div>
+        <div class="wo-detail-row"><span class="wo-detail-label">Point of Contact</span><span class="wo-detail-value">${fmt(wo.poc_name)}</span></div>
+        <div class="wo-detail-row"><span class="wo-detail-label">POC Phone</span><span class="wo-detail-value">${fmt(wo.poc_phone)}</span></div>
       </div>
-
       <div class="wo-detail-section">
         <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy-mid);margin-bottom:10px;">Scope of Work</div>
         <div style="font-size:14px;color:var(--navy);line-height:1.75;background:var(--light);border-radius:8px;padding:14px 16px;">${fmt(wo.scope)}</div>
       </div>
-
-      ${wo.attachment_path ? `
-      <div class="wo-detail-section">
-        <div class="wo-detail-row">
-          <span class="wo-detail-label">Attachment</span>
-          <span class="wo-detail-value">
-            <a href="#" style="color:var(--blue);font-weight:700;" onclick="viewAttachment('${wo.attachment_path}');return false;">
-              <i class="fas fa-paperclip" style="margin-right:4px;"></i>View Attachment
-            </a>
-          </span>
-        </div>
-      </div>` : ''}
-    `;
+      ${wo.attachment_path ? `<div class="wo-detail-section"><div class="wo-detail-row"><span class="wo-detail-label">Attachment</span><span class="wo-detail-value"><a href="#" style="color:var(--blue);font-weight:700;" onclick="viewAttachment('${wo.attachment_path}');return false;"><i class="fas fa-paperclip" style="margin-right:4px;"></i>View Attachment</a></span></div></div>` : ''}`;
   }
 
   async function viewAttachment(path) {
@@ -937,7 +651,6 @@
     if (data?.signedUrl) window.open(data.signedUrl, '_blank');
   }
 
-  // ── MAP EDIT ──────────────────────────────────────────────────────────────
   function handleMeFileSelect(input) {
     selectedMeFile = input.files[0];
     document.getElementById('meFileName').textContent = selectedMeFile ? `✓ ${selectedMeFile.name}` : '';
@@ -949,24 +662,19 @@
     const layer   = document.getElementById('meLayerName').value.trim();
     const address = document.getElementById('meAddress').value.trim();
     if (!layer || !address) { showStatusMsg(msg, 'Layer name and address/GPS are required.', 'error'); return; }
-
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-
     let attachmentUrl = null;
     if (selectedMeFile) {
       const filePath = `map-edits/${currentUser.id}/${Date.now()}-${selectedMeFile.name}`;
       const { data, error: upErr } = await sb.storage.from('work-order-attachments').upload(filePath, selectedMeFile, { cacheControl: '3600', upsert: false });
       if (!upErr && data) attachmentUrl = data.path;
     }
-
     const { error } = await sb.from('map_edit_requests').insert({
-      user_id:            currentUser.id,
-      email:              currentUser.email,
-      name:               document.getElementById('meName').value.trim(),
-      layer_name:         layer,
-      edit_explanation:   document.getElementById('meExplanation').value.trim(),
-      address_or_gps:     address,
+      user_id: currentUser.id, email: currentUser.email,
+      name: document.getElementById('meName').value.trim(),
+      layer_name: layer, edit_explanation: document.getElementById('meExplanation').value.trim(),
+      address_or_gps: address,
       line_size:          document.getElementById('meLineSize').value.trim()      || null,
       line_depth:         document.getElementById('meLineDepth').value.trim()     || null,
       line_material:      document.getElementById('meLineMaterial').value.trim()  || null,
@@ -978,13 +686,10 @@
       outlet_pressure:    document.getElementById('meOutletPressure').value.trim()|| null,
       item_manufacturer:  document.getElementById('meManufacturer').value.trim()  || null,
       distance_from_road: document.getElementById('meRoadDistance').value.trim()  || null,
-      attachment_path:    attachmentUrl,
-      submitted_at:       new Date().toISOString()
+      attachment_path: attachmentUrl, submitted_at: new Date().toISOString()
     });
-
-    if (error) {
-      showStatusMsg(msg, 'Submission failed. Please try again.', 'error');
-    } else {
+    if (error) { showStatusMsg(msg, 'Submission failed. Please try again.', 'error'); }
+    else {
       showStatusMsg(msg, '✓ Map edit request submitted successfully!', 'success');
       ['meLayerName','meExplanation','meAddress','meLineSize','meLineDepth','meLineMaterial',
        'meRepairMethod','meValveSize','meValveType','meLinePressure','meInletPressure',
@@ -993,99 +698,34 @@
       selectedMeFile = null;
       document.getElementById('meFileInput').value = '';
     }
-
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Map Edit Request';
   }
 
-  // ── INVOICES ──────────────────────────────────────────────────────────────
   async function loadInvoices() {
     const el = document.getElementById('invoicesContent');
     try {
-      const { data, error } = await sb.from('invoices')
-        .select('*')
-        .eq('email', currentUser.email)
-        .order('created_at', { ascending: false });
-
+      const { data, error } = await sb.from('invoices').select('*').eq('email', currentUser.email).order('created_at', { ascending: false });
       if (error) throw error;
-
-      if (!data || data.length === 0) {
-        el.innerHTML = `<div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><p>No invoices found for your account.</p></div>`;
-        return;
-      }
-
-      el.innerHTML = `
-        <div class="data-table-wrap">
-          <table class="data-table">
-            <thead><tr>
-              <th>Customer</th><th>Service</th><th>Service Date</th>
-              <th>Amount</th><th>Status</th><th>Invoice</th>
-            </tr></thead>
-            <tbody>${data.map(inv => `
-              <tr>
-                <td>${inv.customer_name || '—'}</td>
-                <td>${inv.service || '—'}</td>
-                <td>${inv.service_date ? new Date(inv.service_date).toLocaleDateString() : '—'}</td>
-                <td>${inv.amount ? '$' + Number(inv.amount).toFixed(2) : '—'}</td>
-                <td><span class="badge badge-${inv.status}">${inv.status}</span></td>
-                <td>${inv.invoice_url
-                  ? `<a href="${inv.invoice_url}" target="_blank" class="btn btn-ghost btn-sm"><i class="fas fa-download"></i> View</a>`
-                  : '<span style="color:#aab0bc;font-size:12px;">Not uploaded yet</span>'}</td>
-              </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    } catch(e) {
-      el.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not load invoices. Please try again.</p></div>`;
-    }
+      if (!data || data.length === 0) { el.innerHTML = `<div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><p>No invoices found for your account.</p></div>`; return; }
+      el.innerHTML = `<div class="data-table-wrap"><table class="data-table"><thead><tr><th>Customer</th><th>Service</th><th>Service Date</th><th>Amount</th><th>Status</th><th>Invoice</th></tr></thead><tbody>${data.map(inv => `<tr><td>${inv.customer_name || '—'}</td><td>${inv.service || '—'}</td><td>${inv.service_date ? new Date(inv.service_date).toLocaleDateString() : '—'}</td><td>${inv.amount ? '$' + Number(inv.amount).toFixed(2) : '—'}</td><td><span class="badge badge-${inv.status}">${inv.status}</span></td><td>${inv.invoice_url ? `<a href="${inv.invoice_url}" target="_blank" class="btn btn-ghost btn-sm"><i class="fas fa-download"></i> View</a>` : '<span style="color:#aab0bc;font-size:12px;">Not uploaded yet</span>'}</td></tr>`).join('')}</tbody></table></div>`;
+    } catch(e) { el.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not load invoices. Please try again.</p></div>`; }
   }
 
-  // ── QUOTES ────────────────────────────────────────────────────────────────
   async function loadQuotes() {
     const el = document.getElementById('quotesContent');
     try {
-      const { data, error } = await sb.from('quotes')
-        .select('*')
-        .eq('email', currentUser.email)
-        .order('created_at', { ascending: false });
-
+      const { data, error } = await sb.from('quotes').select('*').eq('email', currentUser.email).order('created_at', { ascending: false });
       if (error) throw error;
-
-      if (!data || data.length === 0) {
-        el.innerHTML = `<div class="empty-state"><i class="fas fa-file-alt"></i><p>No quotes found for your account.</p></div>`;
-        return;
-      }
-
-      el.innerHTML = `
-        <div class="data-table-wrap">
-          <table class="data-table">
-            <thead><tr>
-              <th>Customer</th><th>Service</th><th>Submitted</th>
-              <th>Quote Amount</th><th>Status</th><th>Notes</th>
-            </tr></thead>
-            <tbody>${data.map(q => `
-              <tr>
-                <td>${q.customer_name || '—'}</td>
-                <td>${q.service || '—'}</td>
-                <td>${q.submitted_at ? new Date(q.submitted_at).toLocaleDateString() : '—'}</td>
-                <td>${q.amount ? '$' + Number(q.amount).toFixed(2) : '—'}</td>
-                <td><span class="badge badge-${q.status}">${q.status}</span></td>
-                <td style="max-width:200px;font-size:13px;">${q.notes || '—'}</td>
-              </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    } catch(e) {
-      el.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not load quotes. Please try again.</p></div>`;
-    }
+      if (!data || data.length === 0) { el.innerHTML = `<div class="empty-state"><i class="fas fa-file-alt"></i><p>No quotes found for your account.</p></div>`; return; }
+      el.innerHTML = `<div class="data-table-wrap"><table class="data-table"><thead><tr><th>Customer</th><th>Service</th><th>Submitted</th><th>Quote Amount</th><th>Status</th><th>Notes</th></tr></thead><tbody>${data.map(q => `<tr><td>${q.customer_name || '—'}</td><td>${q.service || '—'}</td><td>${q.submitted_at ? new Date(q.submitted_at).toLocaleDateString() : '—'}</td><td>${q.amount ? '$' + Number(q.amount).toFixed(2) : '—'}</td><td><span class="badge badge-${q.status}">${q.status}</span></td><td style="max-width:200px;font-size:13px;">${q.notes || '—'}</td></tr>`).join('')}</tbody></table></div>`;
+    } catch(e) { el.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not load quotes. Please try again.</p></div>`; }
   }
 
-  // ── CALENDAR ──────────────────────────────────────────────────────────────
   const now = new Date();
   let currentMonth = now.getMonth();
   let currentYear  = now.getFullYear();
-  const MONTHS = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
   function changeMonth(dir) {
     currentMonth += dir;
@@ -1098,65 +738,37 @@
     document.getElementById('calMonthLabel').textContent = `${MONTHS[month]} ${year}`;
     const body = document.getElementById('calBody');
     body.innerHTML = '';
-
     const startDate = `${year}-${String(month+1).padStart(2,'0')}-01`;
     const endDate   = `${year}-${String(month+1).padStart(2,'0')}-${new Date(year, month+1, 0).getDate()}`;
     let events = {};
-
     if (currentUser) {
       try {
-        const { data } = await sb.from('work_orders')
-          .select('preferred_date, service, status')
-          .eq('user_id', currentUser.id)
-          .gte('preferred_date', startDate)
-          .lte('preferred_date', endDate);
-        if (data) {
-          data.forEach(wo => {
-            if (wo.preferred_date) {
-              const day = parseInt(wo.preferred_date.split('-')[2]);
-              if (!events[day]) events[day] = [];
-              events[day].push(wo);
-            }
-          });
-        }
+        const { data } = await sb.from('work_orders').select('preferred_date, service, status').eq('user_id', currentUser.id).gte('preferred_date', startDate).lte('preferred_date', endDate);
+        if (data) { data.forEach(wo => { if (wo.preferred_date) { const day = parseInt(wo.preferred_date.split('-')[2]); if (!events[day]) events[day] = []; events[day].push(wo); } }); }
       } catch(e) {}
     }
-
     const firstDay = new Date(year, month, 1).getDay();
     const daysIn   = new Date(year, month+1, 0).getDate();
-    const todayD   = now.getDate(), todayM = now.getMonth(), todayY = now.getFullYear();
-
-    for (let i = 0; i < firstDay; i++) {
-      const blank = document.createElement('div');
-      blank.className = 'cal-day empty';
-      body.appendChild(blank);
-    }
-
+    const todayD = now.getDate(), todayM = now.getMonth(), todayY = now.getFullYear();
+    for (let i = 0; i < firstDay; i++) { const blank = document.createElement('div'); blank.className = 'cal-day empty'; body.appendChild(blank); }
     for (let d = 1; d <= daysIn; d++) {
-      const cell    = document.createElement('div');
+      const cell = document.createElement('div');
       const isToday = (d === todayD && month === todayM && year === todayY);
       cell.className = 'cal-day' + (isToday ? ' today' : '');
       let html = `<div class="day-num">${d}</div>`;
-      if (events[d]) {
-        events[d].forEach(ev => {
-          html += `<div class="cal-event" title="${ev.service}">${ev.service}</div>`;
-        });
-      }
+      if (events[d]) { events[d].forEach(ev => { html += `<div class="cal-event" title="${ev.service}">${ev.service}</div>`; }); }
       cell.innerHTML = html;
       body.appendChild(cell);
     }
   }
 
-  // ── UI HELPERS ────────────────────────────────────────────────────────────
   function showMsg(el, text, type) {
-    el.textContent = text;
-    el.className   = 'form-msg ' + type;
+    el.textContent = text; el.className = 'form-msg ' + type;
     setTimeout(() => { el.style.display = 'none'; el.className = 'form-msg'; }, 8000);
   }
 
   function showStatusMsg(el, text, type) {
-    el.textContent = text;
-    el.className   = 'status-msg ' + type;
+    el.textContent = text; el.className = 'status-msg ' + type;
     setTimeout(() => { el.style.display = 'none'; el.className = 'status-msg'; }, 8000);
   }
 
